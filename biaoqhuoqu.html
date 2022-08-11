@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body contenteditable="true" >
+<body  contenteditable="true" >
     <button onclick ="InitEvent()"  >改变</button>
     <p>1212121</p>
     <p> <br></p>
@@ -14,21 +14,24 @@
     <input id="Text2" type="text" />
     <input id="Text3" type="text" />
     <script type="text/javascript">
+   
         function InitEvent() {
-            var inputs = document.getElementsByTagName("p");
+                 var inputs = document.getElementsByTagName("p");
             for (var i = 0; i < inputs.length; i++) {
-                inputs[i].onblur = OnblurEvent;
+                inputs[i].onclick = OnblurEvent;
+              
             }
         }
-
+       
         function OnblurEvent() {
+            console.log(this);
             // OnblurEvent是onblur的响应函数，而不是被响应函数调用的函数
             // 所以可以用this来获取发生事件的对象
             if (this.innerText !== "") {
-                this.style.color = "white";
+                this.style.color = "red";
             }
             else {
-                this.style.color = "red";
+                this.style.color = "white";
             }
             console.log(this.innerTextL);
         }
