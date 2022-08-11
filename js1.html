@@ -1,0 +1,63 @@
+
+<html>
+<head>
+    <title>测试页面创建子节点</title>
+ 
+    　　<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<div>
+    <div style="background-color:red" id="test">3</div>
+    
+</div>
+ 
+ 
+
+<script type="text/javascript">
+    // var board = document.getElementById("board");
+    // var e =document.createElement("input");
+    // e.type = "button";
+    // e.value = "这是测试加载的小例子";
+    // var object = board.appendChild(e);
+    // var a =document.createElement("input");
+    // a.type = "text";
+    // a.value = "这是测试加载的srukuang";
+    // var object = board.appendChild(a);
+
+    // var board = document.getElementById("board");
+    // var e2 = document.createElement("select");
+    // e2.options[0] = new Option("加载项1", "");
+    // e2.options[1] = new Option("加载项2", "");
+    // e2.options[3] = new Option("加载项3", "");
+    // e2.options[4] = new Option("加载项4", "");
+    // e2.size = "5";
+    // var object = board.appendChild(e2);
+
+
+    // var board = document.getElementById("board");           
+    // var e3 = document.createElement("input");
+    // e3.setAttribute("type", "text");
+    // e3.setAttribute("name", "q");
+    // e3.setAttribute("value", "使用setAttribute");
+    // e3.setAttribute("onclick", "javascript:alert('This is a test!');");           
+    // var object = board.appendChild(e3);
+
+    // var oTest = document.getElementById("test");
+    // var newNode = document.createElement("p");
+    // newNode.innerHTML = "This is a test";
+    // //测试从这里开始
+    // //appendChild方法：
+    // oTest.appendChild(newNode);
+    // //insertBefore方法：
+    // oTest.insertBefore(newNode,null);
+
+    var oTest = document.getElementById("test");
+      var refChild = document.getElementById("x1");
+      var newNode = document.createElement("p");
+      newNode.innerHTML = "This is a test";
+      oTest.insertBefore(newNode,refChild);
+
+
+</script>
+</body>
+</html>

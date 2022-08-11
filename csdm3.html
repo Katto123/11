@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Rich Editor">
+    <meta name="keywords" content="HTML5, CSS3,JavaScript,Bootstrap,jQuery,Web">
+    <meta name="author" content="BaiQiang">
+    <title>
+        富文本编辑器
+    </title>
+
+    <!--为了方便开发我引入了bootstrap和jQuery 但它们和本项目没有任何必须依赖关系。
+    你可以自己布局 也可以使用原生JavaScript操作-->
+
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+    <style contenteditable>
+        #editor {
+            max-height: 450px;
+            height: 350px;
+            background-color: white;
+            border-collapse: separate;
+            border: 1px solid rgb(204, 204, 204);
+            padding: 4px;
+            box-sizing: content-box;
+            -webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+            box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+            border-top-left-radius: 3px;
+            overflow: scroll;
+            outline: none;
+        }
+
+        .btn {
+            font-family: "微软雅黑";
+        }
+    </style>
+</head>
+<body>
+<!--我需要一个工具栏-->
+<div class="btn-group">
+    <button type="button" class="btn btn-deault">字体</button>
+    <button type="button" class="btn btn-deault dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu family" role="menu">
+        <li><a href="#" data-edit="微软雅黑" style="font-family: '微软雅黑'">微软雅黑</a></li>
+        <li><a href="#" data-edit="Serif" style="font-family: 'Serif'">Serif</a></li>
+        <li><a href="#" data-edit="Courier New" style="font-family:'Courier New'">Courier New</a></li>
+        <li><a href="#" data-edit="Lucida Sans" style="font-family: 'Lucida Sans'">Lucida Sans</a></li>
+        <li><a href="#" data-edit="Times" style="font-family: Times">Times</a></li>
+    </ul>
+</div>
+<div class="btn-group">
+    <button type="button" class="btn btn-deault">大小</button>
+    <button type="button" class="btn btn-deault dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu size" role="menu">
+        <li><a href="#" data-edit="7">H1</a></li>
+        <li><a href="#" data-edit="5">H2</a></li>
+        <li><a href="#" data-edit="4">H3</a></li>
+        <li><a href="#" data-edit="3">H4</a></li>
+        <li><a href="#" data-edit="2">H5</a></li>
+        <li><a href="#" data-edit="1">H6</a></li>
+    </ul>
+</div>
+<div class="btn-group style">
+    <a href="#" class="btn btn-default" data-edit="bold">B</a>
+    <a href="#" class="btn btn-default" data-edit="italic">I</a>
+    <a href="#" class="btn btn-default" data-edit="strikethrough">S</a>
+    <a href="#" class="btn btn-default" data-edit="underline">U</a>
+</div>
+
+<div class="btn-group list">
+    <a href="#" class="btn btn-default" data-edit="InsertUnorderedList">UL</a>
+    <a href="#" class="btn btn-default" data-edit="InsertOrderedList">OL</a>
+    <a href="#" class="btn btn-default" data-edit="indent">TAB</a>
+</div>
+
+<div class="btn-group position">
+    <a href="#" class="btn btn-default" data-edit="JustifyLeft">Left</a>
+    <a href="#" class="btn btn-default" data-edit="JustifyCenter">Middle</a>
+    <a href="#" class="btn btn-default" data-edit="JustifyRight">Right</a>
+</div>
+
+<div class="btn-group tool">
+    <a href="#" class="btn btn-default" data-edit="SaveAs">Save</a>
+    <a href="#" class="btn btn-default" data-edit="Copy">Copy</a>
+    <a href="#" class="btn btn-default" data-edit="Delete">Delete</a>
+</div>
+<div class="btn-group">
+    <button class="btn btn-default" id="clear">清理</button>
+</div>
+
+<div contenteditable="true" id="editor">
+
+</div>
+<script>
+    var userSelection;
+    if (window.getSelection) { //现代浏览器
+        userSelection = window.getSelection();
+    } else if (document.selection) { //IE浏览器
+        userSelection = document.selection.createRange();
+    }
+    function editStyle(cmd, bool, value) {
+        document.execCommand(cmd, bool, value);
+    }
+    $(function () {
+        //editor use it's to clear html
+        $.fn.cleanHtml = function () {
+            var html = $(this).html();
+            return html && html.replace(/(<br>|\s|<div><br><\/div>| )*$/, '');
+        };
+        $(".size>li>a").click(function (e) {
+            editStyle("FontSize", false, $(e.target).attr("data-edit"));
+            e.preventDefault();
+        });
+        $(".family>li>a").click(function (e) {
+            editStyle("FontName", false, $(e.target).attr("data-edit"));
+            e.preventDefault();
+        });
+        $(".style>a").click(function (e) {
+            editStyle($(e.target).attr("data-edit"), false);
+            e.preventDefault();
+        });
+        $(".list>a").click(function (e) {
+            editStyle($(e.target).attr("data-edit"), false);
+            e.preventDefault();
+        });
+        $(".position>a").click(function (e) {
+            editStyle($(e.target).attr("data-edit"), false);
+            e.preventDefault();
+        });
+        $(".tool>a").click(function (e) {
+            /*对于拷贝到剪切板和另存为网页只有IE支持*/
+            editStyle($(e.target).attr("data-edit"), false);
+            e.preventDefault();
+        });
+
+        $("#clear").click(function () {
+            var html = $("#editor").cleanHtml();
+            console.log(html);
+        });
+    });
+</script>
+</body>
+</html>

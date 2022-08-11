@@ -1,0 +1,156 @@
+<html>
+
+<head>
+  <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+  <script src="js/colpick.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="css/colpick.css" type="text/css" />
+  <title>简易富文本</title>
+</head>
+<style>
+  @font-face {
+    font-family: 'iconfont';
+    src: url('./css/font_x7bhzc6q4k/iconfont.eot');
+    src: url('./css/font_x7bhzc6q4k/iconfont.eot?#iefix') format('embedded-opentype'),
+      url('./css/font_x7bhzc6q4k/iconfont.woff2') format('woff2'),
+      url('./css/font_x7bhzc6q4k/iconfont.woff') format('woff'),
+      url('./css/font_x7bhzc6q4k/iconfont.ttf') format('truetype'),
+      url('./css/font_x7bhzc6q4k/iconfont.svg#iconfont') format('svg');
+  }
+
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .main {
+    width: 800px;
+    height: 400px;
+    margin: 0 auto;
+    border: 1px solid #ebeef5;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+  }
+
+  .head {
+    height: 15%;
+    border-bottom: 1px solid #ebeef5;
+    display: flex;
+    flex-wrap: nowrap
+  }
+
+  .head span {
+    font-size: 24px;
+    line-height: 60px;
+    text-align: center;
+    cursor: pointer;
+    margin: 0 15px;
+    color: #999;
+  }
+
+  .head span:hover {
+    color: #000;
+  }
+
+  .head .iconfont.on {
+    color: blue;
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    outline: none;
+  }
+
+  .cont {
+    height: 85%;
+    overflow-y: scroll;
+  }
+</style>
+
+<body>
+  <h2 style="text-align:center;line-height: 15vh;height:15vh;">简易富文本</h2>
+  <div class="main">
+    <div class="head">
+      <button><span class="iconfont">&#xe608;</span></button>
+      <button> <span class="iconfont"> &#xe6e2;</span></button>
+      <button> <span class="iconfont"> &#xe6e4;</span></button>
+      <button id="picker"> <span class="iconfont"> &#xe720;</span></button>
+    </div>
+    <div class="cont" contentEditable="true">
+    </div>
+  </div>
+  <script>
+
+    let color = null
+    // 颜色选择器
+    $('#picker').colpick({
+      layout: 'hex',
+      submit: 0,
+      colorScheme: 'dark',
+      onChange: function (a, b, c, d) {
+        color = "#" + b
+        console.log(color)
+        document.execCommand('ForeColor', false, color);
+      }
+    });
+    $(".head button").click(function () {
+      let index = $(this).index();
+      // 加粗
+      if (index === 0) {
+        document.execCommand('bold', true, null);
+        if ($(this).find("span").hasClass("on")) {
+          $(this).find("span").removeClass("on")
+
+        }
+        else {
+          $(this).find("span").addClass("on")
+
+        }
+      }
+      // 正常字号
+      else if (index === 1) {
+        document.execCommand('fontSize', true, '4');
+      }
+      // H1字号
+      else if (index === 2) {
+        document.execCommand('fontSize', true, '7');
+      }
+      else if (index === 3) {
+        // document.execCommand('ForeColor', true, color);
+      }
+    })
+
+    // fontSize
+
+    $(".cont").bind('keyup', function (e) {
+      console.log('e', e)
+    });
+
+
+
+
+  </script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+</html>

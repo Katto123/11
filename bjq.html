@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://unpkg.com/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">
+    <style>
+        #container {
+            margin: 0 10px;
+            border: 1px solid #ccc;
+        }
+
+        #toolbar-container {
+            border-bottom: 1px solid #ccc;
+        }
+
+        #editor-container {
+            height: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <P>wangEditor V5</P>
+    <div id="container">
+        <div id="toolbar-container"></div>
+        <div id="editor-container"></div>
+    </div>
+    <script src="https://unpkg.com/@wangeditor/editor@latest/dist/index.js"></script>
+    <script>
+        //   var E = window.wangEditor; // 全局变量
+        const { createEditor, createToolbar } = window.wangEditor
+        // 编辑器配置
+        const editorConfig = { MENU_CONF: {} }
+        editorConfig.placeholder = '请输入内容'
+        editorConfig.onChange = (editor) => {
+            // 当编辑器选区、内容变化时，即触发
+            console.log('content', editor.children)
+            console.log('html', editor.getHtml())
+        }
+        // // 文字颜色
+        // editorConfig.MENU_CONF['color'] = {
+        //     colors: ['#000', '#333', '#666']
+        // }
+
+        // 背景色
+        // editorConfig.MENU_CONF['bgColor'] = {
+        //     colors: ['#000', '#333', '#666']
+        // }
+
+        // // 字号
+        // editorConfig.MENU_CONF['fontSize'] = {
+        //     fontSizeList: ['12px', '16px', '24px', '40px' , '240px']
+        // }
+
+
+        // // 字体
+        // editorConfig.MENU_CONF['fontFamily'] = {
+        //     fontFamilyList: [
+        //         // 元素支持两种形式
+        //         //   1. 字符串；
+        //         //   2. { name: 'xxx', value: 'xxx' }
+
+        //         '黑体',
+        //         '楷体',
+        //         { name: '仿宋', value: '仿宋' },
+        //         'Arial',
+        //         'Tahoma',
+        //         'Verdana'
+        //     ]    
+        // }
+
+        // // 表情
+        // editorConfig.MENU_CONF['emotion'] = {
+        //     emotions: '💰 😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇 🙂 🙃 😉'.split(' ') // 数组
+        // }
+
+
+        // // 自定义校验链接
+        // function customCheckLinkFn(text, url) {
+        //     if (!url) {
+        //         return
+        //     }
+        //     if (url.indexOf('http') !== 0) {
+        //         return '链接必须以 http/https 开头'
+        //     }
+        //     return true
+
+        //     // 返回值有三种选择：
+        //     // 1. 返回 true ，说明检查通过，编辑器将正常插入链接
+        //     // 2. 返回一个字符串，说明检查未通过，编辑器会阻止插入。会 alert 出错误信息（即返回的字符串）
+        //     // 3. 返回 undefined（即没有任何返回），说明检查未通过，编辑器会阻止插入。但不会提示任何信息
+        // }
+
+        // // 自定义转换链接 url
+        // function customParseLinkUrl(url) {
+        //     if (url.indexOf('http') !== 0) {
+        //         return `http://${url}`
+        //     }
+        //     return url
+        // }
+
+        // const editorConfig = { MENU_CONF: {} }
+
+        // // 插入链接
+        // editorConfig.MENU_CONF['insertLink'] = {
+        //     checkLink: customCheckLinkFn, // 也支持 async 函数
+        //     parseLinkUrl: customParseLinkUrl, // 也支持 async 函数
+        // }
+        // // 更新链接
+        // editorConfig.MENU_CONF['editLink'] = {
+        //     checkLink: customCheckLinkFn, // 也支持 async 函数
+        //     parseLinkUrl: customParseLinkUrl, // 也支持 async 函数
+        // }
+
+        // // 执行 createEditor
+
+        // // 代码高亮
+        // editorConfig.MENU_CONF['codeSelectLang'] = {
+        //     // 代码语言
+        //     codeLangs: [
+        //         { text: 'CSS', value: 'css' },
+        //         { text: 'HTML', value: 'html' },
+        //         { text: 'XML', value: 'xml' },
+        //         // 其他
+        //     ]
+        // }
+
+        //配置编辑器是否支持滚动
+        // editorConfig.scroll = false
+        
+
+        // 工具栏配置
+        const toolbarConfig = {
+            //  // 自定义扩展菜单
+            // insertKeys: {
+            //     index: 0, // 插入的位置，基于当前的 toolbarKeys
+            //     keys: ['menu-key1', 'menu-key2']
+            // },
+
+            // // 排除菜单组
+            // excludeKeys: [
+            //     'headerSelect',
+            //     'italic',
+            //     'group-more-style' // 排除菜单组，写菜单组 key 的值即可
+            // ]
+        }
+
+
+        // 创建编辑器
+        const editor = createEditor({
+            selector: '#editor-container',
+            config: editorConfig,
+            mode: 'default',// 或 'simple' 参考下文
+            // html: '<p>hello <strong>world</strong></p>',
+
+        })
+        // const text = '...' // text 内容
+        // const html = text.split(/\n/).map(line => `<p>${line}</p>`).join('\n')
+
+        // 创建工具栏
+        const toolbar = createToolbar({
+            editor,
+            selector: '#toolbar-container',
+            config: toolbarConfig,
+            mode: 'default' // 或 'simple' 参考下文
+        })
+        console.log(editor.getHtml());
+    </script>
+</body>
+
+</html>

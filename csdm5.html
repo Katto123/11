@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>富文本编辑器</title>
+</head>
+
+<body>
+
+    <center>
+        <h2 style="margin:auto;">富文本编辑器</h2>
+    </center>
+    <hr>
+
+    <div id="toolbar"
+        style="width:80%;margin:auto;border:2px solid gray;padding: 5px;overflow: auto;font-family: 'Courier New', Courier, monospace;">
+        <input type="button" name="bold" value='加粗' class="bold">
+        <input type="button" name="italic" value='斜体' class="italic">
+        <input type="button" name="underline" value='下划线' class="decotation">
+        <input type="button" name="insertHorizontalRule" value='水平线' class="insertHorizontalRule">
+        大小
+        <select name="fontSize" class="font">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+        </select>
+        <!-- 图片
+        <select name="insertImage">
+            <option value="">请选择图片</option>
+            <option value="timg.jpg">timg.jpg</option>
+            <option value="timg1.jpg">timg1.jpg</option>
+            <option value="timg2.jpg">timg2.jpg</option>
+            <option value="timg3.jpg">timg3.jpg</option>
+            <option value="timg4.jpg">timg4.jpg</option>
+        </select> -->
+        <!-- <input type="button" name="insertImage" value='插入图片(未完成,可粘贴)' class="insImg"> -->
+        <input type="button" name="selectAll" value='全选' class="selectAll">
+        <input type="button" name="undo" value='撤销' class="undo">
+        <input type="button" name="justifyLeft" value='居左' class="justifyLeft">
+        <input type="button" name="justifyCenter" value='居中' class="justifyCenter">
+        <input type="button" name="justifyRight" value='居右' class="justifyRight">
+        <input type="button" name="insertOrderedList" value='有序列表' class="insertOrderedList">
+        <input type="button" name="insertUnorderedList" value='无序列表' class="insertUnorderedList">
+        <input type="button" name="strikeThrough" value='划掉' class="strikeThrough">
+        <input type="button" name="picture" value='图片' class="picture">
+    </div>
+
+    <div id="edit" style="width:80%;height:700px;margin:auto;border:2px solid gray;padding: 5px;overflow: auto;"
+        contenteditable="true">
+    </div>
+
+    <!-- <button id="save" style="width:300px;height:30px;margin:auto;margin-top:30px;
+    background-color: green;border:1px solid green;display: block;color: white;font-family:'Courier New', Courier, monospace;
+    font-weight: 500;font-size: 20px;">点 击</button> -->
+
+    <div id="shade" style="width:100%;height:100%;background-color: white;
+    opacity:0.5;position: absolute;z-index:5;display: none;left:0;top:0;"></div>
+
+    <script>
+        (function () {
+            // 富文本编辑器类 类的构造函数
+            class Editor {
+                constructor() {
+                    this.bindElem();
+                }
+
+                bindElem() {
+
+                    var toolbar = document.getElementById("toolbar");
+                    var bs = toolbar.querySelectorAll('input,select');
+                    for (var i = 0; i < bs.length; i++) {
+                        if (bs[i].tagName.toLowerCase() == 'select') {
+                            bs[i].onchange = function () {
+                                document.execCommand(this.name, true, this.value);
+                            }
+                        } else if (bs[i].tagName.toLowerCase() == 'input') {
+                            this.action(bs[i], bs[i].name);
+                        }
+                    }
+
+                }
+
+                action(obj, attr) {
+                    obj.onclick = function () {
+                        document.execCommand(attr, true);
+                    }
+                }
+
+            }
+
+            new Editor();
+
+        })();
+
+
+        // 监听粘贴事件
+        document.querySelector('#edit').addEventListener('paste', function (e) {
+            // 判断剪切板是否有内容
+            if (!(e.clipboardData && e.clipboardData.items)) {
+                return;
+            }
+
+            for (var i = 0, len = e.clipboardData.items.length; i < len; i++) {
+                var item = e.clipboardData.items[i];
+
+                if (item.kind == "file") {
+                    // var bt = document.createElement("input");
+                    // bt.type = "text"
+                    // bt.placeholder = "图片"
+
+                    var blob = item.getAsFile();
+                    var reader = new FileReader();
+                    var imgs = new Image();
+                    imgs.file = blob;
+                    reader.onload = (function (aImg) {
+                        return function (e) {
+                            aImg.src = e.target.result;
+                        }
+                    })(imgs)
+                    reader.readAsDataURL(blob);
+                    document.querySelector('#edit').appendChild(imgs);
+                    document.querySelector('#edit').appendChild(input);
+                }
+            }
+        });
+
+        document.getElementById("save").onclick = function () {
+            alert(document.getElementById("edit").innerHTML);
+        }
+
+        // document.querySelector('.insImg').onclick = function () {
+        //     document.getElementById("shade").style.display = "block";
+        //     var div = document.createElement("div");
+        //     div.style.cssText =
+        //         "width:300px;height:50px;border:1px solid #000;background-color:white;" +
+        //         "text-align:center;line-height:50px;" +
+        //         "position:absolute;z-index:9;left:0; top:0;right:0;bottom:0;margin:auto;";
+        //     var input = document.createElement("input");
+        //     input.type = "file";
+        //     div.appendChild(input);
+        //     document.body.appendChild(div);
+        // }
+    </script>
+
+
+</body>
+
+</html>

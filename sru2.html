@@ -1,0 +1,42 @@
+<style>
+    .edit[contenteditable]:empty:before {
+        content: attr(placeholder);
+        color: #cccccc;
+    }
+
+    .edit[contenteditable]:focus {
+        content: none;
+    }
+</style>
+
+
+
+<body>
+    <div class="edit" id="inputContent" contenteditable="true" placeholder="请在这输入内容" onblur="blurEdit()">
+    <p><br></p></div>
+    <button onclick="clickInsert()">点击插入一个按钮</button>
+</body>
+
+<script>
+    let position = ''
+    function blurEdit() {
+        position = window.getSelection().getRangeAt(0)
+    }
+    function clickInsert() {
+        if (position === '') {
+            // 如果div没有光标，则在div内容末尾插入
+            const div = document.getElementById('inputContent')
+            div.focus()
+            const range = window.getSelection()
+            range.selectAllChildren(div)
+            range.collapseToEnd()
+            position = window.getSelection().getRangeAt(0)
+        }
+        // 创建一个元素
+        const span = document.createElement('span')
+        // 插入的按钮不可编辑，设置contenteditable为false
+        span.innerHTML = '<button contenteditable="false" class="btn" id="btn1">插入的按钮1</button>'
+        // 将按钮插入
+        position.insertNode(span)
+    }
+</script>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>富文本编辑器</title>
+  <style>
+    /* .edit[contenteditable]:empty:before {
+      content: attr(placeholder);
+      color: #cccccc;
+    }
+
+    .edit[contenteditable]:focus {
+      content: none;
+    } */
+
+    .float {
+      float: left;
+      overflow: hidden;
+      border-radius: 10px;
+      /* padding: 5px;
+      margin: 5px; */
+      width: 100%;
+      /* background-color: aquamarine; */
+    }
+
+    img {
+      position: relative;
+    }
+
+    .result {
+      /* background-color: aqua; */
+      min-width: 200px;
+      height: auto;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    #file_input {
+      display: none;
+    }
+
+    .zs {
+      outline: none;
+      /* user-modify: read-write; */
+      min-width: 20%;
+      max-width: 80%;
+      min-height: 17px;
+      /* background: none;
+      outline: none;
+      border: 0px; */
+      /* position: absolute; */
+      display: inline-block;
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+      border-bottom: 1px solid rgba(240, 240, 240, 1);
+
+    }
+
+    .zs:after {
+      content: '在此输入图片注释...';
+      color: #c0c0c0;
+    }
+    blockquote::before {
+    content: "“";
+    width: 20px;
+    height: 19px;
+    display: block;
+    position: absolute;
+    /* top: 4px;
+    left: 0; */
+    background-image: url(https://upfile2.asqql.com/upfile/hdimg/wmtp/wmtp/2015-12/30/9835VicmIhquvD.jpg);
+    background-size: 100% 100%;
+}
+
+    /* 
+      .delete {
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        text-align: center;
+        line-height: 200px;
+        z-index: 10;
+        font-size: 30px;
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #777;
+        opacity: 0;
+        transition-duration: 0.7s;
+        -webkit-transition-duration: 0.7s;
+      } */
+
+    /* .delete:hover {
+        cursor: pointer;
+        opacity: 1;
+      } */
+  </style>
+</head>
+
+<body>
+  <center>
+    <h2 style="margin: auto">富文本编辑器</h2>
+  </center>
+  <hr />
+  <p>
+    "1""2""3""45"
+  </p>
+  <div id="toolbar" style="
+        width: 80%;
+        margin: auto;
+        border: 2px solid gray;
+        padding: 5px;
+        overflow: auto;
+        font-family: 'Courier New', Courier, monospace;
+      ">
+    <input type="button" name="bold" value="加粗" class="bold" />
+    <input type="button" name="italic" value="斜体" class="italic" />
+    <input type="button" name="underline" value="下划线" class="decotation" />
+    <input type="button" name="insertHorizontalRule" value="水平线" class="insertHorizontalRule" />
+    大小
+    <select name="fontSize" class="font">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+    </select>
+    <!-- 图片
+        <select name="insertImage">
+            <option value="">请选择图片</option>
+            <option value="timg.jpg">timg.jpg</option>
+            <option value="timg1.jpg">timg1.jpg</option>
+            <option value="timg2.jpg">timg2.jpg</option>
+            <option value="timg3.jpg">timg3.jpg</option>
+            <option value="timg4.jpg">timg4.jpg</option>
+        </select> -->
+    <!-- <input type="button" name="insertImage" value='插入图片(未完成,可粘贴)' class="insImg"> -->
+    <input type="button" name="selectAll" value="全选" class="selectAll" />
+    <input type="button" name="undo" value="撤销" class="undo" />
+    <input type="button" name="justifyLeft" value="居左" class="justifyLeft" />
+    <input type="button" name="justifyCenter" value="居中" class="justifyCenter" />
+    <input type="button" name="justifyRight" value="居右" class="justifyRight" />
+    <input type="button" name="insertOrderedList" value="有序列表" class="insertOrderedList" />
+    <input type="button" name="insertUnorderedList" value="无序列表" class="insertUnorderedList" />
+    <input type="button" name="strikeThrough" value="划掉" class="strikeThrough" />
+    <input type="button" name="indent" value="引用" class="indent" />
+    <button id="add" onclick="add1()">图片</button>
+    <!-- <input type="button" id="add" onclick="add1()" value="图片" /> -->
+    <!-- <button onclick="clickInsert()">点击插入一个按钮</button> -->
+    <button onclick="yy()">引用</button>
+    <input type="file" id="file_input" />
+  </div>
+
+  <div id="edit" onblur="blurEdit()" style="
+        width: 80%;
+        height: 700PX;
+        margin: auto;
+        border: 2px solid gray;
+        padding: 5px;
+        overflow: auto;
+      " contenteditable="true" spellcheck="false">
+    <p contenteditable="false">sdffffffffffffffffffffffffff</p>
+    <p> <br></p>
+  </div>
+
+  <!-- <button id="save" style="width:300px;height:30px;margin:auto;margin-top:30px;
+    background-color: green;border:1px solid green;display: block;color: white;font-family:'Courier New', Courier, monospace;
+    font-weight: 500;font-size: 20px;">点 击</button> -->
+
+  <div id="shade" style="
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        opacity: 0.5;
+        position: absolute;
+        z-index: 5;
+        display: none;
+        left: 0;
+        top: 0;
+      "></div>
+
+  <script>
+function  yy() {
+						var html='<blockquote class="editor-block"><p><br></p></blockquote>';
+						r.execCommand('insertHTML',html);
+						var p=document.createElement('p');
+						p.innerHTML='<br>';
+						et.appendChild(p);
+					}
+    function qq() {
+      let d = document.getElementsByTagName("button");
+      for (let f = 0; f < d.length; f++) {
+        d[f].disabled = true;
+      };
+      let h = document.getElementsByTagName("select");
+      for (let y = 0; y < h.length; h++) {
+        h[y].disabled = true;
+      };
+      // .disabled = false
+      let a = document.getElementsByTagName("input")
+      for (let i = 0; i < a.length; i++) {
+        a[i].disabled = true;
+      };
+      document.getElementById("myP").contentEditable = true;
+    }
+    function cc() {
+      let d1 = document.getElementsByTagName("button");
+      for (let f1 = 0; f1 < d1.length; f1++) {
+        d1[f1].disabled = false;
+      };
+      let h1 = document.getElementsByTagName("select");
+      for (let y1 = 0; y1 < h1.length; h1++) {
+        h1[y1].disabled = false;
+      };
+      // .disabled = false
+      let a1 = document.getElementsByTagName("input")
+      for (let i1 = 0; i1 < a1.length; i1++) {
+        a1[i1].disabled = false;
+      };
+      document.getElementById("myP").contentEditable = false;
+    }
+    // // 把按钮插入在光标后面
+    // let position = ''
+    // function blurEdit() {
+    //   position = window.getSelection().getRangeAt(0)
+    // }
+    // function clickInsert() {
+    //   if (position === '') {
+    //     // 如果div没有光标，则在div内容末尾插入
+    //     const div = document.getElementById('inputContent')
+    //     div.focus()
+    //     const range = window.getSelection()
+    //     range.selectAllChildren(div)
+    //     range.collapseToEnd()
+    //     position = window.getSelection().getRangeAt(0)
+    //   }
+    //   // 创建一个元素
+    //   const span = document.createElement('span')
+    //   // 插入的按钮不可编辑，设置contenteditable为false
+    //   span.innerHTML = '<figure class="result" contenteditable="false"  ><img src="' +
+    //         this.result +
+    //         '" alt=""/><br ><figcaption contenteditable="true"  class="zs" >在此输入图片注释</figcaption> </figure><br >'
+    //   // 将按钮插入
+    //   position.insertNode(span)
+    // }
+
+
+
+
+    // var sel = window.getSelection();
+    // document.onmouseup = function () {
+    //   var a = sel.anchorOffset
+    //   console.log(sel.anchorNode);    //起点所在的文本节点
+    //   console.log(a);  //起点在该节点中的位置   
+    // }
+    var input = document.getElementById('file_input');
+    var onInput = document.getElementById('file_input');
+    var oAdd = document.getElementById('add');
+    var dataArr = []; // 储存所选图片的结果(文件名和base64数据)
+    var fd;
+    var result;
+    (function () {
+      // 富文本编辑器类 类的构造函数
+      class Editor {
+        constructor() {
+          this.bindElem();
+        }
+
+        bindElem() {
+          var toolbar = document.getElementById('toolbar');
+          var bs = toolbar.querySelectorAll('input,select');
+          for (var i = 0; i < bs.length; i++) {
+            if (bs[i].tagName.toLowerCase() == 'select') {
+              bs[i].onchange = function () {
+                document.execCommand(this.name, true, this.value);
+              };
+            } else if (bs[i].tagName.toLowerCase() == 'input') {
+              this.action(bs[i], bs[i].name);
+            }
+          }
+        }
+
+        action(obj, attr) {
+          obj.onclick = function () {
+            document.execCommand(attr, true);
+          };
+        }
+      }
+
+      new Editor();
+    })();
+
+    // 监听粘贴事件
+    //   document.querySelector('#edit').addEventListener('paste', function (e) {
+    //     // 判断剪切板是否有内容
+    //     if (!(e.clipboardData && e.clipboardData.items)) {
+    //       return;
+    //     }
+
+    //     for (var i = 0, len = e.clipboardData.items.length; i < len; i++) {
+    //       var item = e.clipboardData.items[i];
+    //       if (item.kind == 'file') {
+    //         var blob = item.getAsFile();
+    //         var reader = new FileReader();
+    //         var imgs = new Image();
+    //         imgs.file = blob;
+    //         reader.onload = (function (aImg) {
+    //           return function (e) {
+    //             aImg.src = e.target.result;
+    //           };
+    //         })(imgs);
+    //         reader.readAsDataURL(blob);
+    //         document.querySelector('#edit').appendChild(imgs);
+    //       }
+    //     }
+    //   });
+
+    //   document.getElementById('save').onclick = function () {
+    //     alert(document.getElementById('edit').innerHTML);
+    //   };
+
+    //   document.querySelector('.insImg').onclick = function () {
+    //     document.getElementById('shade').style.display = 'block';
+    //     var div = document.createElement('div');
+    //     div.style.cssText =
+    //       'width:300px;height:50px;border:1px solid #000;background-color:white;' +
+    //       'text-align:center;line-height:50px;' +
+    //       'position:absolute;z-index:9;left:0; top:0;right:0;bottom:0;margin:auto;';
+    //     var input = document.createElement('input');
+    //     input.type = 'file';
+    //     div.appendChild(input);
+    //     document.body.appendChild(div);
+    //   };
+
+    // new
+
+
+
+
+    //判断是否支持FileReader
+    if (typeof FileReader === 'undefined') {
+      alert('抱歉，你的浏览器不支持 FileReader');
+      input.setAttribute('disabled', 'disabled'); //添加属性，禁用input
+    } else {
+      //添加监听事件
+      input.addEventListener('change', readFile, false); //默认值是false，冒泡传递;当值为true，捕获传递
+    }
+    let position = ''
+    function blurEdit() {
+      position = window.getSelection().getRangeAt(0)
+    }
+
+    function readFile() {
+
+      if (position === '') {
+        // 如果div没有光标，则在div内容末尾插入
+        const div = document.getElementById('edit')
+        div.focus()
+        const range = window.getSelection()
+        range.selectAllChildren(div)
+        range.collapseToEnd()
+        position = window.getSelection().getRangeAt(0)
+      }
+
+
+
+      fd = new FormData(); //FormData方式发送请求
+      var iLen = this.files.length; //获取图片数量
+      var index = 0;
+      for (var i = 0; i < iLen; i++) {
+        if (!input['value'].match(/.jpg|.gif|.png|.jpeg|.bmp/i)) {
+          //判断上传文件格式
+          return alert('上传的图片格式不正确，请重新选择');
+        }
+        var reader = new FileReader(); //创建FileReader对象
+        reader.index = i;
+        fd.append(i, this.files[i]); //可以通过fd.get(i)获取FormData()对应的值;
+        reader.readAsDataURL(this.files[i]); //转成base64，并存在reader.result里
+        reader.fileName = this.files[i].name;
+        reader.onload = function (e) {
+          //设置图片信息对象
+          var imgMsg = {
+            name: this.fileName, //获取文件名
+            base64: this.result, //reader.readAsDataURL方法执行完后，base64数据储存在reader.result里
+          };
+          dataArr.push(imgMsg); //将图片信息对象存到数据数组中
+          console.log(dataArr);
+          result =
+            '<figure class="result"  contenteditable="false" ><img src="' +
+            this.result +
+            '" alt=""/><br ><figcaption  contenteditable="false" onclick="qq()" onblur="cc()"  id="myP" class="zs" ></figcaption> </figure>';
+          var div = document.createElement('div');
+          // div.contenteditable = true
+          div.innerHTML = result;
+          div['className'] = 'result';
+          div['index'] = index;
+          console.log(div);
+
+
+          // document.getElementById('edit').appendChild(div); //插入dom树
+
+          position.insertNode(div)
+          console.log(a)
+          // div.onclick = function () {
+          //   this.remove(); // 在页面中删除该图片元素
+          //   // delete dataArr[this.index]; // 删除dataArr对应的数据
+          // };
+
+          index++;
+
+        };
+      }
+    }
+    function add1() {
+      console.log(111);
+      onInput.value = ''; // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
+      onInput.click();
+    }
+
+  </script>
+</body>
+
+</html>

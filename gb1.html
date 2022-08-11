@@ -1,0 +1,49 @@
+<div contenteditable="true" >
+  <span>A</span><span>B</span>
+  <div>
+    <span>C</span> DE <span>FGHI</span> <span>J</span>
+    <span>K</span>
+  </div>
+  <span>L</span> <span>M</span> OPQRST
+  <a href="">tdfthhgcghhg</a>
+</div>
+
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script>
+  var sel = window.getSelection();
+  document.onmouseup = function () {
+    var a = sel.anchorNode
+    console.log(a); //起点所在的文本节点
+    console.log(sel.anchorOffset); //起点在该节点中的位置
+    console.log(sel.focusNode); //终点所在的文本节点
+    console.log(sel.focusOffset); //终点在该节点中的位置
+    console.log(sel.isCollapsed); //起点和终点是否在同一位置
+    console.log(sel.rangeCount); // ranges （区域）的个数
+
+    $(document).ready(function(){
+var that=$("#body").find("a");
+console.log(that);
+console.log(that.length);
+//给所有table元素标签外层嵌套一个div标签
+that.wrap('<li class="table-responsive"></li>');
+for(var i=0; i<that.length;i++)
+{
+//给所有table元素标签添加一个样式类
+that.eq(i).addClass("a");
+}
+});
+  };
+//   var selection = document.getSelection();
+// //取得选择的文本
+// var selectionText = selection.toString();
+// //取得代表选区的范围
+// var range = selection.getRangeAt();
+// //突出显示选择的文本
+// var span = document.createElement("span");
+// span.style.backgroundColor = "yellow";
+// range.surroundContents(span);
+
+
+
+</script>
+ 

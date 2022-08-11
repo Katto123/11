@@ -1,0 +1,87 @@
+<html>
+
+<head>
+  <script type="text/javascript">
+    window.onload = function () {  // 
+      frames['editCon'].document.designMode = 'on';
+      var table = document.getElementById('toolBar');  // 获取table
+      table.addEventListener(  // 监听table
+        'change', // 发生改变
+        function (event) {  // 回调函数
+          var target = event.target; // 这应该是事件对象
+          if (target.tagName.toLowerCase() == 'select') {  // target.tagName 转换成小写在判断
+            frames['editCon'].document.execCommand(
+              target.id,
+              false,
+              target.options[target.selectedIndex].value
+            );
+          }
+        },
+        false
+      );
+      table.addEventListener(  // 监听
+        'click',  // 点击事件
+        function (event) {  // 回调
+          var target = event.target;
+          if (target.tagName.toLowerCase() == 'input') {
+            frames['editCon'].document.execCommand(target.id, false, null);
+          }
+        },
+        false
+      );
+      document
+        .getElementById('VC')
+        .addEventListener('click', function (event) { // 获取叫vc的input框，监听点击事件，然后触发回调
+          var text = document.getElementById('htmlCon'),  // 获取textarea标签
+            frame = document.getElementById('editCon');  // 获取iframe标签
+          if (text.style.display == 'none') {  // 如果textarea是隐藏的
+            text.innerText = frames['editCon'].document.body.innerHTML;  // text.innerText:里面的文本 = ？？？
+            text.style.display = 'inline-block'; // 然后将textarea转换成行块标签
+            frame.style.display = 'none'; // 最后将iframe标签隐藏
+          } else {  // 否则
+            frame.style.display = 'inline-block';  // iframe标签转成行块标签
+            text.style.display = 'none';  // textarea隐藏
+          }
+        });
+    };
+  </script>
+</head>
+
+<body>
+  <h1>富文本编辑器</h1>
+  <table id="toolBar" width="600">
+    <tr>
+      <td>
+        color:<select id="backcolor">
+          <option value="#f00">red</option>
+          <option value="#00f">blue</option>
+        </select>
+      </td>
+      <td>
+        size:<select id="fontsize">
+          <option value="10">10</option>
+          <option value="15">15</option>
+        </select>
+      </td>
+      <td><input type="button" value="I" id="italic" /></td>
+    </tr>
+  </table>
+  <input type="button" id="VC" value="Code or View" /><br />
+  <textarea id="htmlCon" name="htmlCon" style="
+        display: none;
+        width: 600px;
+        height: 500px;
+        background: rgb(107, 89, 185);
+      "></textarea>
+  <iframe id="editCon" name="editCon" style="width: 600px; height: 500px">
+    <html>
+
+    <head> </head>
+
+    <body></body>
+
+    </html>
+  </iframe>
+</body>
+
+</html>

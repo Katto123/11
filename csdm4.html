@@ -1,0 +1,54 @@
+<html>
+<head>
+    <script type="text/javascript">
+        window.onload = function(){ // 游览器加载时就开始执行
+            frames['editCon'].document.designMode = 'on';  // 对iframe 进行可编辑操作
+        var table = document.getElementById('toolBar'); // 获取到这个标签叫 table
+        table.addEventListener('change',function(event){ // 监听  change 该事件在表单元素的内容改变时触发( , , , 和 )   （用removeEventListener()方法来移除事件的监听。）
+            var target = event.target; // target 被赋值为触发该事件的节点
+            if(target.tagName.toLowerCase() == 'select'){ // 如果该节点的名字小写名字是select
+                frames['editCon'].document.execCommand(target.id,false,target.options[target.selectedIndex].value); // document.execCommand(命令昵称，false, 参数 ) （触发节点的id, false , 参数是value值）
+            }
+        },false);// 干嘛又加一个false
+        table.addEventListener('click',function(event){// 监听  当用户点击某个对象时调用的事件句柄
+            var target = event.target;  // 还是target 被赋值为触发节点的名字
+            if(target.tagName.toLowerCase() == 'input'){ // 如果什么是input
+                frames['editCon'].document.execCommand(target.id,false,null);// document.execCommand(命令昵称，false, 参数 ) （触发节点的id, false , 空null）
+            }
+        },false);
+        document.getElementById('VC').addEventListener('click',function(event){ // 获取vc 点击时触发这个函数
+            var text = document.getElementById('htmlCon'), // 设置一个变量text 被赋值htmIcon
+            frame = document.getElementById('editCon'); //改变它的属性
+            if(text.style.display == 'none'){ //如果 htmlCon 这个的属性为none
+                text.innerText = frames['editCon'].document.body.innerHTML;  //
+                text.style.display = 'inline-block';
+                frame.style.display = 'none';
+            }else{
+                frame.style.display = 'inline-block';// inline-block可以使元素在一行上显示 ，能够改变元素的height，width的值. 使用padding，margin的top，left，bottom，right都能够撑开元素。
+                text.style.display = 'none';
+            }
+        })
+    }
+    </script>
+</head>
+<body>
+    <h1>富文本编辑器</h1>
+    <table id="toolBar" width=600>
+        <tr>
+            <td>color:<select id="backcolor"><option value="#f00">red</option><option value="#00f">blue</option></select></td>
+            <td>size:<select id="fontsize"><option value=10>10</option><option value=15>15</option></select></td>
+            <td><input type="button" value="I" id="italic"/></td>
+        </tr>
+    </table>
+    <input type="button" id="VC" value="Code or View"/><br/>
+    <textarea id="htmlCon" name="htmlCon" style="display:none;width:600px;height:500px;background: rgb(107, 89, 185);"></textarea>
+    <iframe id="editCon" name="editCon" style="width:600px;height:500px;">
+        <html>
+            <head>
+            </head>
+            <body>
+            </body>
+        </html>
+    </iframe>
+</body>
+</html>

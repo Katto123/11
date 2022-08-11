@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #bj {
+        width: 500px;
+        height: 500px;
+        border: 1px solid red;
+    }
+</style>
+
+<body contenteditable="true" spellcheck="false">
+    <!-- <div  onclick="add()" id="bj"> -->
+    <p> <br></p>
+    <p>"1""2""3""4""5"</p>
+    <!-- </div> -->
+    <script type="text/javascript">
+        // function add() {
+        //     var BJ = document.getElementById("bj").innerText
+        //     var SR = document.getElementById("sr")
+        //     console.log(BJ);
+        //     console.log(BJ.length);
+        //     if (BJ.length > 0) {
+        //         var para = document.createElement("p");
+        //         // var node = document.createTextNode("这是一个新的段落。");
+        //         // para.appendChild(node);
+        //         para.innerText = BJ
+        //         var element = document.getElementById("bj");
+        //         element.appendChild(para);
+        //     }
+        // }
+
+        // function add() {
+        //     var CS = document.getElementById("cs")
+        //     console.log(CS);
+        //     CS.innerHTML = " "
+        // }
+
+        /*阻止回车事件*/
+        $(window).keydown(function (e) {
+            var key = window.event ? e.keyCode : e.which;
+            /*获取用户按键，如果是回车，则不执行任何*/
+            if (key.toString() == "13") {
+                /*调用光标插入方法，在光标处插入 换行*/
+                insertHtml("<br>");
+                return false;
+            }
+        });
+    </script>
+</body>
+
+</html>
