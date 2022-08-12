@@ -199,29 +199,52 @@
     //   et.appendChild(p);
     // }
 
-function tpyr(){
-  let TPYR = document.getElementById("tp");
-  TPYR.style.border = "2px solid #33FFFF"
 
-}
-function tpyc(){
-  let TPYC = document.getElementById("tp");
-  TPYC.style.border = " 2px solid #FFFFFF"
+    // 图片移入
+    function tpyr() {
+      let TPYR = document.getElementsByTagName("img");
+      for (let i = 0; i < TPYR.length; i++) {
+        TPYR[i].onmouseenter = tpr;
+      };
+    }
+    function tpr() {
+      this.style.border = "2px solid #33FFFF"
+    }
+    // 图片移出
+    function tpyc() {
+      let TPYC = document.getElementsByTagName("img");
+      for (let i = 0; i < TPYC.length; i++) {
+        TPYC[i].onmouseleave = tpc
+      };
+    }
+    function tpc() {
+      this.style.border = "2px solid #FFFFFF"
+    }
 
-}
-function tpdj(){
-  let result = document.getElementsByClassName("result");
+    // 图片点击
+    function tpdj() {
+      let result = document.getElementsByClassName("result")[0];
+      console.log(result);
+      let TPYC = document.getElementsByTagName("img");
+      var parent = result.parentElement;
+      for (let i = 0; i < TPYC.length; i++) {
+        TPYC[i].onclick = tpd
+      };
+      result.onkeydown = keyDown;
+    }
+    function keyDown(event) { //方向键控制元素移动函数
+      var event = event || window.event; //标准化事件对象
+      switch (event.keyCode) { //获取当前按下键盘键的编码
+        case 8:  //按下删除键
+          parent.removeChild(result); // 删除result 元素
+      }
+      return false
+    }
 
-    console.log(result);
-   
+    function tpd() {
+      this.style.border = "2px solid #33CCFF"
+    }
 
-  let TPYC = document.getElementById("tp");
-var parent=TPYC.parentElement;
-  TPYC.style.border = " 2px solid #33CCFF"
-// if(TPYC.onmouseenter){
-//   parent.removeChild(TPYC);
-// }
-}
 
 
 
