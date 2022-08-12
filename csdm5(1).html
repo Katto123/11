@@ -162,7 +162,7 @@
     <input type="file" id="file_input" />
   </div>
 
-  <div id="edit" onblur="blurEdit()" style="
+  <div id="edit" onblur="blurEdit()" onclick="jd()" style="
         width: 80%;
         height: 700PX;
         margin: auto;
@@ -200,6 +200,15 @@
     // }
 
 
+
+    // 点击大编辑框获取焦点
+    function jd() {
+      const edit1 = document.getElementById('edit')
+      // console.log(edit);
+      edit1.contentEditable = true
+
+    }
+
     // 图片移入
     function tpyr() {
       let TPYR = document.getElementsByTagName("img");
@@ -212,6 +221,8 @@
     }
     // 图片移出
     function tpyc() {
+
+
       let TPYC = document.getElementsByTagName("img");
       for (let i = 0; i < TPYC.length; i++) {
         TPYC[i].onmouseleave = tpc
@@ -223,25 +234,40 @@
 
     // 图片点击
     function tpdj() {
-      let result = document.getElementsByClassName("result")[0];
-      console.log(result);
+      const edit = document.getElementById('edit')
+      // console.log(edit);
+      edit.contentEditable = false  // 点击图片的时候 编辑框失去焦点
+
+
+      // let result = document.getElementsByTagName("result");
+      // console.log(result);
       let TPYC = document.getElementsByTagName("img");
-      var parent = result.parentElement;
+      // var parent = result.parentElement;
+      // console.log(parent);
       for (let i = 0; i < TPYC.length; i++) {
         TPYC[i].onclick = tpd
+        TPYC[i].onkeydown = addEventListener;  // 键盘事件
       };
-      result.onkeydown = keyDown;
+
     }
-    function keyDown(event) { //方向键控制元素移动函数
-      var event = event || window.event; //标准化事件对象
-      switch (event.keyCode) { //获取当前按下键盘键的编码
-        case 8:  //按下删除键
-          parent.removeChild(result); // 删除result 元素
+    document.addEventListener('keydown', (e) => {
+      if (e.keyCode === 8) {  // 监听删除按键
+        let result = document.getElementsByClassName("result")[0]; //获取result元素
+        console.log(result);
+        var parent = result.parentElement; // 获取result的父元素
+
+
+        parent.removeChild(result); // 删除result 元素
+        console.log(111);
       }
       return false
-    }
+    })
 
     function tpd() {
+      // const edit1 = document.getElementById('edit')
+      // // console.log(edit);
+      // edit1.contentEditable = false
+
       this.style.border = "2px solid #33CCFF"
     }
 
