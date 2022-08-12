@@ -26,16 +26,20 @@
       /* background-color: aquamarine; */
     }
 
-    img {
+    /* img {
       position: relative;
-    }
+    } */
 
-    .result {
+    .results {
       /* background-color: aqua; */
       min-width: 200px;
       height: auto;
       text-align: center;
       box-sizing: border-box;
+    }
+
+    #tp {
+      border: 2px solid #FFFFFF
     }
 
     #file_input {
@@ -64,17 +68,18 @@
       content: '在此输入图片注释...';
       color: #c0c0c0;
     }
+
     blockquote::before {
-    content: "“";
-    width: 20px;
-    height: 19px;
-    display: block;
-    position: absolute;
-    /* top: 4px;
+      content: "“";
+      width: 20px;
+      height: 19px;
+      display: block;
+      position: absolute;
+      /* top: 4px;
     left: 0; */
-    background-image: url(https://upfile2.asqql.com/upfile/hdimg/wmtp/wmtp/2015-12/30/9835VicmIhquvD.jpg);
-    background-size: 100% 100%;
-}
+      background-image: url(https://upfile2.asqql.com/upfile/hdimg/wmtp/wmtp/2015-12/30/9835VicmIhquvD.jpg);
+      background-size: 100% 100%;
+    }
 
     /* 
       .delete {
@@ -186,13 +191,40 @@
       "></div>
 
   <script>
-function  yy() {
-						var html='<blockquote class="editor-block"><p><br></p></blockquote>';
-						r.execCommand('insertHTML',html);
-						var p=document.createElement('p');
-						p.innerHTML='<br>';
-						et.appendChild(p);
-					}
+    // function yy() {
+    //   var html = '<blockquote class="editor-block"><p><br></p></blockquote>';
+    //   r.execCommand('insertHTML', html);
+    //   var p = document.createElement('p');
+    //   p.innerHTML = '<br>';
+    //   et.appendChild(p);
+    // }
+
+function tpyr(){
+  let TPYR = document.getElementById("tp");
+  TPYR.style.border = "2px solid #33FFFF"
+
+}
+function tpyc(){
+  let TPYC = document.getElementById("tp");
+  TPYC.style.border = " 2px solid #FFFFFF"
+
+}
+function tpdj(){
+  let result = document.getElementsByClassName("result");
+
+    console.log(result);
+   
+
+  let TPYC = document.getElementById("tp");
+var parent=TPYC.parentElement;
+  TPYC.style.border = " 2px solid #33CCFF"
+// if(TPYC.onmouseenter){
+//   parent.removeChild(TPYC);
+// }
+}
+
+
+
     function qq() {
       let d = document.getElementsByTagName("button");
       for (let f = 0; f < d.length; f++) {
@@ -392,7 +424,7 @@ function  yy() {
           dataArr.push(imgMsg); //将图片信息对象存到数据数组中
           console.log(dataArr);
           result =
-            '<figure class="result"  contenteditable="false" ><img src="' +
+            '<figure class="results"  contenteditable="false" ><img id="tp" onmouseenter="tpyr()"  onmouseleave="tpyc()"  onclick="tpdj()" src="' +
             this.result +
             '" alt=""/><br ><figcaption  contenteditable="false" onclick="qq()" onblur="cc()"  id="myP" class="zs" ></figcaption> </figure>';
           var div = document.createElement('div');
