@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <script src="jquery-1.10.2.min.js"></script>
+    <script>
+        function showEmail() {
+            var tEmail, text
+            tEmail = document.getElementById("em");
+            if (/^\w+@\w+\.\w+$/.test(tEmail.value)) {
+                text = "正确"
+            }
+            else {
+                // if (tEmail.value == "") {
+                //     text = "不能为空"
+                // } else { text = "邮箱格式错误" }
+                tEmail.value == "" ? text = "正确" : text = "邮箱格式错误"
+            }
+            document.getElementById('tis').innerHTML = text
+        }
+    </script>
+</head>
+
+<body>
+    <h4>请输入邮箱账号：</h4>
+    <input type="text" id="em" onblur="showEmail()">
+    <button onclick="showEmail()">弹出结果!</button>
+    <p id="tis"></p>
+</body>
+
+</html>
