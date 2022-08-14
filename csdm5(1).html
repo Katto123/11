@@ -162,7 +162,7 @@
     <input type="file" id="file_input" />
   </div>
 
-  <div id="edit" onblur="blurEdit()" onclick="jd()" style="
+  <div id="edit" onblur="blurEdit()"  style="
         width: 80%;
         height: 700PX;
         margin: auto;
@@ -202,11 +202,12 @@
 
 
     // 点击大编辑框获取焦点
-    function jd() {
+    function cp() {
       const edit1 = document.getElementById('edit')
-      // console.log(edit);
-      edit1.contentEditable = true
-
+      var p = document.createElement('p');
+      p.innerHTML = "<br>"
+      edit1.appendChild(p); 
+      console.log("焦点");
     }
 
     // 图片移入
@@ -246,28 +247,43 @@
       // console.log(parent);
       for (let i = 0; i < TPYC.length; i++) {
         TPYC[i].onclick = tpd
-        TPYC[i].onkeydown = addEventListener;  // 键盘事件
+        document.onkeydown = add2;  // 键盘事件
       };
-
+ 
     }
-    document.addEventListener('keydown', (e) => {
+//     function add2(event) {
+//   let keycode = event.keyCode;
+//   if (keycode == 32) {
+//     alert("空格键被按下了")
+//   }
+// }
+
+
+    function add2(){
+      console.log("2222");
+      document.addEventListener('keydown', (e) => {
+      console.log(e.target);
       if (e.keyCode === 8) {  // 监听删除按键
-        let result = document.getElementsByClassName("result")[0]; //获取result元素
+        // let result = document.getElementsByClassName("result")[0]; //获取result元素
+        let result = jies.parentElement  
         console.log(result);
+
+        // var fj = this.parentElement
+        // console.log(fj);
         var parent = result.parentElement; // 获取result的父元素
-
-
         parent.removeChild(result); // 删除result 元素
         console.log(111);
       }
       return false
     })
 
+    }
+  var jies = ""
     function tpd() {
       // const edit1 = document.getElementById('edit')
       // // console.log(edit);
       // edit1.contentEditable = false
-
+       jies = this
       this.style.border = "2px solid #33CCFF"
     }
 
@@ -475,7 +491,7 @@
           result =
             '<figure class="results"  contenteditable="false" ><img id="tp" onmouseenter="tpyr()"  onmouseleave="tpyc()"  onclick="tpdj()" src="' +
             this.result +
-            '" alt=""/><br ><figcaption  contenteditable="false" onclick="qq()" onblur="cc()"  id="myP" class="zs" ></figcaption> </figure>';
+            '" alt=""/><br><figcaption  contenteditable="false" onclick="qq()" onblur="cc()"  id="myP" class="zs" ></figcaption> </figure>';
           var div = document.createElement('div');
           // div.contenteditable = true
           div.innerHTML = result;
@@ -487,7 +503,7 @@
           // document.getElementById('edit').appendChild(div); //插入dom树
 
           position.insertNode(div)
-          console.log(a)
+           cp() 
           // div.onclick = function () {
           //   this.remove(); // 在页面中删除该图片元素
           //   // delete dataArr[this.index]; // 删除dataArr对应的数据
