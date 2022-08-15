@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .box{
+            width: 300px;height: 200px;border: 5px solid black;margin: 100px auto;
+        }
+        .box:before{
+            content: attr(dataBefore);color: red;font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+<div class="box" onclick="dj()" dataBefore="阿花"></div>
+<script>
+
+    function dj(){
+        var box=document.querySelector('.box');
+box.setAttribute('dataBefore','谢谢你');//第二个值为‘’就是伪元素隐藏效果
+    }
+
+</script>
+</body>
+</html>
