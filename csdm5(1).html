@@ -190,10 +190,10 @@
         left: 0;
         top: 0;
       "></div>
-	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
   <script>
     function yy() {
-      $(document).ready(function () { 
+      $(document).ready(function () {
         var that = $("#edit").find("p");
         console.log(that);
         console.log(that.length);
@@ -204,26 +204,25 @@
           that.eq(i).addClass("table");
         }
       })
-}
+    }
 
 
 
 
     // 点击编辑框让他变成可编辑状态（好像没有什么影响）
     function hqjd() {
-          const edit = document.getElementById('edit')
-          edit.contenteditable = true
-        }
+      const edit = document.getElementById('edit')
+      edit.contenteditable = true
+    }
 
 
     // 点击生成p标签
     function cp() {
-          const edit1 = document.getElementById('edit')
-          var p = document.createElement('p');
-          p.innerHTML = "<br>"
-          edit1.appendChild(p);
-          console.log("焦点");
-        }
+      const edit1 = document.getElementById('edit')
+      var p = document.createElement('p');
+      p.innerHTML = "<br>"
+      edit1.appendChild(p);
+    }
 
 
     //  图片注释的回车事件
@@ -269,45 +268,45 @@
 
     // 图片移入
     function tpyr() {
-          let TPYR = document.getElementsByTagName("img");
-          for (let i = 0; i < TPYR.length; i++) {
-            TPYR[i].onmouseenter = tpr;
-          };
-        }
+      let TPYR = document.getElementsByTagName("img");
+      for (let i = 0; i < TPYR.length; i++) {
+        TPYR[i].onmouseenter = tpr;
+      };
+    }
     function tpr() {
-          this.style.border = "2px solid #33FFFF"
-        }
+      this.style.border = "2px solid #33FFFF"
+    }
     // 图片移出
     function tpyc() {
 
 
-          let TPYC = document.getElementsByTagName("img");
-          for (let i = 0; i < TPYC.length; i++) {
-            TPYC[i].onmouseleave = tpc
-          };
-        }
+      let TPYC = document.getElementsByTagName("img");
+      for (let i = 0; i < TPYC.length; i++) {
+        TPYC[i].onmouseleave = tpc
+      };
+    }
     function tpc() {
-          this.style.border = "2px solid #FFFFFF"
-        }
+      this.style.border = "2px solid #FFFFFF"
+    }
 
     // 图片点击
     function tpdj() {
-          // const edit = document.getElementById('edit')
-          // console.log(edit);
-          // edit.contentEditable = false  // 点击图片的时候 编辑框失去焦点  (但是会有一个问题 导致删除图片后没有焦点  暂时不添加这个功能)
+      // const edit = document.getElementById('edit')
+      // console.log(edit);
+      // edit.contentEditable = false  // 点击图片的时候 编辑框失去焦点  (但是会有一个问题 导致删除图片后没有焦点  暂时不添加这个功能)
 
 
-          // let result = document.getElementsByTagName("result");
-          // console.log(result);
-          let TPYC = document.getElementsByTagName("img");
-          // var parent = result.parentElement;
-          // console.log(parent);
-          for (let i = 0; i < TPYC.length; i++) {
-            TPYC[i].onclick = tpd
-            document.onkeydown = add2;  // 键盘事件
-          };
+      // let result = document.getElementsByTagName("result");
+      // console.log(result);
+      let TPYC = document.getElementsByTagName("img");
+      // var parent = result.parentElement;
+      // console.log(parent);
+      for (let i = 0; i < TPYC.length; i++) {
+        TPYC[i].onclick = tpd
+        document.onkeydown = add2;  // 键盘事件
+      };
 
-        }
+    }
     //     function add2(event) {
     //   let keycode = event.keyCode;
     //   if (keycode == 32) {
@@ -317,294 +316,306 @@
 
 
     function add2() {
-          console.log("2222");
-          document.addEventListener('keydown', (e) => {
-            console.log(e.target);
-            if (e.keyCode === 8) {  // 监听删除按键
-              // let result = document.getElementsByClassName("result")[0]; //获取result元素
-              let result = jies.parentElement
-              console.log(result);
+      console.log("2222");
+      document.addEventListener('keydown', (e) => {
+        console.log(e.target);
+        if (e.keyCode === 8) {  // 监听删除按键
+          // let result = document.getElementsByClassName("result")[0]; //获取result元素
+          let result = jies.parentElement
+          console.log(result);
 
-              // var fj = this.parentElement
-              // console.log(fj);
-              var parent = result.parentElement; // 获取result的父元素
-              parent.removeChild(result); // 删除result 元素
-              console.log(111);
-            }
-            return false
-          })
-
+          // var fj = this.parentElement
+          // console.log(fj);
+          var parent = result.parentElement; // 获取result的父元素
+          parent.removeChild(result); // 删除result 元素
+          console.log(111);
         }
+        return false
+      })
+
+    }
     var jies = ""
-      function tpd() {
-        // const edit1 = document.getElementById('edit')
-        // // console.log(edit);
-        // edit1.contentEditable = false
-        jies = this
-        this.style.border = "2px solid #33CCFF"
+    function tpd() {
+      // const edit1 = document.getElementById('edit')
+      // // console.log(edit);
+      // edit1.contentEditable = false
+      jies = this
+      this.style.border = "2px solid #33CCFF"
+    }
+
+
+
+
+      function xs() {
+        console.log("修改");
+      this.setAttribute('dataBefore', ' ');// 修改注释默认提示
+    }
+
+    function qq() {
+      var zs = document.querySelectorAll('.zs')
+      for (let s = 0; s < zs.length; s++) {
+       zs[s].setAttribute('dataBefore', ' ');// 修改注释默认提示
+      console.log(zs);
       }
 
+      let d = document.getElementsByTagName("button");
+      for (let f = 0; f < d.length; f++) {
+        d[f].disabled = true;  // 禁用
+      };
+      let h = document.getElementsByTagName("select");
+      for (let y = 0; y < h.length; h++) {
+        h[y].disabled = true;
+      };
+      // .disabled = false
+      let a = document.getElementsByTagName("input")
+      for (let i = 0; i < a.length; i++) {
+        a[i].disabled = true;
+      };
+   
 
+      document.getElementById("myP").contentEditable = true; // (展示不用)   
+      if (document.getElementById("myP").contentEditable = true) {
+        hc()
+      }
+    }
 
-
-      function qq() {
-        let d = document.getElementsByTagName("button");
-        for (let f = 0; f < d.length; f++) {
-          d[f].disabled = true;  // 禁用
-        };
-        let h = document.getElementsByTagName("select");
-        for (let y = 0; y < h.length; h++) {
-          h[y].disabled = true;
-        };
-        // .disabled = false
-        let a = document.getElementsByTagName("input")
-        for (let i = 0; i < a.length; i++) {
-          a[i].disabled = true;
-        };
-        document.querySelector('.zs').setAttribute('dataBefore', ' ');// 修改注释默认提示
-
-        document.getElementById("myP").contentEditable = true; // (展示不用)   
-        if (document.getElementById("myP").contentEditable = true) {
-          hc()
+    function hc() {
+      document.onkeypress = function () {
+        if (event.keyCode == 13) {
+          console.log("回车");
+          return false; //可以控制是否屏蔽
         }
-      }
-      function hc() {
-        document.onkeypress = function () {
-          if (event.keyCode == 13) {
-            console.log("回车");
-            return false; //可以控制是否屏蔽
-          }
 
+      }
+    }
+
+    function qxhc() {
+      document.onkeypress = function () {
+        if (event.keyCode == 13) {
+          console.log("取消回车");
+          return true;
         }
+
       }
+    }
 
-      function qxhc() {
-        document.onkeypress = function () {
-          if (event.keyCode == 13) {
-            console.log("取消回车");
-            return true;
-          }
 
+
+    function cc() {
+      let d1 = document.getElementsByTagName("button");
+      for (let f1 = 0; f1 < d1.length; f1++) {
+        d1[f1].disabled = false;
+      };
+      let h1 = document.getElementsByTagName("select");
+      for (let y1 = 0; y1 < h1.length; h1++) {
+        h1[y1].disabled = false;
+      };
+      // .disabled = false
+      let a1 = document.getElementsByTagName("input")
+      for (let i1 = 0; i1 < a1.length; i1++) {
+        a1[i1].disabled = false;
+      };
+
+      qxhc()
+      // document.getElementById("myP").contentEditable = false;// （不用）
+    }
+    // // 把按钮插入在光标后面
+    // let position = ''
+    // function blurEdit() {
+    //   position = window.getSelection().getRangeAt(0)
+    // }
+    // function clickInsert() {
+    //   if (position === '') {
+    //     // 如果div没有光标，则在div内容末尾插入
+    //     const div = document.getElementById('inputContent')
+    //     div.focus()
+    //     const range = window.getSelection()
+    //     range.selectAllChildren(div)
+    //     range.collapseToEnd()
+    //     position = window.getSelection().getRangeAt(0)
+    //   }
+    //   // 创建一个元素
+    //   const span = document.createElement('span')
+    //   // 插入的按钮不可编辑，设置contenteditable为false
+    //   span.innerHTML = '<figure class="result" contenteditable="false"  ><img src="' +
+    //         this.result +
+    //         '" alt=""/><br ><figcaption contenteditable="true"  class="zs" >在此输入图片注释</figcaption> </figure><br >'
+    //   // 将按钮插入
+    //   position.insertNode(span)
+    // }
+
+
+
+
+    // var sel = window.getSelection();
+    // document.onmouseup = function () {
+    //   var a = sel.anchorOffset
+    //   console.log(sel.anchorNode);    //起点所在的文本节点
+    //   console.log(a);  //起点在该节点中的位置   
+    // }
+    var input = document.getElementById('file_input');
+    var onInput = document.getElementById('file_input');
+    var oAdd = document.getElementById('add');
+    var dataArr = []; // 储存所选图片的结果(文件名和base64数据)
+    var fd;
+    var result;
+    (function () {
+      // 富文本编辑器类 类的构造函数
+      class Editor {
+        constructor() {
+          this.bindElem();
         }
-      }
 
-
-
-      function cc() {
-        let d1 = document.getElementsByTagName("button");
-        for (let f1 = 0; f1 < d1.length; f1++) {
-          d1[f1].disabled = false;
-        };
-        let h1 = document.getElementsByTagName("select");
-        for (let y1 = 0; y1 < h1.length; h1++) {
-          h1[y1].disabled = false;
-        };
-        // .disabled = false
-        let a1 = document.getElementsByTagName("input")
-        for (let i1 = 0; i1 < a1.length; i1++) {
-          a1[i1].disabled = false;
-        };
-
-        qxhc()
-        // document.getElementById("myP").contentEditable = false;// （不用）
-      }
-      // // 把按钮插入在光标后面
-      // let position = ''
-      // function blurEdit() {
-      //   position = window.getSelection().getRangeAt(0)
-      // }
-      // function clickInsert() {
-      //   if (position === '') {
-      //     // 如果div没有光标，则在div内容末尾插入
-      //     const div = document.getElementById('inputContent')
-      //     div.focus()
-      //     const range = window.getSelection()
-      //     range.selectAllChildren(div)
-      //     range.collapseToEnd()
-      //     position = window.getSelection().getRangeAt(0)
-      //   }
-      //   // 创建一个元素
-      //   const span = document.createElement('span')
-      //   // 插入的按钮不可编辑，设置contenteditable为false
-      //   span.innerHTML = '<figure class="result" contenteditable="false"  ><img src="' +
-      //         this.result +
-      //         '" alt=""/><br ><figcaption contenteditable="true"  class="zs" >在此输入图片注释</figcaption> </figure><br >'
-      //   // 将按钮插入
-      //   position.insertNode(span)
-      // }
-
-
-
-
-      // var sel = window.getSelection();
-      // document.onmouseup = function () {
-      //   var a = sel.anchorOffset
-      //   console.log(sel.anchorNode);    //起点所在的文本节点
-      //   console.log(a);  //起点在该节点中的位置   
-      // }
-      var input = document.getElementById('file_input');
-      var onInput = document.getElementById('file_input');
-      var oAdd = document.getElementById('add');
-      var dataArr = []; // 储存所选图片的结果(文件名和base64数据)
-      var fd;
-      var result;
-      (function () {
-        // 富文本编辑器类 类的构造函数
-        class Editor {
-          constructor() {
-            this.bindElem();
-          }
-
-          bindElem() {
-            var toolbar = document.getElementById('toolbar');
-            var bs = toolbar.querySelectorAll('input,select');
-            for (var i = 0; i < bs.length; i++) {
-              if (bs[i].tagName.toLowerCase() == 'select') {
-                bs[i].onchange = function () {
-                  document.execCommand(this.name, true, this.value);
-                };
-              } else if (bs[i].tagName.toLowerCase() == 'input') {
-                this.action(bs[i], bs[i].name);
-              }
+        bindElem() {
+          var toolbar = document.getElementById('toolbar');
+          var bs = toolbar.querySelectorAll('input,select');
+          for (var i = 0; i < bs.length; i++) {
+            if (bs[i].tagName.toLowerCase() == 'select') {
+              bs[i].onchange = function () {
+                document.execCommand(this.name, true, this.value);
+              };
+            } else if (bs[i].tagName.toLowerCase() == 'input') {
+              this.action(bs[i], bs[i].name);
             }
           }
-
-          action(obj, attr) {
-            obj.onclick = function () {
-              document.execCommand(attr, true);
-            };
-          }
         }
 
-        new Editor();
-      })();
-
-      // 监听粘贴事件
-      //   document.querySelector('#edit').addEventListener('paste', function (e) {
-      //     // 判断剪切板是否有内容
-      //     if (!(e.clipboardData && e.clipboardData.items)) {
-      //       return;
-      //     }
-
-      //     for (var i = 0, len = e.clipboardData.items.length; i < len; i++) {
-      //       var item = e.clipboardData.items[i];
-      //       if (item.kind == 'file') {
-      //         var blob = item.getAsFile();
-      //         var reader = new FileReader();
-      //         var imgs = new Image();
-      //         imgs.file = blob;
-      //         reader.onload = (function (aImg) {
-      //           return function (e) {
-      //             aImg.src = e.target.result;
-      //           };
-      //         })(imgs);
-      //         reader.readAsDataURL(blob);
-      //         document.querySelector('#edit').appendChild(imgs);
-      //       }
-      //     }
-      //   });
-
-      //   document.getElementById('save').onclick = function () {
-      //     alert(document.getElementById('edit').innerHTML);
-      //   };
-
-      //   document.querySelector('.insImg').onclick = function () {
-      //     document.getElementById('shade').style.display = 'block';
-      //     var div = document.createElement('div');
-      //     div.style.cssText =
-      //       'width:300px;height:50px;border:1px solid #000;background-color:white;' +
-      //       'text-align:center;line-height:50px;' +
-      //       'position:absolute;z-index:9;left:0; top:0;right:0;bottom:0;margin:auto;';
-      //     var input = document.createElement('input');
-      //     input.type = 'file';
-      //     div.appendChild(input);
-      //     document.body.appendChild(div);
-      //   };
-
-      // new
-
-
-
-
-      //判断是否支持FileReader
-      if (typeof FileReader === 'undefined') {
-        alert('抱歉，你的浏览器不支持 FileReader');
-        input.setAttribute('disabled', 'disabled'); //添加属性，禁用input
-      } else {
-        //添加监听事件
-        input.addEventListener('change', readFile, false); //默认值是false，冒泡传递;当值为true，捕获传递
-      }
-      let position = ''
-      function blurEdit() {
-        position = window.getSelection().getRangeAt(0)
-      }
-
-      function readFile() {
-
-        if (position === '') {
-          // 如果div没有光标，则在div内容末尾插入
-          const div = document.getElementById('edit')
-          div.focus()
-          const range = window.getSelection()
-          range.selectAllChildren(div)
-          range.collapseToEnd()
-          position = window.getSelection().getRangeAt(0)
-        }
-
-
-
-        fd = new FormData(); //FormData方式发送请求
-        var iLen = this.files.length; //获取图片数量
-        var index = 0;
-        for (var i = 0; i < iLen; i++) {
-          if (!input['value'].match(/.jpg|.gif|.png|.jpeg|.bmp/i)) {
-            //判断上传文件格式
-            return alert('上传的图片格式不正确，请重新选择');
-          }
-          var reader = new FileReader(); //创建FileReader对象
-          reader.index = i;
-          fd.append(i, this.files[i]); //可以通过fd.get(i)获取FormData()对应的值;
-          reader.readAsDataURL(this.files[i]); //转成base64，并存在reader.result里
-          reader.fileName = this.files[i].name;
-          reader.onload = function (e) {
-            //设置图片信息对象
-            var imgMsg = {
-              name: this.fileName, //获取文件名
-              base64: this.result, //reader.readAsDataURL方法执行完后，base64数据储存在reader.result里
-            };
-            dataArr.push(imgMsg); //将图片信息对象存到数据数组中
-            console.log(dataArr);
-            result =
-              '<figure class="results" id="cs"   contenteditable="false" ><img id="tp" onmouseover="tpyr()"  onmouseout="tpyc()"  onclick="tpdj()" src="' +
-              this.result +
-              '" alt=""/><br><figcaption  contenteditable="true" dataBefore="在此输入图片注释 "   onclick="qq()" onblur="cc()"  id="myP" class="zs" ></figcaption> </figure>';
-            var div = document.createElement('div');
-            // div.contenteditable = true
-            div.innerHTML = result;
-            div['className'] = 'result';
-            div['index'] = index;
-            console.log(div);
-
-
-            // document.getElementById('edit').appendChild(div); //插入dom树
-
-            position.insertNode(div)
-            cp()
-            // div.onclick = function () {
-            //   this.remove(); // 在页面中删除该图片元素
-            //   // delete dataArr[this.index]; // 删除dataArr对应的数据
-            // };
-
-            index++;
-
+        action(obj, attr) {
+          obj.onclick = function () {
+            document.execCommand(attr, true);
           };
         }
       }
-      function add1() {
-        console.log(111);
-        onInput.value = ''; // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
-        onInput.click();
+
+      new Editor();
+    })();
+
+    // 监听粘贴事件
+    //   document.querySelector('#edit').addEventListener('paste', function (e) {
+    //     // 判断剪切板是否有内容
+    //     if (!(e.clipboardData && e.clipboardData.items)) {
+    //       return;
+    //     }
+
+    //     for (var i = 0, len = e.clipboardData.items.length; i < len; i++) {
+    //       var item = e.clipboardData.items[i];
+    //       if (item.kind == 'file') {
+    //         var blob = item.getAsFile();
+    //         var reader = new FileReader();
+    //         var imgs = new Image();
+    //         imgs.file = blob;
+    //         reader.onload = (function (aImg) {
+    //           return function (e) {
+    //             aImg.src = e.target.result;
+    //           };
+    //         })(imgs);
+    //         reader.readAsDataURL(blob);
+    //         document.querySelector('#edit').appendChild(imgs);
+    //       }
+    //     }
+    //   });
+
+    //   document.getElementById('save').onclick = function () {
+    //     alert(document.getElementById('edit').innerHTML);
+    //   };
+
+    //   document.querySelector('.insImg').onclick = function () {
+    //     document.getElementById('shade').style.display = 'block';
+    //     var div = document.createElement('div');
+    //     div.style.cssText =
+    //       'width:300px;height:50px;border:1px solid #000;background-color:white;' +
+    //       'text-align:center;line-height:50px;' +
+    //       'position:absolute;z-index:9;left:0; top:0;right:0;bottom:0;margin:auto;';
+    //     var input = document.createElement('input');
+    //     input.type = 'file';
+    //     div.appendChild(input);
+    //     document.body.appendChild(div);
+    //   };
+
+    // new
+
+
+
+
+    //判断是否支持FileReader
+    if (typeof FileReader === 'undefined') {
+      alert('抱歉，你的浏览器不支持 FileReader');
+      input.setAttribute('disabled', 'disabled'); //添加属性，禁用input
+    } else {
+      //添加监听事件
+      input.addEventListener('change', readFile, false); //默认值是false，冒泡传递;当值为true，捕获传递
+    }
+    let position = ''
+    function blurEdit() {
+      position = window.getSelection().getRangeAt(0)
+    }
+
+    function readFile() {
+
+      if (position === '') {
+        // 如果div没有光标，则在div内容末尾插入
+        const div = document.getElementById('edit')
+        div.focus()
+        const range = window.getSelection()
+        range.selectAllChildren(div)
+        range.collapseToEnd()
+        position = window.getSelection().getRangeAt(0)
       }
+
+
+
+      fd = new FormData(); //FormData方式发送请求
+      var iLen = this.files.length; //获取图片数量
+      var index = 0;
+      for (var i = 0; i < iLen; i++) {
+        if (!input['value'].match(/.jpg|.gif|.png|.jpeg|.bmp/i)) {
+          //判断上传文件格式
+          return alert('上传的图片格式不正确，请重新选择');
+        }
+        var reader = new FileReader(); //创建FileReader对象
+        reader.index = i;
+        fd.append(i, this.files[i]); //可以通过fd.get(i)获取FormData()对应的值;
+        reader.readAsDataURL(this.files[i]); //转成base64，并存在reader.result里
+        reader.fileName = this.files[i].name;
+        reader.onload = function (e) {
+          //设置图片信息对象
+          var imgMsg = {
+            name: this.fileName, //获取文件名
+            base64: this.result, //reader.readAsDataURL方法执行完后，base64数据储存在reader.result里
+          };
+          dataArr.push(imgMsg); //将图片信息对象存到数据数组中
+          console.log(dataArr);
+          result =
+            '<figure class="results" id="cs"   contenteditable="false" ><img id="tp" onmouseover="tpyr()"  onmouseout="tpyc()"  onclick="tpdj()" src="' +
+            this.result +
+            '" alt=""/><br><figcaption  contenteditable="true" dataBefore="在此输入图片注释 "   onclick="qq()" onblur="cc()"  id="myP" class="zs" ></figcaption> </figure>';
+          var div = document.createElement('div');
+          // div.contenteditable = true
+          div.innerHTML = result;
+          div['className'] = 'result';
+          div['index'] = index;
+          console.log(div);
+
+
+          // document.getElementById('edit').appendChild(div); //插入dom树
+
+          position.insertNode(div)
+          cp()
+          // div.onclick = function () {
+          //   this.remove(); // 在页面中删除该图片元素
+          //   // delete dataArr[this.index]; // 删除dataArr对应的数据
+          // };
+
+          index++;
+
+        };
+      }
+    }
+    function add1() {
+      console.log(111);
+      onInput.value = ''; // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
+      onInput.click();
+    }
 
   </script>
 </body>
