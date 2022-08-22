@@ -1,0 +1,19 @@
+<div>div</div>
+<span>span</span>
+<script>
+    var num = 1;
+
+    var div = document.querySelector('div');
+    div.addEventListener('click', function() {
+        num=2;
+    })
+
+    function b() {
+        num=3;
+    }
+
+    var span = document.querySelector('span');
+    span.addEventListener('click', function() {
+       console.log(num);
+    })//不点击div 输出1
+    </script>

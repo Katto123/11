@@ -72,21 +72,18 @@
 
     .zs:after {
       content: attr(dataBefore);
-      /* display: none; */
-      /* content: '在此输入图片注释...'; */
-      /* content: ' '; */
       color: #c0c0c0;
     }
 
     blockquote::before {
-      content: "“";
-      width: 20px;
-      height: 19px;
+      content: "";
+      width: 25px;
+      height: 26px;
       display: block;
       position: absolute;
-      /* top: 4px;
-    left: 0; */
-      background-image: url(https://upfile2.asqql.com/upfile/hdimg/wmtp/wmtp/2015-12/30/9835VicmIhquvD.jpg);
+      margin-left: -39px;
+      margin-top: -2px;
+      background-image: url(./w.png);
       background-size: 100% 100%;
     }
 
@@ -164,7 +161,8 @@
     <button id="add" onclick="add1()">图片</button>
     <!-- <input type="button" id="add" onclick="add1()" value="图片" /> -->
     <!-- <button onclick="clickInsert()">点击插入一个按钮</button> -->
-    <button onclick="yy()">引用</button>
+    <button id="yy" aria-pressed="false">引用</button>
+    <button id="qxyy" aria-pressed="false">取消引用</button>
     <input type="file" id="file_input" />
   </div>
 
@@ -199,34 +197,122 @@
       "></div>
   <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
   <script>
-    function yy() {
-      yiny()
-      setTimeout(cp, 500)
 
-    }
-    function yiny() {
+
+    // var dianji = 0
+    // var p = document.getElementById('p');
+    // p.addEventListener('click', function(){
+    //   dianji = 1;
+    //   yy() 
+    // })
+    // var yy = document.getElementById('yy');
+    // yy.addEventListener('click', function(){
+    //  console.log(dianji);
+
+    // })
+
+
+    var num = 0;
+
+    var yy = document.getElementById('yy')
+    yy.addEventListener('click', function () {
+      if (num = 0) {
+        num === 1
+      } else (num = 1) => {
+        num === 0
+      }
+      console.log(num);
       $(document).ready(function () {
-        var that = $("#edit").find("p");
-        console.log(that);
-        console.log(that.length);
-        //给所有table元素标签外层嵌套一个div标签
-        that.wrap('<blockquote></blockquote>');
-        for (var i = 0; i < that.length; i++) {
-          //给所有table元素标签添加一个样式类
-          that.eq(i).addClass("table");
+        var ch = $("#edit").find("p");
+        for (var i = 0; i < ch.length; i++) {
+          console.log(ch[i]);
+          ch[i].onclick = wd1
+        }
+      })
+
+    })
+
+
+
+
+    function wd1() {
+      if (num = 1) {
+        $(this).wrap('<blockquote></blockquote>');
+        cp()
+        console.log(num);
+      } else {
+        jies = this
+        var parent = jies.parentElement; // 获取result的父元素
+        parent.removeChild(jies); // 删除result 元素
+      }
+    }
+
+
+    // 取消引用
+
+
+    var c = 0;
+
+    var qxyy = document.getElementById('qxyy')
+    qxyy.addEventListener('click', function () {
+      if (c = 0) {
+        c === 1
+      } else (c = 1) => {
+        c === 0
+      }
+      console.log(c);
+      $(document).ready(function () {
+        var ch = $("#edit").find("p");
+        for (var i = 0; i < ch.length; i++) {
+          console.log(ch[i]);
+          ch[i].onclick = wd2
+        }
+      })
+
+    })
+
+
+
+
+    function wd2() {
+      if (c = 1) {
+        const divElement = document.querySelector('blockquote')
+        const h1Element = document.querySelector('p')
+        divElement.parentNode.insertBefore(h1Element, divElement.nextElementSibling)
+        divElement.remove()
+      }
+    }
+
+
+
+
+
+
+
+    function yy111() {
+      yiny()
+    }
+
+    function yiny() {
+      // console.log(dianji);
+      $(document).ready(function () {
+        var ch = $("#edit").find("p");
+        for (var i = 0; i < ch.length; i++) {
+          console.log(ch[i]);
+          ch[i].onclick = wd
         }
       })
     }
-
-
+    function wd() {
+      $(this).wrap('<blockquote></blockquote>');
+      cp()
+    }
 
 
     // 点击编辑框让他变成可编辑状态（好像没有什么影响）
     function hqjd() {
       const edit2 = document.getElementById('edit')
       edit2.contentEditable = true
-
-
 
       let results = document.getElementById("cs")
       for (let o = 0; o < results.length; o++) {
@@ -296,18 +382,33 @@
         cs2[k].onclick = kbj  // 给每一个图片大框添加点击事件
       };
 
+      let TPYR = document.getElementsByTagName("img");
+      for (let i = 0; i < TPYR.length; i++) {
+
+        TPYR[i].onclick = kbjj
+      };
+
     }
 
     function kbj() {
       editss = document.getElementById('edit')
       editss.contentEditable = true
+
+      // this.style.border='2px solid #FFFFFF'
+
+
+    }
+    function kbjj() {
+
+
+      this.style.border = '2px solid #FFFFFF'
+
+
     }
 
 
     // 鼠标移入图片
     function tpyr() {
-
-
 
       let TPYR = document.getElementsByTagName("img");
       for (let i = 0; i < TPYR.length; i++) {
