@@ -212,6 +212,11 @@
     // })
 
 
+
+
+    // 引用功能
+
+
     var num = 0;
 
     var yy = document.getElementById('yy')
@@ -238,6 +243,7 @@
     function wd1() {
       if (num = 1) {
         $(this).wrap('<blockquote></blockquote>');
+        $("blockquote").addClass("aaa");
         cp()
         console.log(num);
       } else {
@@ -250,38 +256,38 @@
 
     // 取消引用
 
-
-    var c = 0;
-
     var qxyy = document.getElementById('qxyy')
     qxyy.addEventListener('click', function () {
-      if (c = 0) {
-        c === 1
-      } else (c = 1) => {
-        c === 0
+
+
+      // $(document).ready(function () {
+      //   var ch = $("#edit").find("p");
+      //   for (var i = 0; i < ch.length; i++) {
+      //     console.log(ch[i]);
+      //     ch[i].onclick = wd2
+      //   }
+      sh = $('.aaa')
+      for (var i = 0; i < sh.length; i++) {
+        console.log(sh[i]);
+        sh[i].onclick = wd2
       }
-      console.log(c);
-      $(document).ready(function () {
-        var ch = $("#edit").find("p");
-        for (var i = 0; i < ch.length; i++) {
-          console.log(ch[i]);
-          ch[i].onclick = wd2
-        }
-      })
+
+      // })
 
     })
 
 
-
-
     function wd2() {
-      if (c = 1) {
-        const divElement = document.querySelector('blockquote')
-        const h1Element = document.querySelector('p')
-        divElement.parentNode.insertBefore(h1Element, divElement.nextElementSibling)
-        divElement.remove()
-      }
+
+      ls = $(this).html()
+      console.log(ls);
+      // $('.aaa').before(ls);
+      // $('.aaa').remove();
+
     }
+
+
+
 
 
 
