@@ -161,8 +161,8 @@
     <button id="add" onclick="add1()">图片</button>
     <!-- <input type="button" id="add" onclick="add1()" value="图片" /> -->
     <!-- <button onclick="clickInsert()">点击插入一个按钮</button> -->
-    <button id="yy" onclick="wd2()" aria-pressed="false">引用</button>
-    <button id="qxyy" aria-pressed="false">取消引用</button>
+    <button id="yy" onclick="wd2()">引用</button>
+    <!-- <button id="qxyy" aria-pressed="false">取消引用</button> -->
     <input type="file" id="file_input" />
   </div>
 
@@ -184,7 +184,7 @@
     background-color: green;border:1px solid green;display: block;color: white;font-family:'Courier New', Courier, monospace;
     font-weight: 500;font-size: 20px;">点 击</button> -->
 
-  <div id="shade" style="
+  <p id="shade" style="
         width: 100%;
         height: 100%;
         background-color: white;
@@ -194,9 +194,15 @@
         display: none;
         left: 0;
         top: 0;
-      "></div>
+      "></p>
   <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+
   <script>
+
+    $("div").click(function () {
+      console.log("文字");
+      // console.log($(".result").html());
+    });
 
 
     // var dianji = 0
@@ -208,7 +214,6 @@
     // var yy = document.getElementById('yy');
     // yy.addEventListener('click', function(){
     //  console.log(dianji);
-
     // })
 
 
@@ -235,32 +240,29 @@
         cp()
         pbj.context.id = 1
       } else if (pbj.context.id == 1) {
-        pbj.context.id  = 0 
+        pbj.context.id = 0
         let my_html = pbj.parent('.aaa').html()
-        pbj.parent('.aaa').before(my_html)
-        pbj.parent('.aaa').remove();
+        pbj.parent('.aaa').after(my_html)
+        pbj.parent('.aaa').detach();
 
-       
+
       }
     }
     function wd1() {
-      console.log(pbj);
+      $(this).id = 0
+      // console.log(pbj);
       pbj = $(this)
+      console.log("绑定");
       // state = pbj.context.id
     }
 
-    document.addEventListener('keyup', (e) => {
-      console.log("22222222222222");
+    document.addEventListener('mousemove', (e) => {  // 对性能不太友好
       // $(document).ready(function () {
-        var ch = $("#edit").find("p");
-        for (var i = 0; i < ch.length; i++) {
-          ch[i].id = 0
-          ch[i].onclick = wd1
-        //  ch[i].click(function(){
-        //   wd1()
-        //  })
-        }
-      // })
+      var ch = $("#edit").find("p");
+      for (var i = 0; i < ch.length; i++) {
+        // ch[i].id = 0
+        ch[i].onclick = wd1
+      }
     })
 
 
@@ -270,33 +272,33 @@
 
     // 取消引用
 
-    var qxyy = document.getElementById('qxyy')
-    qxyy.addEventListener('click', function () {
+    // var qxyy = document.getElementById('qxyy')
+    // qxyy.addEventListener('click', function () {
 
 
-      // $(document).ready(function () {
-      //   var ch = $("#edit").find("p");
-      //   for (var i = 0; i < ch.length; i++) {
-      //     console.log(ch[i]);
-      //     ch[i].onclick = wd2
-      //   }
-      sh = $('.aaa')
-      for (var i = 0; i < sh.length; i++) {
-        sh[i].onclick = wd3
-      }
+    //   // $(document).ready(function () {
+    //   //   var ch = $("#edit").find("p");
+    //   //   for (var i = 0; i < ch.length; i++) {
+    //   //     console.log(ch[i]);
+    //   //     ch[i].onclick = wd2
+    //   //   }
+    //   sh = $('.aaa')
+    //   for (var i = 0; i < sh.length; i++) {
+    //     sh[i].onclick = wd3
+    //   }
 
-      // })
+    //   // })
 
-    })
+    // })
 
 
-    function wd3() {
+    // function wd3() {
 
-      ls = $(this).html()
-      // $('.aaa').before(ls);
-      // $('.aaa').remove();
+    //   ls = $(this).html()
+    //   // $('.aaa').before(ls);
+    //   // $('.aaa').remove();
 
-    }
+    // }
 
 
 
@@ -352,6 +354,31 @@
       p.innerHTML = "<br>"
       edit1.appendChild(p);
     }
+
+    //生成换行标签
+    function hh() {
+
+      // $(".result").after("<p><br></p>");
+      // $(".result").before("<p><br></p>");
+      console.log("添加回车");
+
+      // const result1 = document.getElementsByClassName('result')
+      // for (let i = 0; i < result1.length; i++) {
+      //   var br = document.createElement('br');
+      // br.innerHTML = "<br>"
+      // this.insertBefore(br,result1);
+
+      // }
+
+      // console.log(result);
+
+    }
+    // function tpc1() {
+    //   var br = document.createElement('br');
+    //   br.innerHTML = "<br>"
+    //   this.insertBefore(br,this);
+    // }
+
 
 
     //  图片注释的回车事件
@@ -740,7 +767,7 @@
         const range = window.getSelection()
         range.selectAllChildren(div)
         range.collapseToEnd()
-        position = window.getSelection().getRangeAt(0)
+        position = window.getSelection()
       }
 
 
@@ -767,7 +794,7 @@
           dataArr.push(imgMsg); //将图片信息对象存到数据数组中
           console.log(dataArr);
           result =
-            '<figure class="results" id="cs"   onmouseout="imgtpyr()"   contenteditable="false" ><img id="tp" onmouseover="tpyr()"  onmouseout="tpyc()"  onclick="tpdj()" src="' +
+            '<figure class="results" id="cs"   onmouseout="imgtpyr()"   contenteditable="true" ><img id="tp" onmouseover="tpyr()"  onmouseout="tpyc()"  onclick="tpdj()" src="' +
             this.result +
             '" alt=""/><br><figcaption  contenteditable="true" dataBefore="在此输入图片注释 "   onclick="qq()" onblur="cc()"  onmouseover="yrzs()"  id="myP" class="zs" ></figcaption> </figure>';
           var div = document.createElement('div');
@@ -779,9 +806,15 @@
 
 
           // document.getElementById('edit').appendChild(div); //插入dom树
+          // parentNode = document.getElementById('edit')
+          // div = parentNode.insertBefore(div, position)
 
+
+          console.log(position);
           position.insertNode(div)
           cp()
+          // setTimeout(hh(),500)
+          // hh()
           // div.onclick = function () {
           //   this.remove(); // 在页面中删除该图片元素
           //   // delete dataArr[this.index]; // 删除dataArr对应的数据
