@@ -14,10 +14,11 @@
 </head>
 
 <body>
+
     <div id="edit" contenteditable>
         <p><br></p>
     </div>
-    <input type="text"  value ="请选择"   id="emojiInput">
+    <input type="text" value="请选择" id="emojiInput">
     <button id="sendEmoji">send</button>
 
     <script>
@@ -44,6 +45,9 @@
             // 设置最后光标对象
             lastEditRange = selection.getRangeAt(0)
         }
+
+
+
 
         // 表情点击事件
         document.getElementById('sendEmoji').onclick = function () {
