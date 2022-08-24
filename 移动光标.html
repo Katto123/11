@@ -1,0 +1,10 @@
+<p>
+    <input type="text" value="hello"/>
+</p>
+<script>
+    var input = document.getElementsByTagName('input')[0];
+    var val = input.value;
+    input.focus();
+    input.value = '';
+    input.value = val;
+</script>

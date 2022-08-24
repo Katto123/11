@@ -326,7 +326,7 @@
       } else if (pbj.context.id == 1) {
         pbj.context.id = 0
         let my_html = pbj.parent('.aaa').html()
-        pbj.parent('.aaa').after(my_html)
+        pbj.parent('.aaa').before(my_html)
         pbj.parent('.aaa').detach();
 
 
@@ -438,7 +438,7 @@
       const edit1 = document.getElementById('edit')
       var p = document.createElement('p');
       p.innerHTML = "<br>"
-      p.id = "wq"
+      // p.id = "wq"
       edit1.appendChild(p);
 
     }

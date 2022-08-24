@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+</script>
+<script>
+$(document).ready(function(){
+  $("#btn").click(function(){
+      alert($("#sel").find("option:selected").text());
+  });
+  $("#sel").change(function(){
+    $("#sel").blur();
+  });
+});
+$(document).keyup(function(event){
+　　 if(event.keyCode == 13){
+　　　　 　$("#btn").trigger("click");
+　　　　}
+});
+</script>
+</head><body>
+<select name="cars" id="sel">
+<option value="volvo">Volvo</option>
+<option value="saab">Saab</option>
+</select>
+<button type="button" id="btn">Click Me!</button>
+</body>
+</html>
