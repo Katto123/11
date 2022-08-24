@@ -1,25 +1,107 @@
-<div>
-  <span>A</span>
-  <span>B</span>
+<div id='eadi' contenteditable="true">
   <div>
-    <span>C</span>
-    DE
-    <span>FGHI</span>
-    <span>J</span>
-    <span>K</span>
+    <p><br></p>
   </div>
-  <span>L</span>
-  <span>M</span>
-  OPQRST
+
 </div>
+<button onclick="add()">添加</button>
 <script>
-var sel = window.getSelection();
-document.onmouseup = function(){
-  console.log(sel.anchorNode);    //起点所在的文本节点
-  console.log(sel.anchorOffset);  //起点在该节点中的位置
-  console.log(sel.focusNode);     //终点所在的文本节点
-  console.log(sel.focusOffset);   //终点在该节点中的位置
-  console.log(sel.isCollapsed);   //起点和终点是否在同一位置
-  console.log(sel.rangeCount);    // ranges （区域）的个数
-}
+
+
+
+var body = document.getElementsByTagName("body")[0];
+window.getSelection().collapse(body,0);
+
+
+    var sel = window.getSelection();
+    document.onmouseup = function () {
+      console.log(sel.anchorNode);    //起点所在的文本节点
+      console.log(sel.anchorOffset);  //起点在该节点中的位置
+      console.log(sel.focusNode);     //终点所在的文本节点
+      console.log(sel.focusOffset);   //终点在该节点中的位置
+      console.log(sel.isCollapsed);   //起点和终点是否在同一位置
+      console.log(sel.rangeCount);    // ranges （区域）的个数
+
+    }
+ 
+    var p = document.createElement('p');
+    p.innerHTML = "添加"
+
+    var range = document.createRange();
+    range.selectNode(p);
+    sel.addRange(range);
+
+
+
 </script>
+
+
+
+
+
+
+<!-- 
+<button onclick="add()">添加</button>
+
+<div>123789</div>
+<span id="a">456</span>
+<script>
+    function add() {
+var a = document.getElementById("a");
+var sel = window.getSelection();
+
+var range = document.createRange();
+range.selectNode(a);
+sel.addRange(range);
+    }
+</script> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <p   contenteditable="true"  id="text-box" size="20"> Mozill </p> -->
+
+<!-- <input type="text" id="text-box" size="20" value="Mozilla">
+<button onclick="selectText()">Select text</button>
+
+
+<script>
+function selectText() {
+  const input = document.getElementById('text-box');
+  input.focus();
+  input.setSelectionRange(3, 3);
+}
+
+
+</script> -->

@@ -1,0 +1,106 @@
+<!-- <div id="div" contentEditable="true">
+    <p>123</p>
+    <p>22222</p>
+    <p>33333</p>
+    <span id="a">456</span>789
+    <p><br></p>
+  </div>
+  <script>
+  var div = document.getElementById("div");
+  var a = document.getElementById("a");
+  var sel = window.getSelection();
+  var range = document.createRange();
+  range.selectNode(a);
+  sel.addRange(range);   //初始选中 456
+  
+  setTimeout(function(){
+   //偏移1个节点，也就是 ‘123’ 这个文本节点
+    sel.extend(div,1)    //1秒钟后光标在3和4之间闪烁 （也就是起点和终点位置相同） 
+  },1000)
+  
+//   setTimeout(function(){
+//     sel.extend(div,0)   //2秒钟后选中 123
+//   },2000)
+  </script>
+   -->
+
+
+
+
+
+
+
+
+
+<!-- 
+   setBaseAndExtent()
+   选中并设置在两个特定的DOM节点中文本选中的范围, 并且选中的任何内容都位于两个节点之间。
+   语法：sel.setBaseAndExtent(anchorNode,anchorOffset,focusNode,focusOffset)
+   参数：
+   anchorNode 锚节点-选中内容的开始节点。
+   anchorOffset 选中范围内起点位置在锚节点下第几个子节点的位置。例如，如果是值为0的话，整个节点都是被选中的， 如果值为1的话，那么至少整个节点至少有一个子节点被选中. 以此类推。
+   focusNode 焦点节点-选中内容的结尾节点。
+   focusOffset 选中范围内结束位置在焦点节点下第几个子节点的位置。例如，如果是值为0的话，整个节点都是被选中的，如果值为1的话，那么至少整个节点至少有一个子节点被选中. 以此类推。 -->
+
+
+
+   <!-- <div  contentEditable="true">
+
+    <hr>
+    
+    <span id="b" >scdafcdasfcda</span> 
+    <span id="b" ><br>sss</span> 
+  </div>
+  <script>
+//  可以通过延时去触发P的自动获取光标
+
+  var a = document.getElementById("a");
+  var b = document.getElementById("b");
+  var sel = window.getSelection();
+  
+//   setTimeout(function(){
+//     sel.setBaseAndExtent(a,0,b,0);  //选中 456
+//   },1000);''
+//   setTimeout(function(){
+   
+//     sel.setBaseAndExtent(a,0,b,1);  //选中 456789
+//   },2000)
+  setTimeout(function(){
+    sel.setBaseAndExtent(a,1,b,0);  //光标在6和7之间闪烁
+  },1000) -->
+
+
+
+
+
+ 
+<!-- //   sel.setBaseAndExtent(a,1,b,1);  //选中 789
+  
+//   sel.setBaseAndExtent(a,2,b,0);  //报错！没有第二个节点
+  </script> -->
+  
+  <div id="div" contentEditable="true">
+    123<span id="a">456  </span><span style="margin-left:10px" id="b"><hr> 789</span>000
+  </div>
+  <script>
+  var a = document.getElementById("a");
+  var b = document.getElementById("b");
+  var sel = window.getSelection();
+  
+//   sel.setBaseAndExtent(a,0,b,0);  //选中 456
+//   sel.setBaseAndExtent(a,0,b,1);  //选中 456789
+
+
+  setTimeout(function(){
+  sel.setBaseAndExtent(a,1,b,0);  //光标在6和7之间闪烁
+  },1000)
+
+
+
+
+//   sel.setBaseAndExtent(a,1,b,1);  //选中 789
+  
+//   sel.setBaseAndExtent(a,2,b,0);  //报错！没有第二个节点
+  </script>
+  
+

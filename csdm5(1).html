@@ -74,9 +74,11 @@
       content: attr(dataBefore);
       color: #c0c0c0;
     }
-    blockquote{
-      color: #778899!important;
+
+    blockquote {
+      color: #778899 !important;
     }
+
     blockquote::before {
       content: "";
       width: 25px;
@@ -138,9 +140,24 @@
       <option value="5">5</option>
       <option value="6">6</option>
       <option value="7">7</option>
-      <option value="8">8</option>
-      <option value="9">9</option>
     </select>
+
+
+
+    字体颜色：
+    <select name="forecolor" class="fcolor">
+      <option value="black">Black </option>
+      <option value="red">Red </option>
+      <option value="green">Green </option>
+      <option value="blue">Blue </option>
+      <option value="maize">maize </option>
+      <option value="yellowcream">yellow cream </option>
+      <option value="ceruleanblue">cerulean blue </option>
+      <option value="waterblue">water blue </option>
+      <option value="lilac">lilac </option>
+    </select>
+
+
     <!-- 图片
         <select name="insertImage">
             <option value="">请选择图片</option>
@@ -151,6 +168,9 @@
             <option value="timg4.jpg">timg4.jpg</option>
         </select> -->
     <!-- <input type="button" name="insertImage" value='插入图片(未完成,可粘贴)' class="insImg"> -->
+
+
+
     <input type="button" name="selectAll" value="全选" class="selectAll" />
     <input type="button" name="undo" value="撤销" class="undo" />
     <input type="button" name="justifyLeft" value="居左" class="justifyLeft" />
@@ -201,10 +221,72 @@
 
   <script>
 
-    $("div").click(function () {
-      console.log("文字");
-      // console.log($(".result").html());
+    // $("div").click(function () {
+    //   console.log("文字");
+    //   // console.log($(".result").html());
+    // });
+
+
+
+    var sel = window.getSelection();
+    document.onmouseup = function () {
+      console.log(sel.anchorNode);    //起点所在的文本节点
+    console.log(sel.anchorOffset);  //起点在该节点中的位置
+    console.log(sel.focusNode);     //终点所在的文本节点
+    console.log(sel.focusOffset);   //终点在该节点中的位置
+    console.log(sel.isCollapsed);   //起点和终点是否在同一位置
+    console.log(sel.rangeCount);    // ranges （区域）的个数
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //  水平线
+
+    $(".insertHorizontalRule").click(function () {
+      console.log("水平线生成p");
+      cp()
+      // $("#wq").focus();
+      // $("div").blur();
+
     });
+
+
+
+    //   无用改变光标位置
+
+    // function  offKeyDown (e) {
+    //       // 创建一个自定义的位置
+    //       let range = document.createRange()
+    //       range.selectNodeContents(document.getElementsByTagName("hr"))
+    //       range.collapse(false)
+    //       // 获取原来光标的位置
+    //       let sel = window.getSelection()
+    //       // 把原来数据里面的位置改变
+    //       range.setStart(document.getElementsByTagName("hr"),sel.getRangeAt(0).startOffset + 1)
+    //       range.setEnd(document.getElementsByTagName("hr"), sel.getRangeAt(0).endOffset + 1)
+    //       sel.removeAllRanges()
+    //       sel.addRange(range)
+    //       // 最后一定记得去掉原有的事件，执行我们上面自定义的事件
+    //       e.returnValue = false
+    //       }
+
+
+
+
+
+
 
 
     // var dianji = 0
@@ -258,8 +340,10 @@
       // state = pbj.context.id
     }
 
+
     document.addEventListener('mousemove', (e) => {  // 对性能不太友好
       // $(document).ready(function () {
+
       var ch = $("#edit").find("p");
       for (var i = 0; i < ch.length; i++) {
         // ch[i].id = 0
@@ -329,18 +413,18 @@
     }
 
 
-    // 点击编辑框让他变成可编辑状态（好像没有什么影响）
-    function hqjd() {
-      const edit2 = document.getElementById('edit')
-      edit2.contentEditable = true
+    // // 点击编辑框让他变成可编辑状态（好像没有什么影响）
+    // function hqjd() {
+    //   const edit2 = document.getElementById('edit')
+    //   edit2.contentEditable = true
 
-      let results = document.getElementById("cs")
-      for (let o = 0; o < results.length; o++) {
+    //   let results = document.getElementById("cs")
+    //   for (let o = 0; o < results.length; o++) {
 
-        results[o].onclick = tpc
-      };
+    //     results[o].onclick = tpc
+    //   };
 
-    }
+    // }
 
 
 
@@ -354,7 +438,9 @@
       const edit1 = document.getElementById('edit')
       var p = document.createElement('p');
       p.innerHTML = "<br>"
+      p.id = "wq"
       edit1.appendChild(p);
+
     }
 
     //生成换行标签
@@ -528,8 +614,6 @@
     function tpd() {  // 鼠标在移入情况下点击图片
       editss = document.getElementById('edit')
       editss.contentEditable = false
-
-
       jies = this
       this.style.border = "2px solid #33CCFF"
 
@@ -796,7 +880,7 @@
           dataArr.push(imgMsg); //将图片信息对象存到数据数组中
           console.log(dataArr);
           result =
-            '<figure class="results" id="cs"   onmouseout="imgtpyr()"   contenteditable="true" ><img id="tp" onmouseover="tpyr()"  onmouseout="tpyc()"  onclick="tpdj()" src="' +
+            '<figure class="results" id="cs"   onmouseout="imgtpyr()"   contenteditable="false" ><img id="tp" onmouseover="tpyr()"  onmouseout="tpyc()"  onclick="tpdj()" src="' +
             this.result +
             '" alt=""/><br><figcaption  contenteditable="true" dataBefore="在此输入图片注释 "   onclick="qq()" onblur="cc()"  onmouseover="yrzs()"  id="myP" class="zs" ></figcaption> </figure>';
           var div = document.createElement('div');
