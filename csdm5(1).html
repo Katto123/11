@@ -91,6 +91,10 @@
       background-size: 100% 100%;
     }
 
+
+
+
+
     /* 
       .delete {
         width: 200px;
@@ -150,11 +154,26 @@
       <option value="red">Red </option>
       <option value="green">Green </option>
       <option value="blue">Blue </option>
-      <option value="maize">maize </option>
-      <option value="yellowcream">yellow cream </option>
-      <option value="ceruleanblue">cerulean blue </option>
-      <option value="waterblue">water blue </option>
-      <option value="lilac">lilac </option>
+      <option value="#808080">Gray </option>
+      <option value="#FFFFFF">White </option>
+      <option value="#FFC0CB">Pink</option>
+      <option value="#FF7300">Sun Orange </option>
+      <option value="#7FFF00">Lilac </option>
+      <option value="#6B8E23">Olive Drab </option>
+    </select>
+
+    背景颜色：
+    <select name="hiliteColor" class="hcolor">
+      <option value="black">Black </option>
+      <option value="red">Red </option>
+      <option value="green">Green </option>
+      <option value="blue">Blue </option>
+      <option value="#808080">Gray </option>
+      <option value="#FFFFFF">White </option>
+      <option value="#FFC0CB">Pink</option>
+      <option value="#FF7300">Sun Orange </option>
+      <option value="#7FFF00">Lilac </option>
+      <option value="#6B8E23">Olive Drab </option>
     </select>
 
 
@@ -184,6 +203,8 @@
     <!-- <input type="button" id="add" onclick="add1()" value="图片" /> -->
     <!-- <button onclick="clickInsert()">点击插入一个按钮</button> -->
     <button id="yy" onclick="wd2()">引用</button>
+    <button id="yx" onclick="yx()">有序列表</button>
+    <button id="wx">无序列表</button>
     <!-- <button id="qxyy" aria-pressed="false">取消引用</button> -->
     <input type="file" id="file_input" />
   </div>
@@ -197,16 +218,14 @@
         padding: 5px;
         overflow: auto;
       " contenteditable="true" spellcheck="false">
-    <!-- <p contenteditable="false">sdffffffffffffffffffffffffff</p> -->
-    <p> <br></p>
-    <!-- <blockquote><p>12121</p></blockquote> -->
+    <!-- <p><br></p> -->
   </div>
 
   <!-- <button id="save" style="width:300px;height:30px;margin:auto;margin-top:30px;
     background-color: green;border:1px solid green;display: block;color: white;font-family:'Courier New', Courier, monospace;
     font-weight: 500;font-size: 20px;">点 击</button> -->
 
-  <p id="shade" style="
+  <!-- <p id="shade" style="
         width: 100%;
         height: 100%;
         background-color: white;
@@ -216,27 +235,72 @@
         display: none;
         left: 0;
         top: 0;
-      "></p>
+      "></p> -->
   <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 
   <script>
 
-    // $("div").click(function () {
+    //   $("div").click(function () {
     //   console.log("文字");
     //   // console.log($(".result").html());
     // });
 
+    // 监听鼠标按下  如果按下删除键且div里没有任何html内容 那么就生成一个p标签
+
+    //     document.addEventListener('keyup', (e) => {
+
+    //       if (e.keyCode === 8 || edit === " ") {
+    //         var edit = document.getElementById('edit').innerHTML
+    //       console.log(edit);
+    //         cp()
+    //       }
+    //     })
 
 
-    var sel = window.getSelection();
-    document.onmouseup = function () {
-      console.log(sel.anchorNode);    //起点所在的文本节点
-    console.log(sel.anchorOffset);  //起点在该节点中的位置
-    console.log(sel.focusNode);     //终点所在的文本节点
-    console.log(sel.focusOffset);   //终点在该节点中的位置
-    console.log(sel.isCollapsed);   //起点和终点是否在同一位置
-    console.log(sel.rangeCount);    // ranges （区域）的个数
-    }
+
+    //     $('#edit').keydown(function(e) {
+    //     if (e.keyCode === 13) {
+    //         document.execCommand('insertHTML', true, '<p><br></p>');
+    //         return false;
+    //     }
+    // });
+
+
+    /*阻止回车事件*/
+    $(window).keydown(function (e) {
+      var key = window.event ? e.keyCode : e.which;
+      /*获取用户按键，如果是回车，则不执行任何*/
+      if (key.toString() == "13") {
+
+        /*调用光标插入方法，在光标处插入 换行*/
+        insertHtml("<br>");
+        return false;
+      }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // var sel = window.getSelection();
+    // document.onmouseup = function () {
+    //   console.log(sel.anchorNode);    //起点所在的文本节点
+    //   console.log(sel.anchorOffset);  //起点在该节点中的位置
+    //   console.log(sel.focusNode);     //终点所在的文本节点
+    //   console.log(sel.focusOffset);   //终点在该节点中的位置
+    //   console.log(sel.isCollapsed);   //起点和终点是否在同一位置
+    //   console.log(sel.rangeCount);    // ranges （区域）的个数
+    // }
 
 
 
@@ -314,42 +378,106 @@
     // })
     var state = 0
     var pbj = ''
+    var olj = ''
     // 引用点击事件
     function wd2() {
-
-      if (pbj.context.id == 0) {
-
+      if (pbj.context.id == 0 && olj.context.id != 0) {
+        console.log("p执行");
         pbj.wrap('<blockquote></blockquote>');
         $("blockquote").addClass("aaa");
         cp()
         pbj.context.id = 1
       } else if (pbj.context.id == 1) {
+        console.log("p取消执行");
         pbj.context.id = 0
         let my_html = pbj.parent('.aaa').html()
         pbj.parent('.aaa').before(my_html)
         pbj.parent('.aaa').detach();
-
-
+      }
+      //  ol 引用
+      if (olj.context.id == 0) {
+        console.log("ol执行");
+        olj.wrap('<blockquote></blockquote>');
+        $("blockquote").addClass("aaa");
+        cp()
+        olj.context.id = 1
+      } else if (olj.context.id == 1) {
+        console.log("ol取消执行");
+        olj.context.id = 0
+        let myol_html = olj.parent('.aaa').html()
+        console.log(myol_html);
+        olj.parent('.aaa').before(myol_html)
+        olj.parent('.aaa').remove();
       }
     }
+
+
+
+
     function wd1() {
       $(this).id = 0
       // console.log(pbj);
       pbj = $(this)
-      console.log("绑定");
       // state = pbj.context.id
+      console.log($(this));
     }
+
+    function olhwd() {
+      $(this).context.id = 0
+      // console.log(pbj);
+      olj = $(this)
+      // console.log("ol绑定");
+    }
+
+
+
+
 
 
     document.addEventListener('mousemove', (e) => {  // 对性能不太友好
       // $(document).ready(function () {
 
+      // 以p标签包裹内容
       var ch = $("#edit").find("p");
       for (var i = 0; i < ch.length; i++) {
         // ch[i].id = 0
         ch[i].onclick = wd1
       }
+
+
+      // ol标签 
+      var olh = $("#edit").find("ol");
+      for (var t = 0; t < olh.length; t++) {
+
+        olh[t].onclick = olhwd
+      }
+
+
+
+
+
+
+
+
+
     })
+
+    //  插入 有序列表
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -604,6 +732,7 @@
           // console.log(fj);
           var parent = result.parentElement; // 获取result的父元素
           parent.removeChild(result); // 删除result 元素
+
         }
         return false
       })

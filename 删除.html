@@ -1,0 +1,33 @@
+<!doctype html>
+
+<head>
+    <title>jq删除元素</title>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#bt1").click(function () {
+                $("#div1").remove();
+            });
+            $("#bt2").click(function () {
+                $("#div1").empty();
+            });
+            $("#bt3").click(function () {
+                $("#a1").remove("a");
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div id="div1" style="background:#66ccff;width:250px;height:100px;margin:10px;padding:10px">
+        <a href="" id="a1">hello world1!</a>
+        <a href="" id="a2">hello world2!</a>
+        <p>hello world!</p>
+        <h3>hello world!</h3>
+    </div>
+    <input type="button" id="bt1" value="删除DIV">
+    <input type="button" id="bt2" value="删除DIV内元素">
+    <input type="button" id="bt3" value="删除link1">
+</body>
+
+</html>
