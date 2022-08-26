@@ -59,8 +59,8 @@
             max-width: 80%;
             min-height: 17px;
             /* background: none;
-      outline: none;
-      border: 0px; */
+            outline: none;
+            border: 0px; */
             /* position: absolute; */
             display: inline-block;
             text-align: center;
@@ -198,6 +198,7 @@
         <input type="button" name="insertUnorderedList" value="无序列表" class="insertUnorderedList" />
         <input type="button" name="strikeThrough" value="划掉" class="strikeThrough" />
         <input type="button" name="indent" value="引用" class="indent" />
+        <input type="button" name="createLink  " value="链接" class="createLink  " />
         <button id="add" onclick="add1()">图片</button>
         <!-- <input type="button" id="add" onclick="add1()" value="图片" /> -->
         <!-- <button onclick="clickInsert()">点击插入一个按钮</button> -->
@@ -217,7 +218,7 @@
         padding: 5px;
         overflow: auto;
       " contenteditable="true" spellcheck="false">
-        <p class="origin">请输入正文（限制在200-40000字以内）</p>
+        <p><br></p>
     </div>
 
     <!-- <button id="save" style="width:300px;height:30px;margin:auto;margin-top:30px;
@@ -246,14 +247,19 @@
 
         // 监听鼠标按下  如果按下删除键且div里没有任何html内容 那么就生成一个p标签
 
-        //     document.addEventListener('keyup', (e) => {
+        document.addEventListener('keydown', (e) => {
 
-        //       if (e.keyCode === 8 || edit === " ") {
-        //         var edit = document.getElementById('edit').innerHTML
-        //       console.log(edit);
-        //         cp()
-        //       }
-        //     })
+            if (e.keyCode === 8) {
+                var edit = document.getElementById('edit').innerHTML
+                console.log(edit);
+                if (edit = " ") {
+                    console.log("内容空");
+                    cp()
+                }
+                return
+
+            }
+        })
 
 
 
@@ -278,11 +284,55 @@
         // });
 
 
+        //         $('#edit').on('keypress', function(e) {
 
+        // var theEvent = e || window.event;
 
+        // var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
 
+        // if( code == 13 ) {
 
+        //     document.execCommand('formatBlock', 'false', '<p>');
 
+        // }
+
+        // });
+        //  解决ol和ul标签外包裹的p标签
+        function adjustList() {
+
+            let lists = document.querySelectorAll("ol, ul");
+
+            for (let i = 0; i < lists.length; i++) {
+
+                let ele = lists[i];  // ol
+
+                let parentNode = ele.parentNode;
+
+                if (parentNode.tagName === 'P' && parentNode.lastChild === parentNode.firstChild) {
+
+                    parentNode.insertAdjacentElement('beforebegin', ele);
+
+                    parentNode.remove()
+
+                }
+
+            }
+
+        }
+
+        // 把div变成p 标签
+        function changp() {
+            let lists = $("#edit").find("div");
+            var bq = $("<div>我是新创建的div标签</div>")
+            for (let i = 0; i < lists.length; i++) {
+                html = $("我是新创建的div标签")
+                lists[i].onmouseout = gb
+            }
+
+        }
+        function gb() {
+            $(this).replaceWith('<p>' + '<br>' + '</p>')
+        }
 
 
 
@@ -378,6 +428,7 @@
         var state = 0
         var pbj = ''
         var olj = ''
+        var ulj = ''
         // 引用点击事件
         function wd2() {
             if (pbj.context.id == 0) {
@@ -393,9 +444,11 @@
                 pbj.parent('.aaa').before(my_html)
                 pbj.parent('.aaa').detach();
             }
+
+
+
+
             //  ol 引用
-
-
 
 
             if (olj.context.id == 0) {
@@ -410,30 +463,53 @@
                 let myol_html = olj.parent('.aaa').html()
                 console.log(myol_html);
                 olj.parent('.aaa').before(myol_html)
-                olj.parent('.aaa').remove();
+                olj.parent('.aaa').detach();
             }
+
+            // ul引用
+
+            // if (ulj.context.id == 0) {
+            //     console.log("ol执行");
+            //     ulj.wrap('<blockquote></blockquote>');
+            //     $("blockquote").addClass("aaa");
+            //     cp()
+            //     ulj.context.id = 1
+            // } else if (ulj.context.id == 1) {  // 这个引用也是有问题 需要获取父级的父级 
+            //     console.log("ol取消执行");
+            //     ulj.context.id = 0
+            //     let myul_html = ulj.parent('.aaa').html()
+            //     console.log(myul_html);
+            //     ulj.parent('.aaa').before(myul_html)
+            //     ulj.parent('.aaa').detach();
+            // }
         }
+
+
+
+
+
+
         // 有序列表
-        
+
 
         function yx() {
-         let my_html = ''
+            // let my_html = ''
             if (pbj.context.id == 0) {
                 console.log("执行有序列表");
-                olnr = '<ol><li></li></ol>'
+                olnr = '<ul><li></li></ul>'
                 $("ol").addClass("aaa");
                 pbj.wrap(olnr);
                 cp()
-                my_html =  pbj.parents("ol").children("li").children("p")
-                console.log(my_html);
-                for (let i = 0; i < my_html.length; i++) {
-                    my_html[i].id = 1
-                    
-                }
-                // pbj.context.id = 1
-            } else if (pbj.context.id == 1) {   // 这个取消列表的功能还不可以   因为取消列表这个删除有问题
+                // my_html = pbj.parents("ol").children("li").children("p")
+                // console.log(my_html);
+                // for (let i = 0; i < my_html.length; i++) {
+                //     my_html[i].id = 1
+
+                // }
+                pbj.context.id = 1
+            } else if (pbj.context.id == 1) {   // 这个取消列表的功能还不可以   因为取消列表这个删除有问题   当重复点击后 当前的p标签重新插入ol的前面  并且把此p标签的父级li标签 删除掉  
                 console.log("取消有序列表");
-              
+
                 // olnr1 = pbj.parent('li')
                 // console.log(olnr1);
                 // olnr2 = pbj.parent('ol')
@@ -441,25 +517,23 @@
                 // olnr.before(my_html)
                 // olnr.detach();
                 // console.log(pbj.parents("ol")); 
-                my_html =  pbj.parents("ol").children("li").children("p")
-                for (let i = 0; i < my_html.length; i++) {
-                    pbj.parents("ol").before(my_html[i]) 
-                    my_html[i].id = 0
-                }
-    
-                pbj.parents("ol")[0].remove();
+                // my_html = pbj.parents("ol").children("li").children("p")
+                // for (let i = 0; i < my_html.length; i++) {
+                //     pbj.parents("ol").before(my_html[i])
+                //     my_html[i].id = 0
+                // }
 
-                console.log(my_html);
+                // pbj.parents("ol")[0].remove();
+
+                // console.log(my_html);
+                pbj.context.id = 0
+                let myol_html = pbj.parent('li').html()
+                console.log(myol_html);
+                pbj.parents("ul").insertAfter(myol_html)
+                pbj.parent('li').remove();
 
             }
         }
-
-
-    
-
-
-
-
 
 
 
@@ -472,15 +546,42 @@
             pbj = $(this)
             // state = pbj.context.id
             console.log($(this));
+            console.log("p标签");
         }
 
+
+
+        // ol变量
         function olhwd() {
-            $(this).context.id = 0
+            let fj = $(this).parent();
+            if (fj.attr('class') == "aaa") {
+                console.log("相同");
+                //  let olidm =   fj.find("ol");
+                //  let ulidm =   fj.find(" ul");
+                //  olidm.id === ulidm.id
+                let idm = fj.find("ol,ul");
+                for(let t = 0; t < idm.length; t++){
+                    idm[t].id === 1
+                }
+               console.log(idm);
+            }
+
+            $(this).id = 0
             // console.log(pbj);
             olj = $(this)
             // console.log("ol绑定");
+            console.log($(this));
+
         }
 
+        // // ul变量
+        // function ulhwd() {
+        //     $(this).id = 0
+        //     // console.log(pbj);
+        //     ulj = $(this)
+        //     console.log("ul绑定");
+        //     console.log($(this));
+        // }
 
 
 
@@ -488,7 +589,8 @@
 
         document.addEventListener('mousemove', (e) => {  // 对性能不太友好
             // $(document).ready(function () {
-
+            adjustList()  //去掉包裹有序列表无序列表的p标签
+            changp()//p标签替换div标签
             // 以p标签包裹内容
             var ch = $("#edit").find("p");
             for (var i = 0; i < ch.length; i++) {
@@ -497,14 +599,28 @@
             }
 
 
-
-
             //   // 以ol标签包裹内容
             //   var ol = $("#edit").find("ol");
-            //   for (var i = 0; i < ch.length; i++) {
+            //   for (var i = 0; i < ol.length; i++) {
             //     // ch[i].id = 0
-            //     ch[i].onclick = wd1
+            //     ol[i].onclick = olhwd
             //   }
+
+
+            //   // 以ul标签包裹内容
+            //   var ul = $("#edit").find("ul");
+            //   for (var i = 0; i < ul.length; i++) {
+            //     // ch[i].id = 0
+            //     ul[i].onclick = ulhwd
+            //   }
+
+            let lists = document.querySelectorAll("ol, ul");
+            for (let i = 0; i < lists.length; i++) {
+
+                lists[i].onclick = olhwd
+
+            }
+
 
         })
 
