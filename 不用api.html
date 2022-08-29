@@ -133,7 +133,8 @@
         <input type="button" name="bold" value="加粗" class="bold" />
         <input type="button" name="italic" value="斜体" class="italic" />
         <input type="button" name="underline" value="下划线" class="decotation" />
-        <input type="button" name="insertHorizontalRule" value="水平线" class="insertHorizontalRule" />
+        <input type="button" name="insertHorizontalRule" value="水平线" onclick="findParentByTagName()"
+            class="insertHorizontalRule" />
         大小
         <select name="fontSize" class="font">
             <option value="1">1</option>
@@ -204,7 +205,7 @@
         <!-- <button onclick="clickInsert()">点击插入一个按钮</button> -->
         <button id="yy" onclick="wd2()">引用</button>
         <button id="yx" onclick="yx()">有序列表</button>
-        <button id="wx">无序列表</button>
+        <button id="spx"  onclick="spx()" >水平线</button>
         <!-- <button id="qxyy" aria-pressed="false">取消引用</button> -->
         <input type="file" id="file_input" />
     </div>
@@ -218,7 +219,10 @@
         padding: 5px;
         overflow: auto;
       " contenteditable="true" spellcheck="false">
-        <p><br></p>
+      <p><br/></p>
+      <p  class=".weeee">
+        56565
+      </p>
     </div>
 
     <!-- <button id="save" style="width:300px;height:30px;margin:auto;margin-top:30px;
@@ -239,6 +243,46 @@
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 
     <script>
+        function spx(){
+            
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //  光标所在文字 添加外标签给文字
+
+        /**
+        * 查找父元素
+        * @param {String} root
+        * @param {String | Array} name
+        */
+
+
+
+        // function findParentByTagName(root, name) {
+        //     let parent = root;
+        //     if (typeof name === "string") {
+        //         name = [name];
+        //     }
+        //     while (name.indexOf(parent.nodeName.toLowerCase()) === -1 && parent.nodeName !== "#edit" && parent.nodeName !== "HTML") {
+        //         parent = parent.parentNode;
+        //     }
+        //     return parent.nodeName === "#edit" || parent.nodeName === "HTML" ? null : parent;
+        // }
+
 
         //   $("div").click(function () {
         //   console.log("文字");
@@ -251,9 +295,9 @@
 
             if (e.keyCode === 8) {
                 var edit = document.getElementById('edit').innerHTML
-                console.log(edit);
+                // console.log(edit);
                 if (edit = " ") {
-                    console.log("内容空");
+                    // console.log("内容空");
                     cp()
                 }
                 return
@@ -297,6 +341,14 @@
         // }
 
         // });
+
+
+
+
+
+
+
+
         //  解决ol和ul标签外包裹的p标签
         function adjustList() {
 
@@ -323,9 +375,9 @@
         // 把div变成p 标签
         function changp() {
             let lists = $("#edit").find("div");
-            var bq = $("<div>我是新创建的div标签</div>")
+            // var bq = $("<div>我是新创建的div标签</div>")
             for (let i = 0; i < lists.length; i++) {
-                html = $("我是新创建的div标签")
+                // html = $("我是新创建的div标签")
                 lists[i].onmouseout = gb
             }
 
@@ -343,12 +395,12 @@
 
         // var sel = window.getSelection();
         // document.onmouseup = function () {
-        //   console.log(sel.anchorNode);    //起点所在的文本节点
-        //   console.log(sel.anchorOffset);  //起点在该节点中的位置
-        //   console.log(sel.focusNode);     //终点所在的文本节点
-        //   console.log(sel.focusOffset);   //终点在该节点中的位置
-        //   console.log(sel.isCollapsed);   //起点和终点是否在同一位置
-        //   console.log(sel.rangeCount);    // ranges （区域）的个数
+        //     console.log(sel.anchorNode);    //起点所在的文本节点
+        //     console.log(sel.anchorOffset);  //起点在该节点中的位置
+        //     console.log(sel.focusNode);     //终点所在的文本节点
+        //     console.log(sel.focusOffset);   //终点在该节点中的位置
+        //     console.log(sel.isCollapsed);   //起点和终点是否在同一位置
+        //     console.log(sel.rangeCount);    // ranges （区域）的个数
         // }
 
 
@@ -372,6 +424,26 @@
             cp()
             // $("#wq").focus();
             // $("div").blur();
+
+            console.log("点击水平线");
+            let p = document.querySelector(".weeee");
+            for(let i = 0; i< p.length; i++){
+                console.log(p[i].innerHTML);  // 获取不到
+            }
+            
+            p.focus();
+            if (window.getSelection) {
+                //ie11 10 9 ff safari
+                var range = window.getSelection(); //创建range
+                range.selectAllChildren(box2); //range 选择box2下所有子内容
+                range.collapseToStart(); //光标移至首位
+            } else if (document.selection) {
+                //ie10 9 8 7 6 5
+                var range = document.selection.createRange(); //创建选择对象
+                range.moveToElementText(obj); //range定位到obj
+                range.collapse(false); //光标移至最后
+                range.select();
+            }
 
         });
 
@@ -460,10 +532,18 @@
             } else if (olj.context.id == 1) {  // 这个引用也是有问题 需要获取父级的父级 
                 console.log("ol取消执行");
                 olj.context.id = 0
+                let fj = olj.parent();
+                let idm = fj.children("ol,ul");
+                for (let t = 0; t < idm.length; t++) {
+                    idm[t].id = 0
+                    console.log('变化');
+                }
                 let myol_html = olj.parent('.aaa').html()
                 console.log(myol_html);
                 olj.parent('.aaa').before(myol_html)
                 olj.parent('.aaa').detach();
+
+
             }
 
             // ul引用
@@ -492,48 +572,48 @@
         // 有序列表
 
 
-        function yx() {
-            // let my_html = ''
-            if (pbj.context.id == 0) {
-                console.log("执行有序列表");
-                olnr = '<ul><li></li></ul>'
-                $("ol").addClass("aaa");
-                pbj.wrap(olnr);
-                cp()
-                // my_html = pbj.parents("ol").children("li").children("p")
-                // console.log(my_html);
-                // for (let i = 0; i < my_html.length; i++) {
-                //     my_html[i].id = 1
+        // function yx() {
+        //     // let my_html = ''
+        //     if (pbj.context.id == 0) {
+        //         console.log("执行有序列表");
+        //         olnr = '<ul><li></li></ul>'
+        //         $("ol").addClass("aaa");
+        //         pbj.wrap(olnr);
+        //         cp()
+        //         // my_html = pbj.parents("ol").children("li").children("p")
+        //         // console.log(my_html);
+        //         // for (let i = 0; i < my_html.length; i++) {
+        //         //     my_html[i].id = 1
 
-                // }
-                pbj.context.id = 1
-            } else if (pbj.context.id == 1) {   // 这个取消列表的功能还不可以   因为取消列表这个删除有问题   当重复点击后 当前的p标签重新插入ol的前面  并且把此p标签的父级li标签 删除掉  
-                console.log("取消有序列表");
+        //         // }
+        //         pbj.context.id = 1
+        //     } else if (pbj.context.id == 1) {   // 这个取消列表的功能还不可以   因为取消列表这个删除有问题   当重复点击后 当前的p标签重新插入ol的前面  并且把此p标签的父级li标签 删除掉  
+        //         console.log("取消有序列表");
 
-                // olnr1 = pbj.parent('li')
-                // console.log(olnr1);
-                // olnr2 = pbj.parent('ol')
-                // let my_html = olnr2.html()
-                // olnr.before(my_html)
-                // olnr.detach();
-                // console.log(pbj.parents("ol")); 
-                // my_html = pbj.parents("ol").children("li").children("p")
-                // for (let i = 0; i < my_html.length; i++) {
-                //     pbj.parents("ol").before(my_html[i])
-                //     my_html[i].id = 0
-                // }
+        //         // olnr1 = pbj.parent('li')
+        //         // console.log(olnr1);
+        //         // olnr2 = pbj.parent('ol')
+        //         // let my_html = olnr2.html()
+        //         // olnr.before(my_html)
+        //         // olnr.detach();
+        //         // console.log(pbj.parents("ol")); 
+        //         // my_html = pbj.parents("ol").children("li").children("p")
+        //         // for (let i = 0; i < my_html.length; i++) {
+        //         //     pbj.parents("ol").before(my_html[i])
+        //         //     my_html[i].id = 0
+        //         // }
 
-                // pbj.parents("ol")[0].remove();
+        //         // pbj.parents("ol")[0].remove();
 
-                // console.log(my_html);
-                pbj.context.id = 0
-                let myol_html = pbj.parent('li').html()
-                console.log(myol_html);
-                pbj.parents("ul").insertAfter(myol_html)
-                pbj.parent('li').remove();
+        //         // console.log(my_html);
+        //         pbj.context.id = 0
+        //         let myol_html = pbj.parent('li').html()
+        //         console.log(myol_html);
+        //         pbj.parents("ul").insertAfter(myol_html)
+        //         pbj.parent('li').remove();
 
-            }
-        }
+        //     }
+        // }
 
 
 
@@ -543,8 +623,8 @@
             // console.log(pbj);
             pbj = $(this)
             // state = pbj.context.id
-            console.log($(this));
-            console.log("p标签");
+            // console.log($(this));
+            // console.log("p标签");
         }
 
 
@@ -558,10 +638,10 @@
                 //  let ulidm =   fj.find(" ul");
                 //  olidm.id === ulidm.id
                 let idm = fj.children("ol,ul");
-                for(let t = 0; t < idm.length; t++){
-                    idm[t].id === 1
+                for (let t = 0; t < idm.length; t++) {
+                    idm[t].id = 1
                 }
-               console.log(idm);
+                console.log(idm);
             }
 
             $(this).id = 0
@@ -1133,7 +1213,7 @@
                         '<figure class="results" id="cs"   onmouseout="imgtpyr()"   contenteditable="false" ><img id="tp" onmouseover="tpyr()"  onmouseout="tpyc()"  onclick="tpdj()" src="' +
                         this.result +
                         '" alt=""/><br><figcaption  contenteditable="true" dataBefore="在此输入图片注释 "   onclick="qq()" onblur="cc()"  onmouseover="yrzs()"  id="myP" class="zs" ></figcaption> </figure>';
-                    var div = document.createElement('div');
+                    var div = document.createElement('figure');
                     // div.contenteditable = true
                     div.innerHTML = result;
                     div['className'] = 'result';

@@ -1,0 +1,66 @@
+<!-- <div contenteditable="true" id="rich-editor">
+
+ 
+
+    <p>百度EUX团队</p>
+     
+    </div>
+    <script>
+        let range = window.getSelection().getRangeAt(0),
+
+textEle = range.commonAncestorContainer;
+
+range.setStart(range.startContainer, textEle.length);
+
+range.setEnd(range.endContainer, textEle.length);
+    </script> -->
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+          .box1 {
+            background-color: aqua;
+            width: 500px;
+            height: 500px;
+          }
+          .box2 {
+            width: 100%;
+            border: 2px solid black;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="box1">
+          <div class="box2" contenteditable="true"></div>
+        </div>
+        <script>
+          document.querySelector(".box1").onclick = function (e) {
+            let box2 = document.querySelector(".box2");
+            box2.focus();
+
+
+            
+            if (window.getSelection) {
+              //ie11 10 9 ff safari
+              var range = window.getSelection(); //创建range
+              range.selectAllChildren(box2); //range 选择box2下所有子内容
+              range.collapseToStart(); //光标移至首位
+            } else if (document.selection) {
+              //ie10 9 8 7 6 5
+              var range = document.selection.createRange(); //创建选择对象
+              range.moveToElementText(obj); //range定位到obj
+              range.collapse(false); //光标移至最后
+              range.select();
+            }
+          };
+        </script>
+      </body>
+    </html>
+    
+    
