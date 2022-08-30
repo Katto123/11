@@ -1,0 +1,77 @@
+<div>
+    <span id="a">456</span>
+    <span>A</span>
+    <span>B</span>
+    <div>
+        <span>C</span>
+        DE
+        <span>FGHI</span>
+        <span>J</span>
+        <span>K</span>
+    </div>
+    <span>L</span>
+    <span>M</span>
+    OPQRST
+</div>
+<script>
+    var a = document.getElementById("a");
+    var sel = window.getSelection();
+    document.onmouseup = function () {
+        console.log(sel.anchorNode);    //起点所在的文本节点
+        console.log(sel.anchorOffset);  //起点在该节点中的位置
+        console.log(sel.focusNode);     //终点所在的文本节点
+        console.log(sel.focusOffset);   //终点在该节点中的位置
+        console.log(sel.isCollapsed);   //起点和终点是否在同一位置
+        console.log(sel.rangeCount);    // ranges （区域）的个数
+        console.log(sel.toString());  //选中的文本
+        /* 删除页面中选中的文本 */
+        sel.deleteFromDocument();
+    }
+</script>
+
+
+<!-- <div> <p>123</p><p id="a">456</p><p>789</p></div>
+<script>
+var a = document.getElementById("a");
+var sel = window.getSelection();
+
+var range = document.createRange();
+range.selectNode(a);
+sel.addRange(range);
+</script> -->
+
+
+
+<!-- 
+标签插入内部 -->
+<!-- 
+<body>
+    <div class="edit" id="inputContent" contenteditable="true" placeholder="请在这输入内容" onblur="blurEdit()">
+        <p><br /></p>
+    </div>
+    <button onclick="clickInsert()">点击插入一个按钮</button>
+</body>
+
+<script>
+    let position = ''
+    function blurEdit() {
+        position = window.getSelection().getRangeAt(0)
+    }
+    function clickInsert() {
+        if (position === '') {
+            // 如果div没有光标，则在div内容末尾插入
+            const div = document.getElementById('inputContent')
+            div.focus()
+            const range = window.getSelection()
+            range.selectAllChildren(div)
+            range.collapseToEnd()
+            position = window.getSelection().getRangeAt(0)
+        }
+        // 创建一个元素
+        const span = document.createElement('p')
+        // 插入的按钮不可编辑，设置contenteditable为false
+        span.innerHTML = '<button contenteditable="false" class="btn" id="btn1">插入的按钮1</button>'
+        // 将按钮插入
+        position.insertNode(span)
+    }
+</script> -->

@@ -121,7 +121,7 @@
     <center>
         <h2 style="margin: auto">富文本编辑器</h2>
     </center>
-    <hr />
+
     <div id="toolbar" style="
         width: 80%;
         margin: auto;
@@ -133,8 +133,7 @@
         <input type="button" name="bold" value="加粗" class="bold" />
         <input type="button" name="italic" value="斜体" class="italic" />
         <input type="button" name="underline" value="下划线" class="decotation" />
-        <input type="button" name="insertHorizontalRule" value="水平线" onclick="findParentByTagName()"
-            class="insertHorizontalRule" />
+        <input type="button" name="insertHorizontalRule" value="水平线" class="insertHorizontalRule" />
         大小
         <select name="fontSize" class="font">
             <option value="1">1</option>
@@ -205,7 +204,7 @@
         <!-- <button onclick="clickInsert()">点击插入一个按钮</button> -->
         <button id="yy" onclick="wd2()">引用</button>
         <button id="yx" onclick="yx()">有序列表</button>
-        <button id="spx"  onclick="spx()" >水平线</button>
+        <button id="spx">水平线</button>
         <!-- <button id="qxyy" aria-pressed="false">取消引用</button> -->
         <input type="file" id="file_input" />
     </div>
@@ -219,10 +218,10 @@
         padding: 5px;
         overflow: auto;
       " contenteditable="true" spellcheck="false">
-      <p><br/></p>
-      <p  class=".weeee">
-        56565
-      </p>
+        <p><br /></p>
+        <!-- <p class=".weeee">
+            56565
+        </p> -->
     </div>
 
     <!-- <button id="save" style="width:300px;height:30px;margin:auto;margin-top:30px;
@@ -243,14 +242,79 @@
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 
     <script>
-        function spx(){
-            
+        document.execCommand("defaultParagraphSeparator", false, "p"); //回车p标签
+
+
+        // 在光标后面点击生成br标签   还没有写完
+        function cp() {
+            const edit1 = document.getElementById('edit')
+            var p = document.createElement('p');
+            p.innerHTML = "<br>"
+            // p.id = "wq"
+            edit1.appendChild(p);
+
         }
 
 
 
 
 
+
+        // //在光标处插入文本
+        // function gbp() {
+        //     insertTextAtCursor("<strong>666</strong>")
+        // }
+
+
+        // function insertTextAtCursor(text) {
+
+        //     var sel = window.getSelection();
+        //     if (sel.getRangeAt && sel.rangeCount) {
+        //         var range = sel.getRangeAt(0);
+        //         range.deleteContents();
+        //         range.insertNode(document.createTextNode(text));
+
+        //     }
+        // }
+
+
+
+
+
+
+
+
+
+        //  首先遍历hr标签 给每一个hr标签都添加事件
+        $(".insertHorizontalRule").click(function () {
+            console.log("dji");
+            cp()
+            // document.addEventListener('mousemove', (e) => {
+            setTimeout(sppx, 1)
+            // })
+        })
+
+        function sppx() {
+            let hr = document.querySelectorAll("hr");
+            for (let i = 0; i < hr.length; i++) {
+                // hr[i].onmousemove = spx   //  这个移动触发函数需要修改
+                var p = $(hr[i]).next('p')
+                for (let i = 0; i < p.length; i++) {
+                    // p[i].onclick = xzhr
+                    console.log(p[0].innerHTML);
+
+                    p[0].focus();
+                    if (window.getSelection) {
+                        //ie11 10 9 ff safari
+                        var range = window.getSelection(); //创建range
+                        range.selectAllChildren(p[0]); //range 选择p[0]下所有子内容
+                        range.collapseToEnd(); //光标移至最后
+                    }
+                }
+            }
+            console.log(p);
+
+        }
 
 
 
@@ -372,19 +436,19 @@
 
         }
 
-        // 把div变成p 标签
-        function changp() {
-            let lists = $("#edit").find("div");
-            // var bq = $("<div>我是新创建的div标签</div>")
-            for (let i = 0; i < lists.length; i++) {
-                // html = $("我是新创建的div标签")
-                lists[i].onmouseout = gb
-            }
+        // // js原生把div变成p 标签  
+        // function changp() {
+        //     let lists = $("#edit").find("div");
+        //     // var bq = $("<div>我是新创建的div标签</div>")
+        //     for (let i = 0; i < lists.length; i++) {
+        //         // html = $("我是新创建的div标签")
+        //         lists[i].onmouseout = gb
+        //     }
 
-        }
-        function gb() {
-            $(this).replaceWith('<p>' + '<br>' + '</p>')
-        }
+        // }
+        // function gb() {
+        //     $(this).replaceWith('<p>' + '<br>' + '</p>')
+        // }
 
 
 
@@ -417,35 +481,35 @@
 
 
 
-        //  水平线
+        // //  水平线
 
-        $(".insertHorizontalRule").click(function () {
-            console.log("水平线生成p");
-            cp()
-            // $("#wq").focus();
-            // $("div").blur();
+        // $(".insertHorizontalRule").click(function () {
+        //     console.log("水平线生成p");
+        //     cp()
+        //     // $("#wq").focus();
+        //     // $("div").blur();
 
-            console.log("点击水平线");
-            let p = document.querySelector(".weeee");
-            for(let i = 0; i< p.length; i++){
-                console.log(p[i].innerHTML);  // 获取不到
-            }
-            
-            p.focus();
-            if (window.getSelection) {
-                //ie11 10 9 ff safari
-                var range = window.getSelection(); //创建range
-                range.selectAllChildren(box2); //range 选择box2下所有子内容
-                range.collapseToStart(); //光标移至首位
-            } else if (document.selection) {
-                //ie10 9 8 7 6 5
-                var range = document.selection.createRange(); //创建选择对象
-                range.moveToElementText(obj); //range定位到obj
-                range.collapse(false); //光标移至最后
-                range.select();
-            }
+        //     console.log("点击水平线");
+        //     let p = document.querySelector(".weeee");
+        //     for (let i = 0; i < p.length; i++) {
+        //         console.log(p[i].innerHTML);  // 获取不到
+        //     }
 
-        });
+        //     p.focus();
+        //     if (window.getSelection) {
+        //         //ie11 10 9 ff safari
+        //         var range = window.getSelection(); //创建range
+        //         range.selectAllChildren(box2); //range 选择box2下所有子内容
+        //         range.collapseToStart(); //光标移至首位
+        //     } else if (document.selection) {
+        //         //ie10 9 8 7 6 5
+        //         var range = document.selection.createRange(); //创建选择对象
+        //         range.moveToElementText(obj); //range定位到obj
+        //         range.collapse(false); //光标移至最后
+        //         range.select();
+        //     }
+
+        // });
 
 
 
@@ -624,7 +688,7 @@
             pbj = $(this)
             // state = pbj.context.id
             // console.log($(this));
-            // console.log("p标签");
+            // console.log("p标签");        
         }
 
 
@@ -664,11 +728,11 @@
 
 
 
-
         document.addEventListener('mousemove', (e) => {  // 对性能不太友好
+
             // $(document).ready(function () {
             adjustList()  //去掉包裹有序列表无序列表的p标签
-            changp()//p标签替换div标签
+            // changp()//p标签替换div标签
             // 以p标签包裹内容
             var ch = $("#edit").find("p");
             for (var i = 0; i < ch.length; i++) {

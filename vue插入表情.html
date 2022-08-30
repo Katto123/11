@@ -1,0 +1,165 @@
+<!-- <template lang="pug">
+  div
+    div 文字编辑器
+    div.tarea-box
+      div.text-box
+        div.inp-box
+          div.inp(id="textbox", contenteditable, ref="textbox", :placeholder="placeholder",     @blur="saveFocus", @keyup="hang")
+        div.bottom-face
+          img.faceImage(:src="faceImage", @click="handleChoose")
+          span.count  还可以输入{{textCount}}字
+        div.expression(v-if="showFace")
+          div.exp_bd
+            div.exp_cont(:class="showFace? 'active':''")
+              div.qq_face()
+                a.face(@click="chooseQqFace('face', value, key, index)", v-for='(value, key, index) in QQFaceMap.data', v-show="index < 105", type="qq", :title="key",  :class="'qqFace'+ `${index}`") {{key}}
+              div.emoji_face()
+                a.face(@click="chooseQqFace('emoji', value, key, index)", v-for='(value, key, index) in EmojiFaceMap.data',  :title="key", type="emoji",  :class="'emoji'+ `${value}`") {{value}}
+    div
+      el-button(type="primary", @click="submit") 提交
+</template>
+<script>
+import face from '@/assets/face.jpg'
+import { QQFaceMap, EmojiFaceMap, EmojiMap, faceValueMap } from '@/util/faceMap'
+export default {
+  components: {},
+  data () {
+    return {
+      textCount: 1000,
+      QQFaceMap: QQFaceMap,
+      EmojiFaceMap: EmojiFaceMap,
+      faceValueMap: faceValueMap,
+      EmojiMap: EmojiMap,
+      placeholder: '请输入...',
+      showFace: false,
+      faceImage: face
+    }
+  },
+  methods: {
+    choseFace () {
+      this.showFace = false
+    },
+    handleChoose () {
+      this.showFace = !this.showFace
+    },
+    hang: (e) => {
+      this.textCount = 1000 - document.getElementById('textbox').innerText.length
+    },
+    saveFocus () {
+      this.saveRange()
+    },
+    saveRange () { // 保存光标位置
+      var selection = window.getSelection ? window.getSelection() : document.selection
+      if (!selection.rangeCount) {
+        return
+      }
+      var range = selection.createRange ? selection.createRange() : selection.getRangeAt(0)
+      window._range = range
+    },
+    insertHtmlAtCaret (html) { // 插入内容
+      var sel
+      var range = window._range
+      if (window.getSelection) {
+        sel = window.getSelection()
+        if (sel.getRangeAt && sel.rangeCount) {
+          var el = document.createElement('div')
+          el.innerHTML = html
+          var flag = document.createDocumentFragment()
+          var node, lastNode
+          while ((node = el.firstChild)) {
+            lastNode = flag.appendChild(node)
+          }
+          range.insertNode(flag)
+          if (lastNode) {
+            range = range.cloneRange()
+            range.setStartAfter(lastNode)
+            range.collapse(true)
+            sel.removeAllRanges()
+            sel.addRange(range)
+          }
+        }
+      }
+    },
+    chooseQqFace (type, value, key, index) { // 选择表情
+      this.showFace = false
+      var html
+      if (type === 'face') {
+        html = `<img src="http://www.u-qun.com/images/face-v2/spacer.gif" class="qqemoji qqemoji${index}" :data_name="[${key}]" />`
+      } else {
+        for (let ObjKey in this.EmojiMap.data) {
+          if (key === ObjKey) {
+            this.ObjKey = this.EmojiMap.data[key]
+          }
+        }
+        if (this.ObjKey === '112' || this.ObjKey === '111' || this.ObjKey === '110' || this.ObjKey === '109' || this.ObjKey === '108' || this.ObjKey === '107' || this.ObjKey === '106' || this.ObjKey === '105') {
+          html = `<img src="http://www.u-qun.com/images/face-v2/spacer.gif" class="qqemoji qqemoji${this.ObjKey}" :data_name="[${key}]" />`
+        } else {
+          for (let faceKey in this.faceValueMap) {
+            if (this.ObjKey === faceKey) {
+              this.faceKey = this.faceValueMap[faceKey]
+            }
+          }
+          html = `<img src="http://www.u-qun.com/images/face-v2/spacer.gif" class="emoji emoji${this.ObjKey}" :data_name="${this.faceKey}" />`
+        }
+      }
+      document.getElementById('textbox').focus()
+      this.insertHtmlAtCaret(html)
+    },
+    submit () { // 提交处理数据
+      var ele = document.getElementById('textbox').childNodes
+      let aa = ''
+      for (let i = 0; i < ele.length; i++) {
+        if (ele[i].textContent) {
+          aa += ele[i].textContent
+        } else if (ele[i].nodeName === 'BR') {
+          aa += `\n`
+        } else if (ele[i].nodeName === 'IMG') {
+          aa += ele[i].attributes[2].value
+        }
+      }
+      console.log(aa)
+    }
+  }
+}
+</script>
+<style lang="scss">
+  @import 'src/assets/scss/expression';
+  .tarea-box {
+    width: 348.3px;
+    height: 350px;
+  }
+ .text-box {
+   border: solid 1px #ccc;
+   color: #727171;
+   position: relative;
+   .inp-box {
+     padding: 10px;
+   }
+   .inp {
+     width: 100%;
+     height: 285px;
+     outline: none;
+     overflow: scroll;
+     display: inline-block;
+   }
+   .inp:empty:before {
+     content: attr(placeholder);
+     display: block;
+     color: #a9a9a9;
+   }
+   .bottom-face {
+     height: 40px;
+     padding: 0 10px;
+     line-height: 40px;
+     position: relative;
+     border-top: solid 1px #ccc;
+     .faceImage {
+       width: 22px;
+       height: 16px;
+     }
+     .count {
+       margin-left: 160px;
+     }
+   }
+ }
+</style> -->

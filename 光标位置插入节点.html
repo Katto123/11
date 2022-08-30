@@ -1,0 +1,22 @@
+<body>
+    <div id="box" contentEditable>
+        <p>11111111111</p>
+    </div>
+</body>
+<script type="text/javascript">
+    document.getElementById("box").onmouseup = function () {
+        var p = document.createElement('<p><br /></p>');
+    }
+
+    function insertTextAtCursor(text) {
+
+        var sel = window.getSelection();
+        if (sel.getRangeAt && sel.rangeCount) {
+            var range = sel.getRangeAt(0);
+            range.deleteContents();
+            range.insertNode(p);
+
+        }
+
+    }
+</script>
