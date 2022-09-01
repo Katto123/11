@@ -867,10 +867,10 @@
 
 
         document.addEventListener('mousemove', (e) => {  // 对性能不太友好
-            if (tpsfy == 0) {
-                console.log("创建标签");   // 判断创建图片成功  为什么会一直触发
+            // if (tpsfy == 0) {
+            //     console.log("创建标签");   // 判断创建图片成功  为什么会一直触发
 
-            }
+            // }
 
             // let imgys = document.getElementsByTagName("img");
             // for (let i = 0; i < imgys.length; i++) {
@@ -1526,26 +1526,26 @@
         var tpsfy = " "
 
 
-        // 光标位置
+        // // 光标位置
 
-        let position = ''
+        // let position = ''
 
-        function blurEdit() {
+        // function blurEdit() {
 
-            position = window.getSelection().getRangeAt(0)
-        }
+        //     position = window.getSelection().getRangeAt(0)
+        // }
 
         function readFile() {
 
-            if (position === '') {
-                // 如果div没有光标，则在div内容末尾插入
-                const div = document.getElementById('edit')
-                div.focus()
-                const range = window.getSelection()
-                range.selectAllChildren(div)
-                range.collapseToEnd()
-                position = window.getSelection()
-            }
+        //     if (position === '') {
+        //         // 如果div没有光标，则在div内容末尾插入
+        //         const div = document.getElementById('edit')
+        //         div.focus()
+        //         const range = window.getSelection()
+        //         range.selectAllChildren(div)
+        //         range.collapseToEnd()
+        //         position = window.getSelection()
+        //     }
 
 
 
@@ -1591,8 +1591,9 @@
                     // parentNode = document.getElementById('edit')
                     // div = parentNode.insertBefore(div, position)
 
-                    console.log(position);
-                    position.insertNode(div)
+                    // console.log(position);
+                    pbj.after(div)  
+                    // position.insertNode(div)
                     cp()
                     // setTimeout(hh(),500)
                     // hh()
@@ -1612,7 +1613,6 @@
         // 点击图片按钮
 
         function add1() {
-
             onInput.value = ''; // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
             onInput.click();
         }
