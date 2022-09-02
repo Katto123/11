@@ -244,17 +244,6 @@
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 
     <script>
-        // 点击水平线标签在水平线下面生成p标签 并且把光标定位到新创建的标签的末尾
-
-        function djspx() {
-
-        }
-
-
-
-
-
-
         // var p2 = ""
 
         //         function wbnr() {
@@ -369,41 +358,8 @@
 
         function sppx() {
             let hr = document.querySelectorAll("hr");
-            cp()
-
-
-            // 判断hr的父级的父级是不是引用标签 如果是那么光标就落在hr标签下生成一个p标签 然后把光标定位到当前的p标签下面
-
-
             for (let i = 0; i < hr.length; i++) {
                 // hr[i].onmousemove = spx   //  这个移动触发函数需要修改
-                // var px = document.createElement('p');
-                // px.innerHTML = "<br>";
-                // hr[i].after(px)
-                // var hryy = $(hr[i]).parent()
-
-                // console.log(hryy.tagName);
-                // if (hryy.attr("tagName") == "li") {
-                //     console.log("hrpanduan1");
-                // }
-
-
-                // 遍历每一个hr给当前的hr下面生成一个p标签
-
-                // hr[i]
-
-
-
-
-
-
-                // 在每个hr标签下面生成p标签  但是这样会出现引用标签套引用标签情况
-                // var phr = document.createElement('p');
-                // phr.innerHTML = "<br>";
-                // $(hr[i]).after(phr)
-
-                // var p = $(hr[i]).next('p')
-
                 var p = $(hr[i]).next('p')
                 for (let i = 0; i < p.length; i++) {
                     // p[i].onclick = xzhr
@@ -779,13 +735,17 @@
 
         function wd1() {
             $(this).id = 0
+
+            // console.log(pbj);
+            pbj = $(this)
+            state = pbj.context.id
+
+
+
             p2 = $(this).text().slice(sz)
             p3 = $(this).text().slice(0, sz)
             console.log(p3);
             console.log(p2);
-            // console.log(pbj);
-            pbj = $(this)
-            state = pbj.context.id
             // console.log($(this));
             // console.log("p标签");  
             let fj = $(this).parent();
@@ -1196,12 +1156,7 @@
 
         // 当大的编辑框获得焦点的时候  取消之前选中的图片删除事件 jies.id = 1
         function dkjd() {
-            jies.id = 1
-            // 获取图片的父级设定可编辑
-            let re = jies.parent(".cs");
-            re.contenteditable = "true"
-            // console.log(re);
-
+            // jies.id = 1
             // jies.style.border = "2px solid #FFFFFF"  // 对边框颜色限制
         }
 
@@ -1674,28 +1629,11 @@
                     // console.log(position);121212
                     pbj.after(div)
                     var p = document.createElement('p');
-                    // p.innerHTML = " <br>";
                     p.innerHTML = p2;
-
                     div.after(p)
-
-                    // p.html(pbj.html().replace(pbj.text(),p2))
-
-                    // div.contenteditable = "true"
-
-                    // p.html(p.html().replace("<br>",p2))
-                    // var dp = document.createElement('p');
-                    // dp.innerHTML =  p3;
-                    // div.before(dp)
-
-
-                    // pbj.innerHTML =  p3
+                    pbj.innerHTML = p3
                     // position.insertNode(div)
                     cp()
-                    // pbj.remove()
-
-
-                    pbj.html(pbj.html().replace(pbj.text(), p3))
                     // setTimeout(hh(),500)
                     // hh()
                     // div.onclick = function () {
