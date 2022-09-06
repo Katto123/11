@@ -206,6 +206,7 @@
         overflow: auto;
       " contenteditable="true" spellcheck="false">
     <p><br></p>
+    <p class="jd">123456 <b>23456789</b> </p>
     <!-- <pre>daimapianduan</pre> -->
     <!-- <p>1111111111111111
         <figure>333</figure>&#8203 222222222222222<br></p> -->
@@ -743,6 +744,9 @@
     // p标签引用功能 加   俩次回车后退出引用光标显示在下一个p标签里
 
     function wd1() {
+    
+
+
       $(this).id = 0
       console.log(this);
       // console.log(this.nodeName);
@@ -752,6 +756,9 @@
       console.log(pt2);
       // console.log(pbj);
       pbj = $(this)
+      console.log($(this)[0].attributes);
+      // console.log(this.attributes);
+
       state = pbj.context.id
       // console.log($(this));
       // console.log("p标签");  

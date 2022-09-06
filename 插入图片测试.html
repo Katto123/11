@@ -276,6 +276,7 @@
         var jdwz = ""
 
         // 遍历p标签光标后面的文字
+        // var rangeObj  = sel.getRangeAt(4);
         var sel = window.getSelection();
         document.onmouseup = function () {
             // console.log(sel.anchorNode);    //起点所在的文本节点
@@ -289,7 +290,7 @@
 
             // sel.deleteFromDocument();
             // console.log(sel.anchorNode.substr(1, 4));
-            sz = sel.anchorOffset
+            sz = sel.focusOffset
             jdwz = sel.anchorNode.nodeValue
             // console.log(jdwz);
             // console.log(typeof (jdwz));
@@ -739,7 +740,7 @@
         let position = ''
         function blurEdit() {
             jies.id = 0
-            position = window.getSelection().getRangeAt(0)
+            position = window.getSelection().getRangeAt(4)
             console.log(position);
 
         }
@@ -754,8 +755,8 @@
             $(this).id = 0
             console.log(this);
             // console.log(this.nodeName);
-            pt2 = $(this).text().slice(position)
-            pt3 = $(this).text().slice(0, position)
+            pt2 = $(this).text().slice(sz)
+            pt3 = $(this).text().slice(0, sz)
             console.log(pt2);
             console.log(pt3);
 
@@ -1192,7 +1193,7 @@
             // re.contenteditable = "true"
             // console.log(re);
 
-            // jies.style.border = "3px solid #FFFFFF"  // 对边框颜色限制
+            jies.style.border = "3px solid #FFFFFF"  // 对边框颜色限制
         }
 
 
@@ -1625,12 +1626,12 @@
                         cp()
 
                     }
-                    if (olj[0].nodeName = "UL" || olj[0].nodeName == "OL") {
-                        olj.after(div) // 这种情况是列表下插入图片 默认把图片插入到
-                        cp()
-                        console.log(olj);
-                        // console.log(olj[0].nodeName);
-                    }
+                    // if (olj[0].nodeName = "UL" || olj[0].nodeName == "OL") {
+                    //     olj.after(div) // 这种情况是列表下插入图片 默认把图片插入到
+                    //     cp()
+                    //     console.log(olj);
+                    //     // console.log(olj[0].nodeName);
+                    // }
 
 
 
