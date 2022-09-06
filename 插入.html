@@ -278,6 +278,8 @@
         // 遍历p标签光标后面的文字
         var sel = window.getSelection();
         document.onmouseup = function () {
+            adjustList()
+
             // console.log(sel.anchorNode);    //起点所在的文本节点
             // console.log(sel.anchorOffset);  //起点在该节点中的位置
             // console.log(sel.focusNode);     //终点所在的文本节点
@@ -290,7 +292,19 @@
             // sel.deleteFromDocument();
             // console.log(sel.anchorNode.substr(1, 4));
             sz = sel.anchorOffset
-            jdwz = sel.anchorNode.nodeValue
+            jdwz = sel.anchorNode
+            // jdwz = sel.anchorNode.nodeValue  内容转变成字符串
+
+            console.log(jdwz.nodeName);  //文本#text
+
+            // if (jdwz.nodeName == "#text") {
+            //     console.log("文本节点");
+            //     // var p = document.createElement('p');
+            //     // p.innerHTML = sel.anchorNode.nodeVaplue;
+            //     // sel.anchorNode.replaceWith(p)
+
+            // }
+
             // console.log(jdwz);
             // console.log(typeof (jdwz));
 
@@ -634,18 +648,13 @@
                 let my_html = pbj.parent('.aaa').html()
                 pbj.parent('.aaa').before(my_html)
                 pbj.parent('.aaa').detach();
+                // }
             }
-            // }
-
-
-
-
-
 
 
             //  ol ul 引用功能
 
-            //    else if (this[0].nodeName == "UL" || this[0].nodeName == "OL") {
+            //  if (this[0].nodeName == "UL" || this[0].nodeName == "OL") {
             //     console.log("点击列表");
             if (olj.context.id == 0) {
                 // console.log("ol执行");
@@ -736,14 +745,6 @@
         // }
 
 
-        let position = ''
-        function blurEdit() {
-            jies.id = 0
-            position = window.getSelection().getRangeAt(0)
-            console.log(position);
-
-        }
-
 
         var pt2 = ""
         var pt3 = ""
@@ -752,13 +753,12 @@
 
         function wd1() {
             $(this).id = 0
-            console.log(this);
+            // console.log(this);
             // console.log(this.nodeName);
-            pt2 = $(this).text().slice(position)
-            pt3 = $(this).text().slice(0, position)
-            console.log(pt2);
-            console.log(pt3);
-
+            pt2 = $(this).text().slice(sz)
+            pt3 = $(this).text().slice(0, sz)
+            // console.log(pt3);
+            // console.log(pt2);
             // console.log(pbj);
             pbj = $(this)
             state = pbj.context.id
@@ -769,91 +769,46 @@
 
                 console.log("外标签是aaa");
                 // 如果外标签是aaa 那么执行点击回车的判断
-                document.onkeypress = function () {
-                    if (event.keyCode == 13) {
-                        console.log("引用回车");
-                        p2 = pbj.text()
-                        console.log(p2);
-                        setTimeout(function () {
-                            p1 = pbj.nextAll('p').text()
-                            console.log(p1);
-                            // p2 = pbj.next('p').next('p').text()
-                            // console.log(p2);
-                            if (p1 == "" || p2 == "") {
-                                console.log("引用下的内容为空");
-                                document.onkeypress = function () {
-                                    if (event.keyCode == 13) {
-                                        console.log("引用二次回车");
-                                        // 控制光标
-                                        console.log("空");
-                                        var p3 = fj.next('p')
-                                        console.log(p3);
-                                        for (let i = 0; i < p3.length; i++) {
-                                            // p[i].onclick = xzhr
-                                            console.log(p3[0].innerHTML);
-                                            p3[0].focus();
-                                            if (window.getSelection) {
-                                                //ie11 10 9 ff safari
-                                                var range = window.getSelection(); //创建range
-                                                range.selectAllChildren(p3[0]); //range 选择p[0]下所有子内容
-                                                range.collapseToEnd(); //光标移至最后
-                                            }
-                                        }
-                                        pbj.nextAll('p').remove()
-                                    }
-                                }
-                            }
-                        }, 1);
-                    }
-                }
+                // document.onkeypress = function () {
+                //     if (event.keyCode == 13) {
+                //         console.log("引用回车");
+                //         p2 = pbj.text()
+                //         console.log(p2);
+                //         setTimeout(function () {
+                //             p1 = pbj.nextAll('p').text()
+                //             console.log(p1);
+                //             // p2 = pbj.next('p').next('p').text()
+                //             // console.log(p2);
+                //             if (p1 == "" || p2 == "") {
+                //                 console.log("引用下的内容为空");
+                //                 document.onkeypress = function () {
+                //                     if (event.keyCode == 13) {
+                //                         console.log("引用二次回车");
+                //                         // 控制光标
+                //                         console.log("空");
+                //                         var p3 = fj.next('p')
+                //                         console.log(p3);
+                //                         for (let i = 0; i < p3.length; i++) {
+                //                             // p[i].onclick = xzhr
+                //                             console.log(p3[0].innerHTML);
+                //                             p3[0].focus();
+                //                             if (window.getSelection) {
+                //                                 //ie11 10 9 ff safari
+                //                                 var range = window.getSelection(); //创建range
+                //                                 range.selectAllChildren(p3[0]); //range 选择p[0]下所有子内容
+                //                                 range.collapseToEnd(); //光标移至最后
+                //                             }
+                //                         }
+                //                         pbj.nextAll('p').remove()
+                //                     }
+                //                 }
+                //             }
+                //         }, 1);
+                //     }
+                // }
             }
         }
 
-
-
-
-
-
-
-        // 没有用到
-
-        // function tcyy() {
-        //     $(this).id = 0
-        //     // console.log(pbj);
-        //     pbj = $(this)
-        //     // state = pbj.context.id
-        //     // console.log($(this));
-        //     // console.log("p标签");  
-        //     let fj = $(this).parent();
-        //     if (fj.attr('class') == "aaa") {
-
-        //         // 如果外标签是aaa 那么执行点回车的判断
-        //         document.onkeypress = function () {
-        //             if (event.keyCode == 13) {
-        //                 console.log("回车");
-
-
-        //                 setTimeout(function () {
-        //                     p1 = pbj.text()
-        //                     console.log(p1);
-        //                     p2 = pbj.next('p').text()
-        //                     console.log(p2);
-        //                     if (p1 == "" && p2 == "") {
-        //                         console.log("为空");
-
-        //                     }
-
-        //                 }, 1); //1s
-
-
-        //             }
-        //         }
-
-
-        //     }
-
-
-        // }
 
 
 
@@ -872,12 +827,6 @@
                 for (let t = 0; t < idm.length; t++) {
                     idm[t].id = 1
                 }
-
-                // document.onkeypress = function () {
-                //     if (event.keyCode == 13) {
-
-                //     }
-                // }
 
             }
 
@@ -927,7 +876,6 @@
 
 
         document.addEventListener('mousemove', (e) => {  // 对性能不太友好
-
             // if (tpsfy == 0) {
             //     console.log("创建标签");   // 判断创建图片成功  为什么会一直触发
 
@@ -957,7 +905,7 @@
 
 
             // $(document).ready(function () {
-            adjustList()  //去掉包裹有序列表无序列表的p标签
+            // adjustList()  //去掉包裹有序列表无序列表的p标签
             // changp()//p标签替换div标签
             // 以p标签包裹内容
             var ch = $("#edit").find("p");
@@ -1197,6 +1145,10 @@
 
 
 
+        function blurEdit() {
+            jies.id = 0
+
+        }
 
         // $(".result").onmouseout( function () {
 

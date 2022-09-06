@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>jQuery 在光标定位的地方插入文字的插件</title>
+</head>
+
+<body>
+
+    <div class="cont">点击我</div><br />
+    <br />
+
+    <textarea class="tarea" name="" cols="50" rows="15">
+创作、游戏开发、运营管理等领域的精英人才，并拥有国内多家教育科研机构的战略合作资源。
+ 
+　　聚网科技以“为儿童提供真正健康有益的互联网产品”为己任，在产品研发过程中，注重将能力教育融入全新的游戏玩法，不断探索更加受儿童欢迎、更加有益于儿童的多元化娱乐模式，在行业里形成了“锐意进取、不断创新”的良好形象，也使得公司产品一直在行业内保持
+</textarea>
+
+
+
+    <pre>
+主要思路： 
+　　当点击某个元素的时候，让一个输入框，插入指定的值。？ 
+　　1.当点击某个元素的时候，应该让输入框获取焦点，因为只有获得了焦点，才能在里面输入值； 
+　　IE下：document.selection.createRange() 
+　　FF下：var start = dthis.selectionStart; 　　 //获取焦点前坐标 
+　　　　　var end =dthis.selectionEnd; 　　 //获取焦点后坐标 
+　　2.获取当前输入框焦点的位置 
+　　3.将值插入到输入框焦点的位置; 
+　　4.再次获取焦点；保证光标在输入框内
+</pre>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        //jQuery 插件
+
+        (function ($) {
+            $.fn.extend({
+                "insert": function (value) {
+                    //默认参数
+                    value = $.extend({
+                        "text": "123"
+                    }, value);
+
+                    var dthis = $(this)[0]; //将jQuery对象转换为DOM元素
+
+                    //IE下
+                    if (document.selection) {
+
+                        $(dthis).focus();        //输入元素textara获取焦点
+                        var fus = document.selection.createRange();//获取光标位置
+                        fus.text = value.text;    //在光标位置插入值
+                        $(dthis).focus();    ///输入元素textara获取焦点
+
+
+                    }
+                    //火狐下标准    
+                    else if (dthis.selectionStart || dthis.selectionStart == '0') {
+
+                        var start = dthis.selectionStart;
+                        var end = dthis.selectionEnd;
+                        var top = dthis.scrollTop;
+
+                        //以下这句，应该是在焦点之前，和焦点之后的位置，中间插入我们传入的值
+                        dthis.value = dthis.value.substring(0, start) + value.text + dthis.value.substring(end, dthis.value.length);
+                    }
+
+                    //在输入元素textara没有定位光标的情况
+                    else {
+                        this.value += value.text;
+                        this.focus();
+                    };
+
+                    return $(this);
+                }
+            })
+        })(jQuery)
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $(".cont").click(function () {
+                $(".tarea").insert({ "text": "脚本之家" });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
