@@ -206,7 +206,11 @@
         overflow: auto;
       " contenteditable="true" spellcheck="false">
     <p><br></p>
-    <p class="jd">123456 <b>23456789</b> </p>
+    <!-- <p id="jd"> 11112222 <b>3333</b>7777 <b>444</b><b>5555&#8203 999999</b>
+      <hr> aaaaaaaaaa
+    </p>
+    <p> <b>3333</b></p> -->
+
     <!-- <pre>daimapianduan</pre> -->
     <!-- <p>1111111111111111
         <figure>333</figure>&#8203 222222222222222<br></p> -->
@@ -233,6 +237,9 @@
   <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 
   <script>
+
+
+
     // 点击水平线标签在水平线下面生成p标签 并且把光标定位到新创建的标签的末尾
 
     // function djspx() {
@@ -279,10 +286,31 @@
     // 遍历p标签光标后面的文字
     var sel = window.getSelection();
     document.onmouseup = function () {
-      // console.log(sel.anchorNode);    //起点所在的文本节点
-      // console.log(sel.anchorOffset);  //起点在该节点中的位置
-      // console.log(sel.focusNode);     //终点所在的文本节点
-      // console.log(sel.focusOffset);   //终点在该节点中的位置
+      var jd = document.getElementById("jd")
+
+      // console.log(jd.innerText);
+      // console.log(jd.children);
+
+
+
+
+
+      // var tp = document.getElementById("tp")
+      // // console.log(tp);
+      // console.log(tp.parentElement);
+
+
+      var hr = document.getElementsByTagName("hr")[0]
+      // console.log(hr.nextElementSibling );
+
+      console.log("起点所在的文本节点"); 
+      console.log(sel.anchorNode);    //起点所在的文本节点
+      console.log("起点在该节点中的位置"); 
+      console.log(sel.anchorOffset);  //起点在该节点中的位置
+      console.log("终点所在的文本节点"); 
+      console.log(sel.focusNode);     //终点所在的文本节点
+      console.log("终点在该节点中的位置"); 
+      console.log(sel.focusOffset);   //终点在该节点中的位置
       // console.log(sel.isCollapsed);   //起点和终点是否在同一位置
       // console.log(sel.rangeCount);    // ranges （区域）的个数
       // var wz = sel.anchorNode
@@ -613,6 +641,7 @@
 
 
     // p标签引用功能
+    var djys = ""
     var state = 0
     var pbj = ''
     var olj = ''
@@ -621,7 +650,7 @@
     function wd2() {
 
       // console.log(this[0].nodeName);
-      // if (this[0].nodeName == "P"){
+      if (djys[0].nodeName == "P") {
       console.log("点击p");
       if (pbj.context.id == 0) {
         // console.log("p执行");
@@ -633,10 +662,11 @@
         // console.log("p取消执行");
         pbj.context.id = 0
         let my_html = pbj.parent('.aaa').html()
+        console.log(my_html);
         pbj.parent('.aaa').before(my_html)
         pbj.parent('.aaa').detach();
       }
-      // }
+      }
 
 
 
@@ -646,7 +676,7 @@
 
       //  ol ul 引用功能
 
-      //    else if (this[0].nodeName == "UL" || this[0].nodeName == "OL") {
+      else if (djys[0].nodeName == "UL" || djys[0].nodeName == "OL") {
       //     console.log("点击列表");
       if (olj.context.id == 0) {
         // console.log("ol执行");
@@ -666,7 +696,7 @@
         let myol_html = olj.parent('.aaa').html()
         olj.parent('.aaa').before(myol_html)
         olj.parent('.aaa').detach();
-        // }
+        }
       }
       // ul引用
 
@@ -744,21 +774,16 @@
     // p标签引用功能 加   俩次回车后退出引用光标显示在下一个p标签里
 
     function wd1() {
-    
-
-
       $(this).id = 0
       console.log(this);
       // console.log(this.nodeName);
       pt2 = $(this).text().slice(sz)
       pt3 = $(this).text().slice(0, sz)
-      console.log(pt3);
-      console.log(pt2);
+      // console.log(pt3);
+      // console.log(pt2);
       // console.log(pbj);
       pbj = $(this)
-      console.log($(this)[0].attributes);
-      // console.log(this.attributes);
-
+      djys = pbj
       state = pbj.context.id
       // console.log($(this));
       // console.log("p标签");  
@@ -788,7 +813,7 @@
                     console.log(p3);
                     for (let i = 0; i < p3.length; i++) {
                       // p[i].onclick = xzhr
-                      console.log(p3[0].innerHTML);
+                      // console.log(p3[0].innerHTML);
                       p3[0].focus();
                       if (window.getSelection) {
                         //ie11 10 9 ff safari
@@ -863,6 +888,7 @@
       console.log($(this));
       console.log(this);
       olj = $(this)
+      djys = olj
       let fj = $(this).parent();
       if (fj.attr('class') == "aaa") {
         console.log("相同");
@@ -1619,6 +1645,7 @@
           div.innerHTML = result;
           div['className'] = 'result';
           div['index'] = index;
+          div['id'] = "tp";
           console.log(div);
 
 

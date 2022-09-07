@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            pointer-events: none;
+        }
+
+        p {
+            border: 1px solid;
+            font-size: 2em;
+            padding: .3em;
+        }
+
+        button {
+            font-size: 1.2em;
+            padding: .5em;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <p id="list1">123456 <b>hhhhh</b></p>
+    <button id="swap">Swap selected item(s)</button>
+    <p id="list2">abcdef</p>
+
+
+    <script>
+        const list1 = document.getElementById('list1');
+        const list2 = document.getElementById('list2');
+        const button = document.getElementById('swap');
+
+        button.addEventListener('click', (e) => {
+            selection = window.getSelection();
+
+            for (let i = 0; i < selection.rangeCount; i++) {
+                const range = selection.getRangeAt(i);
+
+                if (range.commonAncestorContainer === list1 ||
+                    range.commonAncestorContainer.parentNode === list1) {
+                    const documentFragment = range.extractContents();
+                    list2.appendChild(documentFragment);
+                } else if (range.commonAncestorContainer === list2 ||
+                    range.commonAncestorContainer.parentNode === list2) {
+                    const documentFragment = range.extractContents();
+                    list1.appendChild(documentFragment);
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>

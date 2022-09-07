@@ -206,6 +206,7 @@
         overflow: auto;
       " contenteditable="true" spellcheck="false">
         <p><br></p>
+        <!-- <p id="jd"> 11112222 <b>3333</b>7777</p> -->
         <!-- <pre>daimapianduan</pre> -->
         <!-- <p>1111111111111111
         <figure>333</figure>&#8203 222222222222222<br></p> -->
@@ -279,8 +280,14 @@
         // var rangeObj  = sel.getRangeAt(4);
         var sel = window.getSelection();
         document.onmouseup = function () {
+            // var jd = document.getElementById("jd")
+            // console.log(jd.lastChild);
+
+
+
+
             // console.log(sel.anchorNode);    //起点所在的文本节点
-            // console.log(sel.anchorOffset);  //起点在该节点中的位置
+            console.log(sel.anchorOffset);  //起点在该节点中的位置
             // console.log(sel.focusNode);     //终点所在的文本节点
             // console.log(sel.focusOffset);   //终点在该节点中的位置
             // console.log(sel.isCollapsed);   //起点和终点是否在同一位置
@@ -429,7 +436,6 @@
 
             if (e.keyCode === 8) {
                 var edit = document.getElementById('edit').innerHTML
-                console.log(edit);
                 if (edit == "") {
                     console.log("内容空");
                     cp()
@@ -613,6 +619,7 @@
 
 
         // p标签引用功能
+        var djys = ""
         var state = 0
         var pbj = ''
         var olj = ''
@@ -620,23 +627,24 @@
         // 引用点击事件
         function wd2() {
 
-            // console.log(this[0].nodeName);
-            // if (this[0].nodeName == "P"){
-            console.log("点击p");
-            if (pbj.context.id == 0) {
-                // console.log("p执行");
-                pbj.wrap('<blockquote></blockquote>');
-                $("blockquote").addClass("aaa");
-                cp()
-                pbj.context.id = 1
-            } else if (pbj.context.id == 1) {
-                // console.log("p取消执行");
-                pbj.context.id = 0
-                let my_html = pbj.parent('.aaa').html()
-                pbj.parent('.aaa').before(my_html)
-                pbj.parent('.aaa').detach();
+            // console.log(djys[0].nodeName);
+            if (djys[0].nodeName == "P") {
+                console.log("点击p");
+                if (pbj.context.id == 0) {
+                    // console.log("p执行");
+                    pbj.wrap('<blockquote></blockquote>');
+                    $("blockquote").addClass("aaa");
+                    cp()
+                    pbj.context.id = 1
+                } else if (pbj.context.id == 1) {
+                    // console.log("p取消执行");
+                    pbj.context.id = 0
+                    let my_html = pbj.parent('.aaa').html()
+                  
+                    pbj.parent('.aaa').before(my_html)
+                    pbj.parent('.aaa').detach();
+                }
             }
-            // }
 
 
 
@@ -646,27 +654,27 @@
 
             //  ol ul 引用功能
 
-            //    else if (this[0].nodeName == "UL" || this[0].nodeName == "OL") {
-            //     console.log("点击列表");
-            if (olj.context.id == 0) {
-                // console.log("ol执行");
-                olj.wrap('<blockquote></blockquote>');
-                $("blockquote").addClass("aaa");
-                cp()
-                olj.context.id = 1
-            } else if (olj.context.id == 1) {
-                // console.log("ol取消执行");
-                olj.context.id = 0
-                let fj = olj.parent();
-                let idm = fj.children("ol,ul");
-                for (let t = 0; t < idm.length; t++) {
-                    idm[t].id = 0
-                    console.log('变化');
+            else if (djys[0].nodeName == "UL" || djys[0].nodeName == "OL") {
+                console.log("点击列表");
+                if (olj.context.id == 0) {
+                    // console.log("ol执行");
+                    olj.wrap('<blockquote></blockquote>');
+                    $("blockquote").addClass("aaa");
+                    cp()
+                    olj.context.id = 1
+                } else if (olj.context.id == 1) {
+                    // console.log("ol取消执行");
+                    olj.context.id = 0
+                    let fj = olj.parent();
+                    let idm = fj.children("ol,ul");
+                    for (let t = 0; t < idm.length; t++) {
+                        idm[t].id = 0
+                        console.log('变化');
+                    }
+                    let myol_html = olj.parent('.aaa').html()
+                    olj.parent('.aaa').before(myol_html)
+                    olj.parent('.aaa').detach();
                 }
-                let myol_html = olj.parent('.aaa').html()
-                olj.parent('.aaa').before(myol_html)
-                olj.parent('.aaa').detach();
-                // }
             }
             // ul引用
 
@@ -684,6 +692,7 @@
             //     ulj.parent('.aaa').before(myul_html)
             //     ulj.parent('.aaa').detach();
             // }
+            
         }
 
 
@@ -737,31 +746,42 @@
         // }
 
 
-        let position = ''
+        // let position = ''
         function blurEdit() {
             jies.id = 0
-            position = window.getSelection().getRangeAt(4)
-            console.log(position);
+            // position = window.getSelection().getRangeAt(4)
+            // console.log(position);
 
         }
 
+        // function yyp() { // 在引用情况下插入图片会自动插入到引用标签的下面   不可以在引用格式里面插入图片
+        //     djys = $(this)
+        //     // 会和引用事件冲突
+
+        // }
+
+
+        var dwgb = ""
 
         var pt2 = ""
         var pt3 = ""
 
-        // p标签引用功能 加   俩次回车后退出引用光标显示在下一个p标签里
+        // p标签引用功能 加 俩次回车后退出引用光标显示在下一个p标签里
 
         function wd1() {
+
+
             $(this).id = 0
-            console.log(this);
+            // console.log(this);
             // console.log(this.nodeName);
             pt2 = $(this).text().slice(sz)
             pt3 = $(this).text().slice(0, sz)
-            console.log(pt2);
-            console.log(pt3);
+            // console.log(pt2);
+            // console.log(pt3);
 
             // console.log(pbj);
             pbj = $(this)
+            djys = pbj
             state = pbj.context.id
             // console.log($(this));
             // console.log("p标签");  
@@ -769,24 +789,27 @@
             if (fj.attr('class') == "aaa") {
 
                 console.log("外标签是aaa");
+                dwgb = 0
                 // 如果外标签是aaa 那么执行点击回车的判断
-                document.onkeypress = function () {
+                document.onkeydown = function () {
                     if (event.keyCode == 13) {
                         console.log("引用回车");
                         p2 = pbj.text()
-                        console.log(p2);
                         setTimeout(function () {
                             p1 = pbj.nextAll('p').text()
-                            console.log(p1);
+
                             // p2 = pbj.next('p').next('p').text()
                             // console.log(p2);
                             if (p1 == "" || p2 == "") {
                                 console.log("引用下的内容为空");
-                                document.onkeypress = function () {
-                                    if (event.keyCode == 13) {
+                                document.onkeydown = function () {
+                                    if (event.keyCode == 13 && dwgb == 0) {
                                         console.log("引用二次回车");
+                                        //创建一个p标签
+                                        var p = document.createElement('p');
+                                        p.innerHTML = "<br>";
+                                        fj.after(p)
                                         // 控制光标
-                                        console.log("空");
                                         var p3 = fj.next('p')
                                         console.log(p3);
                                         for (let i = 0; i < p3.length; i++) {
@@ -798,6 +821,7 @@
                                                 var range = window.getSelection(); //创建range
                                                 range.selectAllChildren(p3[0]); //range 选择p[0]下所有子内容
                                                 range.collapseToEnd(); //光标移至最后
+                                                dwgb = 1
                                             }
                                         }
                                         pbj.nextAll('p').remove()
@@ -866,6 +890,7 @@
             console.log($(this));
             console.log(this);
             olj = $(this)
+            djys = olj
             let fj = $(this).parent();
             if (fj.attr('class') == "aaa") {
                 console.log("相同");
@@ -939,6 +964,16 @@
             //     add2()
 
             // };
+
+            var yybq = $("blockquote")
+            for (var y = 0; y < yybq.length; y++) {
+                yybq[y].onclick = yyp
+            }
+
+
+
+
+
 
             var hr = $("hr")
             for (var f = 0; f < hr.length; f++) {
@@ -1193,7 +1228,7 @@
             // re.contenteditable = "true"
             // console.log(re);
 
-            jies.style.border = "3px solid #FFFFFF"  // 对边框颜色限制
+            // jies.style.border = "3px solid #FFFFFF"  // 对边框颜色限制
         }
 
 
@@ -1615,23 +1650,26 @@
                     //     // console.log(olj[0].nodeName);
                     // }
 
-                    if (pbj[0].nodeName == "P") {
-                        pbj.html(pbj.html().replace(pbj.text(), pt3))
-                        pbj.after(div)
-                        console.log(pbj);
+                    if (djys[0].nodeName == "P") {
+
+                        djys.after(div)
+
                         // console.log("sde");
                         var p = document.createElement('p');
                         p.innerHTML = pt2;
                         div.after(p)
                         cp()
+                        pbj.html(pbj.html().replace(pbj.text(), pt3))
 
                     }
-                    // if (olj[0].nodeName = "UL" || olj[0].nodeName == "OL") {
-                    //     olj.after(div) // 这种情况是列表下插入图片 默认把图片插入到
-                    //     cp()
-                    //     console.log(olj);
-                    //     // console.log(olj[0].nodeName);
-                    // }
+                    if (djys[0].nodeName = "UL" || djys[0].nodeName == "OL") {
+                        djys.after(div) // 列表情况下插入图片插入到列表标签的下面   不可以插入到列表标签的中间
+                        cp()
+                    }
+                    if (djys[0].nodeName = "BLOCKQUOTE") {
+                        djys.after(div) //  引用情况下插入图片插入到引用标签的下面   不可以插入到引用标签的中间
+                        cp()
+                    }
 
 
 
