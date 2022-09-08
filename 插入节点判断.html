@@ -37,6 +37,8 @@
 
         .results {
             /* background-color: aqua; */
+            white-space: pre-line;
+
             min-width: 200px;
             height: auto;
             text-align: center;
@@ -119,6 +121,10 @@
       } */
         .origin {
             color: #c0c0c0;
+        }
+
+        p {
+            white-space: "pre"
         }
     </style>
 </head>
@@ -207,13 +213,6 @@
         overflow: auto;
       " contenteditable="true" spellcheck="false">
         <p><br></p>
-        <!-- <p id="jd"> 11112222 <b>3333</b>7777</p> -->
-        <!-- <pre>daimapianduan</pre> -->
-        <!-- <p>1111111111111111
-        <figure>333</figure>&#8203 222222222222222<br></p> -->
-        <!-- <p class=".weeee">
-            56565
-        </p> -->
     </div>
 
     <!-- <button id="save" style="width:300px;height:30px;margin:auto;margin-top:30px;
@@ -274,6 +273,13 @@
         //             p2 =$(this).text().slice(sz)
         //             console.log(p2);
         //         }
+
+
+
+
+
+
+
         var sz = ""
         var jdwz = ""
 
@@ -282,15 +288,22 @@
         var sel = window.getSelection();
         document.onmouseup = function () {
             // var jd = document.getElementById("jd")
+            // jd.innerHTML = "qqqq" + " \r \n "
+
+
+            // keyEvent()
+  
+
+
             // console.log(jd.lastChild);
 
-
-
-
             // console.log(sel.anchorNode);    //起点所在的文本节点
+            console.log("起点在该节点中的位置");
             console.log(sel.anchorOffset);  //起点在该节点中的位置
-            // console.log(sel.focusNode);     //终点所在的文本节点
-            // console.log(sel.focusOffset);   //终点在该节点中的位置
+            console.log("终点所在的文本节点");
+            console.log(sel.focusNode);     //终点所在的文本节点
+            console.log("终点在该节点中的位置");
+            console.log(sel.focusOffset);   //终点在该节点中的位置
             // console.log(sel.isCollapsed);   //起点和终点是否在同一位置
             // console.log(sel.rangeCount);    // ranges （区域）的个数
             // var wz = sel.anchorNode
@@ -761,7 +774,8 @@
         //     // 会和引用事件冲突
 
         // }
-
+        var jdsl = " "
+        var jds = " "
 
         var dwgb = ""
 
@@ -785,6 +799,16 @@
             pbj = $(this)
             djys = pbj
             state = pbj.context.id
+
+            jdsl = this.childNodes.length
+            jds = this.childNodes
+            console.log(jdsl);
+            console.log(this.childNodes); //p标签内节点
+            console.log(this.children);
+
+
+
+
             // console.log($(this));
             // console.log("p标签");  
             let fj = $(this).parent();
@@ -1597,11 +1621,31 @@
             input.addEventListener('change', readFile, false); //默认值是false，冒泡传递;当值为true，捕获传递
         }
 
-
+        let position = ''
+        function blurEdit() {
+            jies.id = 0
+            position = window.getSelection().getRangeAt(0)
+            console.log(position);
+        }
 
         var tpsfy = " "
 
         function readFile() {
+            if (position === '') {
+                // 如果div没有光标，则在div内容末尾插入
+                const div = document.getElementById('edit')
+                div.focus()
+                const range = window.getSelection()
+                range.selectAllChildren(div)
+                range.collapseToEnd()
+                position = window.getSelection()
+            }
+
+
+
+
+
+
 
 
             fd = new FormData(); //FormData方式发送请求
@@ -1626,9 +1670,9 @@
                     dataArr.push(imgMsg); //将图片信息对象存到数据数组中
                     console.log(dataArr);
                     result =
-                        '<figure class="results" id="cs"     contenteditable="false" ><img id="tp" onmouseover="tpyr()"  onmouseout="tpyc()"  onclick="tpdj()" src="' +
+                        ' <figure class="results" id="cs"   contenteditable="false" ><img id="tp" onmouseover="tpyr()"  onmouseout="tpyc()"  onclick="tpdj()" src="' +
                         this.result +
-                        '" alt=""/><br><figcaption  contenteditable="true" dataBefore="在此输入图片注释 "   onclick="qq()" onblur="cc()"  onmouseover="yrzs()"  id="myP" class="zs" ></figcaption> </figure>';
+                        '" alt=""/><br><figcaption  contenteditable="true" dataBefore="在此输入图片注释 "   onclick="qq()" onblur="cc()"  onmouseover="yrzs()"  id="myP" class="zs" ></figcaption> </figure>   ';
                     var div = document.createElement('figure');
                     // div.contenteditable = true
                     div.innerHTML = result;
@@ -1654,26 +1698,80 @@
                     //     // console.log(olj[0].nodeName);
                     // }
 
-                    if (djys[0].nodeName == "P") {
 
-                        djys.after(div)
 
-                        // console.log("sde");
-                        var p = document.createElement('p');
-                        p.innerHTML = pt2;
-                        div.after(p)
-                        cp()
-                        pbj.html(pbj.html().replace(pbj.text(), pt3))
+
+                    if (jdsl == 1) {
+                        console.log("一个节点");
+                        if (djys[0].nodeName == "P") {
+
+                            djys.after(div)
+
+                            // console.log("sde");
+                            var p = document.createElement('p');
+                            p.innerHTML = pt2;
+                            div.after(p)
+                            cp()
+                            pbj.html(pbj.html().replace(pbj.text(), pt3))
+
+                        }
+                        if (djys[0].nodeName = "UL" || djys[0].nodeName == "OL") {
+                            djys.after(div) // 列表情况下插入图片插入到列表标签的下面   不可以插入到列表标签的中间
+                            cp()
+                        }
+                        if (djys[0].nodeName = "BLOCKQUOTE") {
+                            djys.after(div) //  引用情况下插入图片插入到引用标签的下面   不可以插入到引用标签的中间
+                            cp()
+                        }
+
 
                     }
-                    if (djys[0].nodeName = "UL" || djys[0].nodeName == "OL") {
-                        djys.after(div) // 列表情况下插入图片插入到列表标签的下面   不可以插入到列表标签的中间
-                        cp()
+
+                    if (jdsl > 1) {
+                        console.log("多个节点");
+
+                        if (djys[0].nodeName == "P") {
+                            console.log("p的多个节点");
+
+                            // djys.after(div)
+
+                            // // 需要获取节点内容
+
+                            // for (let i = 0; i < jds.length; i++) {
+                            //     jdnr = jds[1].outerHTML;
+                            // }
+                            // console.log(jdnr);
+
+
+                            position.insertNode(div)
+
+
+                            // var brDiv = document.createElement('pre');
+
+                            // pbj.innerHTML = 11111111 + "\r \n " + 333333333;
+                            // position.insertNode(brDiv)
+                            // pbj.after(brDiv);
+                            // brDiv.after(div)
+
+
+
+                            // var p = document.createElement('p');
+                            // p.innerHTML = pt2;
+                            // div.after(p)
+                            // cp()
+                            // pbj.html(pbj.html().replace(pbj.text(), pt3))
+
+                        }
+
+
+
+
                     }
-                    if (djys[0].nodeName = "BLOCKQUOTE") {
-                        djys.after(div) //  引用情况下插入图片插入到引用标签的下面   不可以插入到引用标签的中间
-                        cp()
-                    }
+
+
+
+
+
 
 
 
@@ -1736,6 +1834,9 @@
         // 点击图片按钮
 
         function add1() {
+
+
+
             onInput.value = ''; // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
             onInput.click();
         }
@@ -1744,3 +1845,5 @@
 </body>
 
 </html>
+<!-- 
+&#8203 -->
