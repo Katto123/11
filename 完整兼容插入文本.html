@@ -1,0 +1,20 @@
+<body>
+	<div id="box" contentEditable>我是p标签的内容</div>
+</body>
+<script type="text/javascript">
+	document.getElementById("box").onmouseup = function() {
+		insertTextAtCursor("<strong>666</strong>")
+	}
+
+	function insertTextAtCursor(text) {
+
+		var sel = window.getSelection();
+		if(sel.getRangeAt && sel.rangeCount) {
+			var range = sel.getRangeAt(0);
+			range.deleteContents();
+			range.insertNode(document.createTextNode(text));
+
+		}
+
+	}
+</script>

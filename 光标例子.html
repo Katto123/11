@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ 
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>div contenteditable光标测试</title>
+    <style type="text/css">
+    .div {
+        width: 600px;
+        height: 200px;
+        border: 1px solid #CCC
+    }
+    </style>
+    <script src="http://xxx/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(e) {
+        $('.toEnd').click(function() {
+            var body = document.getElementsByClassName("div")[0];
+            window.getSelection().collapseToEnd();
+        })
+        $('.toStart').click(function() {
+            var body = document.getElementsByClassName("div")[0];
+            window.getSelection().collapseToStart();
+        })
+        $(".toInsertTxt").click(function() {
+                var body = document.getElementsByTagName("inserTxt")[0];
+                window.getSelection().collapseToStart();
+            })
+            //选择节点================[
+        var strongs = document.getElementsByTagName("strong");
+        var s = window.getSelection();
+        console.log(s.rangeCount)
+        if (s.rangeCount > 0) s.removeAllRanges();
+ 
+        console.log(strongs.length)
+            //for (var i = 0; i < strongs.length; i++) {
+ 
+        // var range = document.createRange();
+        // range.selectNode(strongs[1]);
+        // s.addRange(range);
+ 
+        // var range = document.createRange();
+        // range.selectNode(strongs[0]);
+        // s.addRange(range);
+        var body = document.getElementsByClassName("div")[0].getElementsByTagName("div")[0];
+ 
+        var s = window.getSelection();
+        var range = document.createRange();
+        range.selectNode(body);
+        s.addRange(range);
+        s.collapseToEnd();
+ 
+        //}
+        //选择节点================]
+    });
+    </script>
+</head>
+ 
+<body>
+    <a href="javascript:;" class="toEnd">去选中文字的最后面</a>
+    <a href="javascripot:;" class="toStart">去选中文字的最前面</a>
+    <a href="javascripot:;" class="toInsertTxt">插入图片</a>
+    <div class="div" contenteditable="true">
+        <div>fasdaffdsfsf</div>
+         <div>222222222222222222222222</div>
+    </div>
+    <span>
+    	<strong>dfdsfdf</strong>
+    <strong>111111</strong>
+    <strong >3333</strong>
+    </span>
+    <p class="inserTxt">在后面插入[]文字</p>
+</body>
+ 
+</html>

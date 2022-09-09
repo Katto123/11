@@ -213,6 +213,7 @@
         overflow: auto;
       " contenteditable="true" spellcheck="false">
         <p><br></p>
+        <!-- <p id="lz">这里是第 一段文字</p> -->
     </div>
 
     <!-- <button id="save" style="width:300px;height:30px;margin:auto;margin-top:30px;
@@ -287,16 +288,24 @@
         // var rangeObj  = sel.getRangeAt(4);
         var sel = window.getSelection();
         document.onmouseup = function () {
+
+
+
+
             // var jd = document.getElementById("jd")
             // jd.innerHTML = "qqqq" + " \r \n "
 
 
             // keyEvent()
-  
+
 
 
             // console.log(jd.lastChild);
-
+            console.log(sel);
+            console.log(sel.baseNode.parentNode.parentNode);
+            // if (sel.baseNode.parentNode.parentNode.parentNode.id == "edit") {
+            //     document.getElementById("edit").removeChild(sel.baseNode.parentNode.parentNode)
+            // }
             // console.log(sel.anchorNode);    //起点所在的文本节点
             console.log("起点在该节点中的位置");
             console.log(sel.anchorOffset);  //起点在该节点中的位置
@@ -304,8 +313,8 @@
             console.log(sel.focusNode);     //终点所在的文本节点
             console.log("终点在该节点中的位置");
             console.log(sel.focusOffset);   //终点在该节点中的位置
-            // console.log(sel.isCollapsed);   //起点和终点是否在同一位置
-            // console.log(sel.rangeCount);    // ranges （区域）的个数
+            console.log(sel.isCollapsed);   //起点和终点是否在同一位置
+            console.log(sel.rangeCount);    // ranges （区域）的个数
             // var wz = sel.anchorNode
             // console.log(wz.innerHTML);
 
@@ -785,15 +794,16 @@
         // p标签引用功能 加 俩次回车后退出引用光标显示在下一个p标签里
 
         function wd1() {
-
+            var se = window.getSelection();
+            console.log(sel.focusNode);
 
             $(this).id = 0
             // console.log(this);
             // console.log(this.nodeName);
             pt2 = $(this).text().slice(sz)
             pt3 = $(this).text().slice(0, sz)
-            // console.log(pt2);
-            // console.log(pt3);
+            console.log(pt2);
+            console.log(pt3);
 
             // console.log(pbj);
             pbj = $(this)
@@ -1632,6 +1642,7 @@
 
         function readFile() {
             if (position === '') {
+                console.log("光标为空");
                 // 如果div没有光标，则在div内容末尾插入
                 const div = document.getElementById('edit')
                 div.focus()
@@ -1673,7 +1684,7 @@
                         ' <figure class="results" id="cs"   contenteditable="false" ><img id="tp" onmouseover="tpyr()"  onmouseout="tpyc()"  onclick="tpdj()" src="' +
                         this.result +
                         '" alt=""/><br><figcaption  contenteditable="true" dataBefore="在此输入图片注释 "   onclick="qq()" onblur="cc()"  onmouseover="yrzs()"  id="myP" class="zs" ></figcaption> </figure>   ';
-                    var div = document.createElement('figure');
+                    var div = document.createElement('p');
                     // div.contenteditable = true
                     div.innerHTML = result;
                     div['className'] = 'result';
@@ -1703,7 +1714,7 @@
 
                     if (jdsl == 1) {
                         console.log("一个节点");
-                        if (djys[0].nodeName == "P") {
+                        if (djys[0].nodeName == "P" && djys.parent().attr('class') != "aaa") {
 
                             djys.after(div)
 
@@ -1719,13 +1730,15 @@
                             djys.after(div) // 列表情况下插入图片插入到列表标签的下面   不可以插入到列表标签的中间
                             cp()
                         }
-                        if (djys[0].nodeName = "BLOCKQUOTE") {
-                            djys.after(div) //  引用情况下插入图片插入到引用标签的下面   不可以插入到引用标签的中间
+                        if (djys.parent().attr('class') == "aaa") {
+                            console.log("是引用");
+                            djys.parent().after(div) //  引用情况下插入图片插入到引用标签的下面   不可以插入到引用标签的中间
                             cp()
                         }
 
 
                     }
+
 
                     if (jdsl > 1) {
                         console.log("多个节点");

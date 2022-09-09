@@ -1,0 +1,16 @@
+<div id="div">这里是eeeeeeeeeeeeeeeeeeee第 <b>2222222222</b> 一段文字</div>
+<button onclick="sel()">选择</button>
+<script>
+    function sel() {
+        var div = document.getElementById("div");
+        var content = div.firstChild;
+        if (content.nodeType == 3) {//node节点类型必须是text
+            var range = document.createRange();
+            range.setStart(content, 1);
+            range.setEnd(content, 7);
+            //range.deleteContents();//删除
+            var sel = window.getSelection();
+            sel.addRange(range);
+        }
+    }
+</script>

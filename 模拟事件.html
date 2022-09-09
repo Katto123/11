@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="ww"   style="  
+    width: 700px;
+    height: 700PX;   border: 2px solid gray; " contenteditable=" true">
+    <p><br></p>
+    </div>
+
+
+    <script>
+        let t = document.getElementsByClassName('ww')[0] // 这里写输入框的ClassName，只需要改这里和下面间隔时间
+        let evt = document.createEvent('HTMLEvents')
+        var event = document.createEvent('Event')
+        // 模拟回车
+        event.initEvent('keydown', true, false)
+        event = Object.assign(event, {
+            ctrlKey: false,
+            metaKey: false,
+            altKey: false,
+            which: 13,
+            keyCode: 13,
+            key: 'Enter',
+            code: 'Enter'
+        })
+        // 循环发送
+        setInterval(
+            function () {
+                var a = Math.ceil(Math.random() * 10);
+                for (var i = 0; i < a; i++) {
+                    t.value += '生日快乐';
+                }
+                t.focus()
+                t.dispatchEvent(event)
+            }, 500 //间隔时间，单位毫秒
+        )
+
+
+    </script>
+</body>
+
+</html>

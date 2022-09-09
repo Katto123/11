@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Demo ： Textarea 元素的光标位置</title>
+    <style>
+        #result {
+            font-size: 18px;
+            line-height: 25px;
+            padding-left: 20px;
+        }
+
+        #test {
+            width: 500px;
+            height: 300px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Textarea Div 元素的光标位置</h1>
+    <ul>
+        <li>获取 Textarea Div 元素当前的光标位置</li>
+        <li>设置回原先的 Textarea Div 元素的光标位置</li>
+
+    </ul>
+
+    <form action="#">
+        <p>11111111111111111 <b>aaaaaaa</b> 1111111111111111111</p>
+        <div id="test" tabindex="1">无数据</div>
+        <p>
+            <input type="button" id="get" value="Get Cursor Position" />
+            <input type="button" id="set" value="Set Cursor Position" />
+        </p>
+    </form>
+
+    <h2>Textarea Range：</h2>
+    <div id="result"></div>
+
+    <script type="text/javascript">
+        var cursorPosition = {
+            get: function (textarea) {
+                var setSelectionRange = getSelection().getRangeAt(0);
+                console.log("setSelectionRange", setSelectionRange);
+                var rangeData = {
+                    text: "",
+                    start: 0,
+                    end: 0,
+                    startDom: "",
+                    endDom: ""
+                };
+                if (setSelectionRange) { // W3C
+                    textarea.focus();
+                    rangeData.start = setSelectionRange.startOffset;
+                    rangeData.end = setSelectionRange.endOffset;
+                    rangeData.text = (rangeData.start != rangeData.end) ? textarea.innerText.substring(rangeData.start, rangeData.end) : "";
+                    console.log("setSelectionRange", setSelectionRange)
+                    rangeData.startDom = setSelectionRange.startContainer;
+                    rangeData.endDom = setSelectionRange.endContainer;
+                }
+                return rangeData;
+            },
+
+            set: function (textarea, rangeData) {
+                console.log("rangeData", rangeData)
+                try {
+                    var startContent = rangeData.startDom;
+                    var endContent = rangeData.endDom;
+                    var selection = window.getSelection();
+
+                    try {
+                        var range = selection.getRangeAt(0);
+                        range.setStart(startContent, rangeData.start);
+                        range.setEnd(endContent, rangeData.end);
+                        selection.addRange(range);
+                        console.log("设置1", selection.toString(), "xx")
+                    } catch (e1) {
+                        console.log("设置2", endContent.firstChild)
+
+                        range = document.createRange();
+                        range.setStart(startContent, rangeData.start);
+                        range.setEnd(endContent, rangeData.end - 1);
+
+
+                        selection.addRange(range);
+
+                        console.log("设置2", range, "xx")
+                    }
+
+                } catch (e) {
+                    console.log(e);
+                }
+            },
+
+
+        }
+
+
+        var tx = document.getElementById("test"),
+            re = document.getElementById("result"),
+            pos;
+        var s = "";
+        for (let i = 0; i < 12; i++) {
+            s += `<span class="${i}">${i}</span>`
+            // s += i;
+        }
+        tx.innerHTML = s;
+        document.getElementById("get").onclick = function () {
+            pos = cursorPosition.get(tx);
+            re.innerHTML = ("<strong>Range :</strong> (" + pos.start + ", " + pos.end + ")<br /><strong>Text :</strong> " + (!pos.text ? '//--' : pos.text));
+        }
+
+        document.getElementById("set").onclick = function () {
+            cursorPosition.set(tx, pos);
+        }
+    </script>
+
+</body>
+
+</html>
