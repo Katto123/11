@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>富文本编辑器</title>
+    <style>
+        /* .edit[contenteditable]:empty:before {
+      content: attr(placeholder);
+      color: #cccccc;
+    }
+
+    .edit[contenteditable]:focus {
+      content: none;
+    } */
+        pre {
+            background: #f5f2f0;
+        }
+
+
+
+        .float {
+            float: left;
+            overflow: hidden;
+            border-radius: 10px;
+            /* padding: 5px;
+      margin: 5px; */
+            width: 100%;
+            /* background-color: aquamarine; */
+        }
+
+        /* img {
+      position: relative;
+    } */
+
+        .results {
+            /* background-color: aqua; */
+            white-space: pre-line;
+
+            min-width: 200px;
+            height: auto;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        #tp {
+            border: 3px solid #FFFFFF;
+
+        }
+
+        #tp:hover {
+            border: 3px solid #33FFFF;
+        }
+
+
+        #file_input {
+            display: none;
+        }
+
+        .zs {
+            outline: none;
+            /* user-modify: read-write; */
+            min-width: 20%;
+            max-width: 80%;
+            min-height: 17px;
+            /* background: none;
+            outline: none;
+            border: 0px; */
+            /* position: absolute; */
+            display: inline-block;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            border-bottom: 1px solid rgba(240, 240, 240, 1);
+
+        }
+
+        .zs:after {
+            content: attr(dataBefore);
+            color: #c0c0c0;
+        }
+
+        blockquote {
+            color: #778899 !important;
+            position: relative;
+        }
+
+        blockquote::before {
+            content: "";
+            width: 25px;
+            height: 26px;
+            display: block;
+            position: absolute;
+            margin-left: -39px;
+            margin-top: -2px;
+            background-image: url(./w.png);
+            background-size: 100% 100%;
+        }
+
+        /* 
+      .delete {
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        text-align: center;
+        line-height: 200px;
+        z-index: 10;
+        font-size: 30px;
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #777;
+        opacity: 0;
+        transition-duration: 0.7s;
+        -webkit-transition-duration: 0.7s;
+      } */
+
+        /* .delete:hover {
+        cursor: pointer;
+        opacity: 1;
+      } */
+        .origin {
+            color: #c0c0c0;
+        }
+
+        p {
+            white-space: "pre"
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <h2 style="margin: auto">富文本编辑器</h2>
+    </center>
+
+    <div id="toolbar" style="
+        width: 80%;
+        margin: auto;
+        border: 2px solid gray;
+        padding: 5px;
+        overflow: auto;
+        font-family: 'Courier New', Courier, monospace;
+      ">
+        <input type="button" name="bold" value="加粗" class="bold" />
+        <input type="button" name="italic" value="斜体" class="italic" />
+        <input type="button" name="underline" value="下划线" class="decotation" />
+        <input type="button" name="insertHorizontalRule" value="水平线" class="insertHorizontalRule" />
+        大小
+        <select name="fontSize" class="font">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+        </select>
+
+
+
+        字体颜色：
+        <select name="forecolor" class="fcolor">
+            <option value="black">Black </option>
+            <option value="red">Red </option>
+            <option value="green">Green </option>
+            <option value="blue">Blue </option>
+            <option value="#808080">Gray </option>
+            <option value="#FFFFFF">White </option>
+            <option value="#FFC0CB">Pink</option>
+            <option value="#FF7300">Sun Orange </option>
+            <option value="#7FFF00">Lilac </option>
+            <option value="#6B8E23">Olive Drab </option>
+        </select>
+
+        背景颜色：
+        <select name="hiliteColor" class="hcolor">
+            <option value="black">Black </option>
+            <option value="red">Red </option>
+            <option value="green">Green </option>
+            <option value="blue">Blue </option>
+            <option value="#808080">Gray </option>
+            <option value="#FFFFFF">White </option>
+            <option value="#FFC0CB">Pink</option>
+            <option value="#FF7300">Sun Orange </option>
+            <option value="#7FFF00">Lilac </option>
+            <option value="#6B8E23">Olive Drab </option>
+        </select>
+
+
+        <input type="button" name="selectAll" value="全选" class="selectAll" />
+        <input type="button" name="undo" value="撤销" class="undo" />
+        <input type="button" name="justifyLeft" value="居左" class="justifyLeft" />
+        <input type="button" name="justifyCenter" value="居中" class="justifyCenter" />
+        <input type="button" name="justifyRight" value="居右" class="justifyRight" />
+        <input type="button" name="insertOrderedList" value="有序列表" class="insertOrderedList" />
+        <input type="button" name="insertUnorderedList" value="无序列表" class="insertUnorderedList" />
+        <input type="button" name="strikeThrough" value="划掉" class="strikeThrough" />
+        <button id="add" onclick="add1()">图片</button>
+        <button id="yy" onclick="wd2()">引用</button>
+        <button id="yx" onclick="yx()">有序列表</button>
+        <!-- <button id="spx" >水平线</button>  onclick="djspx()" -->
+        <input type="file" id="file_input" />
+    </div>
+
+    <!-- onblur="blurEdit()"   -->
+    <div id="edit" onblur="blurEdit()" onfocus="dkjd()" style="
+        width: 80%;
+        height: 700PX;
+        margin: auto;
+        border: 2px solid gray;
+        padding: 5px;
+        overflow: auto;
+      " contenteditable="true" spellcheck="false">
+        <p><br></p>
+        <!-- <p id="lz">这里是第 一段文字</p> -->
+    </div>
+
+    <!-- <button id="save" style="width:300px;height:30px;margin:auto;margin-top:30px;
+    background-color: green;border:1px solid green;display: block;color: white;font-family:'Courier New', Courier, monospace;
+    font-weight: 500;font-size: 20px;">点 击</button> -->
+
+    <!-- <p id="shade" style="
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        opacity: 0.5;
+        position: absolute;
+        z-index: 5;
+        display: none;
+        left: 0;
+        top: 0;
+      "></p> -->
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+
+    <script>
+
+
+
+        // 点击水平线标签在水平线下面生成p标签 并且把光标定位到新创建的标签的末尾
+
+        // function djspx() {
+        //     var hr = document.createElement('hr');
+        //     var xhr = pbj.after(hr)
+        //     console.log("点击水平线");
+        //     setTimeout(p = document.createElement('p'),
+        //     xhr.after(p), 1)
+        //     // setTimeout(gbyd, 1)
+
+        // }
+
+
+
+        // function gbyd() {
+        //     var hrp = xhr.next('p')
+        //     for (let i = 0; i < hrp.length; i++) {
+        //         // p[i].onclick = xzhr
+        //         console.log(hrp[0].innerHTML);
+
+        //         hrp[0].focus();
+        //         if (window.getSelection) {
+        //             //ie11 10 9 ff safari
+        //             var range = window.getSelection(); //创建range
+        //             range.selectAllChildren(hrp[0]); //range 选择p[0]下所有子内容
+        //             range.collapseToEnd(); //光标移至最后
+        //         }
+        //     }
+
+        // }
+
+
+
+        // var p2 = ""
+
+        //         function wbnr() {
+
+        //             p2 =$(this).text().slice(sz)
+        //             console.log(p2);
+        //         }
+
+
+
+
+
+
+
+        var sz = ""
+        var jdwz = ""
+
+        // 遍历p标签光标后面的文字
+        // var rangeObj  = sel.getRangeAt(4);
+        var sel = window.getSelection();
+        document.onmouseup = function () {
+
+
+
+
+            // var jd = document.getElementById("jd")
+            // jd.innerHTML = "qqqq" + " \r \n "
+
+
+            // keyEvent()
+
+
+
+            // console.log(jd.lastChild);
+            console.log(sel);
+            console.log(sel.baseNode.parentNode.parentNode);
+            // if (sel.baseNode.parentNode.parentNode.parentNode.id == "edit") {
+            //     document.getElementById("edit").removeChild(sel.baseNode.parentNode.parentNode)
+            // }
+            // console.log(sel.anchorNode);    //起点所在的文本节点
+            console.log("起点在该节点中的位置");
+            console.log(sel.anchorOffset);  //起点在该节点中的位置
+            console.log("终点所在的文本节点");
+            console.log(sel.focusNode);     //终点所在的文本节点
+            console.log("终点在该节点中的位置");
+            console.log(sel.focusOffset);   //终点在该节点中的位置
+            console.log(sel.isCollapsed);   //起点和终点是否在同一位置
+            console.log(sel.rangeCount);    // ranges （区域）的个数
+            // var wz = sel.anchorNode
+            // console.log(wz.innerHTML);
+
+            // sel.deleteFromDocument();
+            // console.log(sel.anchorNode.substr(1, 4));
+            sz = sel.focusOffset
+            jdwz = sel.anchorNode.nodeValue
+            // console.log(jdwz);
+            // console.log(typeof (jdwz));
+
+
+            // var wb = $("#edit").find("p");s
+            // for (var i = 0; i < wb.length; i++) {
+            //     // ch[i].id = 0
+            //     wb[i].onclick = wbnr
+
+            // }
+
+            // var arr = [];
+
+
+            // for (var i in wz) {
+            //     arr.push(wz[i]);
+            // }
+            // // var splitAdd = Object.values(wz);
+            // console.log(arr);
+
+            // $("#edit").wrapInner('<p></p>');
+
+        }
+
+
+
+        //     // 俩次回车退出引用
+        //     document.onmouseup = function () {
+
+        //         var ch = $("#edit").find("p");
+        //         for (var i = 0; i < ch.length; i++) {
+        //             // ch[i].id = 0
+        //             ch[i].onclick = tcyy
+        //         }
+
+        //     }
+
+
+        //document.execCommand 特性 回车以p标签生成
+        document.execCommand("defaultParagraphSeparator", false, "p");
+
+
+        var djhr = ""
+        function hrp() {
+            console.log("触发单独水平线");
+            djhr = $(this)
+
+        }
+
+
+
+
+
+        // p标签插入hr标签控制光标落到下一个标签末尾
+        //  首先遍历hr标签 给每一个hr标签都添加事件
+        $(".insertHorizontalRule").click(function () {
+            cp()
+            // document.addEventListener('mousemove', (e) => {
+            setTimeout(sppx, 1)
+            // })
+        })
+
+        function sppx() {
+            // var p = document.createElement('p');
+            // div.innerHTML = "<br>";
+            // djhr.after(p)
+
+
+            let hr = document.querySelectorAll("hr");
+
+
+
+
+
+            // 判断hr的父级的父级是不是引用标签 如果是那么光标就落在hr标签下生成一个p标签 然后把光标定位到当前的p标签下面
+
+
+            for (let i = 0; i < hr.length; i++) {
+                // hr[i].onmousemove = spx   //  这个移动触发函数需要修改
+                // var px = document.createElement('p');
+                // px.innerHTML = "<br>";
+                // hr[i].after(px)
+                // var hryy = $(hr[i]).parent()
+
+                // console.log(hryy.tagName);
+                // if (hryy.attr("tagName") == "li") {
+                //     console.log("hrpanduan1");
+                // }
+
+
+                // 遍历每一个hr给当前的hr下面生成一个p标签
+
+                // hr[i]
+
+
+
+
+
+
+                // 在每个hr标签下面生成p标签  但是这样会出现引用标签套引用标签情况
+                // var phr = document.createElement('p');
+                // phr.innerHTML = "<br>";
+                // $(hr[i]).after(phr)
+
+                // var p = $(hr[i]).next('p')
+
+                var p = $(hr[i]).next('p')
+                for (let i = 0; i < p.length; i++) {
+                    // p[i].onclick = xzhr
+                    console.log(p[0].innerHTML);
+
+                    p[0].focus();
+                    if (window.getSelection) {
+                        //ie11 10 9 ff safari
+                        var range = window.getSelection(); //创建range
+                        range.selectAllChildren(p[0]); //range 选择p[0]下所有子内容
+                        range.collapseToEnd(); //光标移至最后
+                    }
+                }
+            }
+            console.log(p);
+
+        }
+
+
+
+
+
+
+
+
+        // 监听鼠标按下  如果按下删除键且div里没有任何html内容 那么就生成一个p标签  有问题还是会出现div里面没有p标签情况
+
+        document.addEventListener('keyup', (e) => {
+
+            if (e.keyCode === 8) {
+                var edit = document.getElementById('edit').innerHTML
+                if (edit == "") {
+                    console.log("内容空");
+                    cp()
+                }
+                return
+            }
+        })
+
+
+
+
+
+
+
+        //     $('#edit').keydown(function(e) {
+        //     if (e.keyCode === 13) {
+        //         document.execCommand('insertHTML', true, '<p><br></p>');
+        //         return false;
+        //     }
+        // });
+
+
+        // /*阻止回车事件*/
+        // $(window).keydown(function (e) {
+        //     var key = window.event ? e.keyCode : e.which;
+        //     /*获取用户按键，如果是回车，则不执行任何*/
+        //     if (key.toString() == "13") {
+
+        //         /*调用光标插入方法，在光标处插入 换行*/
+        //         insertHtml("<br>");
+        //         return false;
+        //     }
+        // });
+
+
+        //         $('#edit').on('keypress', function(e) {
+
+        // var theEvent = e || window.event;
+
+        // var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+
+        // if( code == 13 ) {
+
+        //     document.execCommand('formatBlock', 'false', '<p>');
+
+        // }
+
+        // });
+
+
+
+
+
+
+
+
+
+        //  解决ol和ul标签外标签p
+        function adjustList() {
+
+            let lists = document.querySelectorAll("ol, ul");
+
+            for (let i = 0; i < lists.length; i++) {
+
+                let ele = lists[i];  // ol
+
+                let parentNode = ele.parentNode;
+
+                if (parentNode.tagName === 'P' && parentNode.lastChild === parentNode.firstChild) {
+
+                    parentNode.insertAdjacentElement('beforebegin', ele);
+
+                    parentNode.remove()
+
+                }
+
+            }
+
+        }
+
+
+
+
+        // // js原生把div变成p 标签   可正常使用但是需要事件触发会有问题
+        // function changp() {
+        //     let lists = $("#edit").find("div");
+        //     // var bq = $("<div>我是新创建的div标签</div>")
+        //     for (let i = 0; i < lists.length; i++) {
+        //         // html = $("我是新创建的div标签")
+        //         lists[i].onmouseout = gb
+        //     }
+
+        // }
+        // function gb() {
+        //     $(this).replaceWith('<p>' + '<br>' + '</p>')
+        // }
+
+
+
+
+
+
+
+
+        // //  水平线
+
+        // $(".insertHorizontalRule").click(function () {
+        //     console.log("水平线生成p");
+        //     cp()
+        //     // $("#wq").focus();
+        //     // $("div").blur();
+
+        //     console.log("点击水平线");
+        //     let p = document.querySelector(".weeee");
+        //     for (let i = 0; i < p.length; i++) {
+        //         console.log(p[i].innerHTML);  // 获取不到
+        //     }
+
+        //     p.focus();
+        //     if (window.getSelection) {
+        //         //ie11 10 9 ff safari
+        //         var range = window.getSelection(); //创建range
+        //         range.selectAllChildren(box2); //range 选择box2下所有子内容
+        //         range.collapseToStart(); //光标移至首位
+        //     } else if (document.selection) {
+        //         //ie10 9 8 7 6 5
+        //         var range = document.selection.createRange(); //创建选择对象
+        //         range.moveToElementText(obj); //range定位到obj
+        //         range.collapse(false); //光标移至最后
+        //         range.select();
+        //     }
+
+        // });
+
+
+
+
+
+        //   无用改变光标位置
+
+        // function  offKeyDown (e) {
+        //       // 创建一个自定义的位置
+        //       let range = document.createRange()
+        //       range.selectNodeContents(document.getElementsByTagName("hr"))
+        //       range.collapse(false)
+        //       // 获取原来光标的位置
+        //       let sel = window.getSelection()
+        //       // 把原来数据里面的位置改变
+        //       range.setStart(document.getElementsByTagName("hr"),sel.getRangeAt(0).startOffset + 1)
+        //       range.setEnd(document.getElementsByTagName("hr"), sel.getRangeAt(0).endOffset + 1)
+        //       sel.removeAllRanges()
+        //       sel.addRange(range)
+        //       // 最后一定记得去掉原有的事件，执行我们上面自定义的事件
+        //       e.returnValue = false
+        //       }
+
+
+
+
+
+
+        // var dianji = 0
+        // var p = document.getElementById('p');
+        // p.addEventListener('click', function(){
+        //   dianji = 1;
+        //   yy() 
+        // })
+        // var yy = document.getElementById('yy');
+        // yy.addEventListener('click', function(){
+        //  console.log(dianji);
+        // })
+
+
+
+
+
+        // var num = 0;
+        // var yy = document.getElementById('yy')
+        // yy.addEventListener('click', function () {
+        // })
+
+
+        // p标签引用功能
+        var djys = ""
+        var pbj = ''
+        var olj = ''
+        var ulj = ''
+        var fji = document.getElementById('edit')
+        // 引用点击事件
+        function wd2() {
+
+            // console.log(djys[0].nodeName);
+            if (djys.nodeName == "P") {
+                console.log("点击p");
+                if (pbj.id == 0) {
+                    console.log("pbj.id == 0");
+                    // console.log("p执行");
+                    // pbj.wrap('<blockquote></blockquote>');
+                    // $("blockquote").addClass("aaa");
+                    var blockquote = document.createElement('blockquote');
+                    blockquote.innerHTML = '<p>' + djys.innerHTML + '</p>'
+                    let yiny = fji.insertBefore(blockquote, djys);
+                    console.log(blockquote);
+                    cp()
+
+                    djys.remove();
+
+                    pbj.id = 1
+                } else if (pbj.id == 1) {
+                    // console.log("p取消执行");
+                    pbj.id = 0
+                    let my_html = pbj.parentNode('.aaa').html()
+
+                    console.log();
+                    pbj.parent('.aaa').before(my_html)
+                    pbj.parent('.aaa').detach();
+                }
+            }
+
+
+
+
+
+
+
+            //  ol ul 引用功能
+
+            else if (djys[0].nodeName == "UL" || djys[0].nodeName == "OL") {
+                console.log("点击列表");
+                if (olj.context.id == 0) {
+                    // console.log("ol执行");
+                    olj.wrap('<blockquote></blockquote>');
+                    $("blockquote").addClass("aaa");
+                    cp()
+                    olj.context.id = 1
+                } else if (olj.context.id == 1) {
+                    // console.log("ol取消执行");
+                    olj.context.id = 0
+                    let fj = olj.parent();
+                    let idm = fj.children("ol,ul");
+                    for (let t = 0; t < idm.length; t++) {
+                        idm[t].id = 0
+                        console.log('变化');
+                    }
+                    let myol_html = olj.parent('.aaa').html()
+                    olj.parent('.aaa').before(myol_html)
+                    olj.parent('.aaa').detach();
+                }
+            }
+            // ul引用
+
+            // if (ulj.context.id == 0) {
+            //     console.log("ol执行");
+            //     ulj.wrap('<blockquote></blockquote>');
+            //     $("blockquote").addClass("aaa");
+            //     cp()
+            //     ulj.context.id = 1
+            // } else if (ulj.context.id == 1) {  // 这个引用也是有问题 需要获取父级的父级 
+            //     console.log("ol取消执行");
+            //     ulj.context.id = 0
+            //     let myul_html = ulj.parent('.aaa').html()
+            //     console.log(myul_html);
+            //     ulj.parent('.aaa').before(myul_html)
+            //     ulj.parent('.aaa').detach();
+            // }
+
+        }
+
+
+
+
+
+
+        // 不用api的有序列表功能 需要考虑的情况很多 
+
+        // function yx() {
+        //     // let my_html = ''
+        //     if (pbj.context.id == 0) {
+        //         console.log("执行有序列表");
+        //         olnr = '<ul><li></li></ul>'
+        //         $("ol").addClass("aaa");
+        //         pbj.wrap(olnr);
+        //         cp()
+        //         // my_html = pbj.parents("ol").children("li").children("p")
+        //         // console.log(my_html);
+        //         // for (let i = 0; i < my_html.length; i++) {
+        //         //     my_html[i].id = 1
+
+        //         // }
+        //         pbj.context.id = 1
+        //     } else if (pbj.context.id == 1) {   // 这个取消列表的功能还不可以   因为取消列表这个删除有问题   当重复点击后 当前的p标签重新插入ol的前面  并且把此p标签的父级li标签 删除掉  
+        //         console.log("取消有序列表");
+
+        //         // olnr1 = pbj.parent('li')
+        //         // console.log(olnr1);
+        //         // olnr2 = pbj.parent('ol')
+        //         // let my_html = olnr2.html()
+        //         // olnr.before(my_html)
+        //         // olnr.detach();
+        //         // console.log(pbj.parents("ol")); 
+        //         // my_html = pbj.parents("ol").children("li").children("p")
+        //         // for (let i = 0; i < my_html.length; i++) {
+        //         //     pbj.parents("ol").before(my_html[i])
+        //         //     my_html[i].id = 0
+        //         // }
+
+        //         // pbj.parents("ol")[0].remove();
+
+        //         // console.log(my_html);
+        //         pbj.context.id = 0
+        //         let myol_html = pbj.parent('li').html()
+        //         console.log(myol_html);
+        //         pbj.parents("ul").insertAfter(myol_html)
+        //         pbj.parent('li').remove();
+
+        //     }
+        // }
+
+
+        // let position = ''
+        function blurEdit() {
+            jies.id = 0
+            // position = window.getSelection().getRangeAt(4)
+            // console.log(position);
+
+        }
+
+        // function yyp() { // 在引用情况下插入图片会自动插入到引用标签的下面   不可以在引用格式里面插入图片
+        //     djys = $(this)
+        //     // 会和引用事件冲突
+
+        // }
+        var jdsl = " "
+        var jds = " "
+
+        var dwgb = ""
+
+        var pt2 = ""
+        var pt3 = ""
+
+        // p标签引用功能 加 俩次回车后退出引用光标显示在下一个p标签里
+
+        function wd1() {
+            var se = window.getSelection();
+            console.log(sel.focusNode);
+
+            this.id = 0
+            // console.log(this);ss
+            // console.log(this.nodeName);
+            // pt2 = this.text().slice(sz)
+            // pt3 = this.text().slice(0, sz)
+            console.log(pt2);
+            console.log(pt3);
+
+            // console.log(pbj);
+            pbj = this
+            djys = pbj
+
+            jdsl = this.childNodes.length
+            jds = this.childNodes
+            console.log(jdsl);
+            console.log(this.childNodes); //p标签内节点
+            console.log(this.children);
+
+
+
+
+            // console.log($(this));
+            // console.log("p标签");  
+            // let fj = this.parentNode ();
+            // if (fj.attr('class') == "aaa") {
+
+            //     console.log("外标签是aaa");
+            //     dwgb = 0
+            //     // 如果外标签是aaa 那么执行点击回车的判断
+            //     document.onkeydown = function () {
+            //         if (event.keyCode == 13) {
+            //             console.log("引用回车");
+            //             p2 = pbj.text()
+            //             setTimeout(function () {
+            //                 p1 = pbj.nextAll('p').text()
+
+            //                 // p2 = pbj.next('p').next('p').text()
+            //                 // console.log(p2);
+            //                 if (p1 == "" || p2 == "") {
+            //                     console.log("引用下的内容为空");
+            //                     document.onkeydown = function () {
+            //                         if (event.keyCode == 13 && dwgb == 0) {
+            //                             console.log("引用二次回车");
+            //                             //创建一个p标签
+            //                             var p = document.createElement('p');
+            //                             p.innerHTML = "<br>";
+            //                             fj.after(p)
+            //                             // 控制光标
+            //                             var p3 = fj.next('p')
+            //                             console.log(p3);
+            //                             for (let i = 0; i < p3.length; i++) {
+            //                                 // p[i].onclick = xzhr
+            //                                 console.log(p3[0].innerHTML);
+            //                                 p3[0].focus();
+            //                                 if (window.getSelection) {
+            //                                     //ie11 10 9 ff safari
+            //                                     var range = window.getSelection(); //创建range
+            //                                     range.selectAllChildren(p3[0]); //range 选择p[0]下所有子内容
+            //                                     range.collapseToEnd(); //光标移至最后
+            //                                     dwgb = 1
+            //                                 }
+            //                             }
+            //                             pbj.nextAll('p').remove()
+            //                         }
+            //                     }
+            //                 }
+            //             }, 1);
+            //         }
+            //     }
+            // }
+
+            // 点击p标签后 当该标签文本内容为空的时候 且点击删除标签的时候   判断该标签上一个标签是否
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+        // 没有用到
+
+        // function tcyy() {
+        //     $(this).id = 0
+        //     // console.log(pbj);
+        //     pbj = $(this)
+        //     // state = pbj.context.id
+        //     // console.log($(this));
+        //     // console.log("p标签");  
+        //     let fj = $(this).parent();
+        //     if (fj.attr('class') == "aaa") {
+
+        //         // 如果外标签是aaa 那么执行点回车的判断
+        //         document.onkeypress = function () {
+        //             if (event.keyCode == 13) {
+        //                 console.log("回车");
+
+
+        //                 setTimeout(function () {
+        //                     p1 = pbj.text()
+        //                     console.log(p1);
+        //                     p2 = pbj.next('p').text()
+        //                     console.log(p2);
+        //                     if (p1 == "" && p2 == "") {
+        //                         console.log("为空");
+
+        //                     }
+
+        //                 }, 1); //1s
+
+
+        //             }
+        //         }
+
+
+        //     }
+
+
+        // }
+
+
+
+
+
+        // ol  ul变量
+        function olhwd() {
+            $(this).id = 0
+            console.log($(this));
+            console.log(this);
+            olj = $(this)
+            djys = olj
+            let fj = $(this).parent();
+            if (fj.attr('class') == "aaa") {
+                console.log("相同");
+                let idm = fj.children("ol,ul");
+                for (let t = 0; t < idm.length; t++) {
+                    idm[t].id = 1
+                }
+
+                // document.onkeypress = function () {
+                //     if (event.keyCode == 13) {
+
+                //     }
+                // }
+
+            }
+
+        }
+
+
+
+
+
+
+
+        // // // ul变量
+        // // function ulhwd() {
+        // //     $(this).id = 0
+        // //     // console.log(pbj);
+        // //     ulj = $(this)
+        // //     console.log("ul绑定");
+        // //     console.log($(this));
+        // // }
+
+        // // function pdhc() {
+        // //     // 假如回车判断
+        // //     // document.onkeypress = function () {
+        // //         if (event.keyCode == 13) {
+
+        // //             console.log("引用回车");
+
+        // //         }
+        // //     // }
+        // // }
+
+        // document.addEventListener('click', (e) => {
+
+        //     let TPYR = document.getElementsByTagName("img");
+        //     for (let i = 0; i < TPYR.length; i++) {
+        //         add2()
+        //         TPYR[i].onclick = tpd
+        //     };
+
+
+        //     }),
+
+
+
+
+
+
+
+        document.addEventListener('mousemove', (e) => {  // 对性能不太友好
+
+            // if (tpsfy == 0) {
+            //     console.log("创建标签");   // 判断创建图片成功  为什么会一直触发
+
+            // }
+
+            // let imgys = document.getElementsByTagName("img");
+            // for (let i = 0; i < imgys.length; i++) {
+            //     add2()
+
+            // };
+
+
+            // 引用标签里面插入图片
+            // var yybq = $("blockquote")
+            // for (var y = 0; y < yybq.length; y++) {
+            //     yybq[y].onclick = yyp
+            // }
+
+
+
+
+
+
+            var hr = $("hr")
+            for (var f = 0; f < hr.length; f++) {
+                hr[f].onmouseleave = hrp
+            }
+
+
+
+
+            var tpk = $(".result")
+            for (var t = 0; t < tpk.length; t++) {
+                tpk[t].onmouseleave = yctpk
+            }
+
+
+
+
+
+            // $(document).ready(function () {
+            adjustList()  //去掉包裹有序列表无序列表的p标签
+            // changp()//p标签替换div标签
+            // 以p标签包裹内容
+            // var ch = $("#edit").find("p");
+            var ch = document.getElementsByTagName("p")
+            // console.log(ch1);
+
+            for (var i = 0; i < ch.length; i++) {
+                // ch[i].id = 0
+                ch[i].onclick = wd1
+
+            }
+
+
+            //     //   // 以ol标签包裹内容
+            //     //   var ol = $("#edit").find("ol");
+            //     //   for (var i = 0; i < ol.length; i++) {
+            //     //     // ch[i].id = 0
+            //     //     ol[i].onclick = olhwd
+            //     //   }
+
+
+            //     //   // 以ul标签包裹内容
+            //     //   var ul = $("#edit").find("ul");
+            //     //   for (var i = 0; i < ul.length; i++) {
+            //     //     // ch[i].id = 0
+            //     //     ul[i].onclick = ulhwd
+            //     //   }
+
+
+            let lists = document.querySelectorAll("ol, ul");
+            for (let i = 0; i < lists.length; i++) {
+                lists[i].onclick = olhwd
+            }
+        })
+
+
+
+
+
+        // 取消引用
+
+        // var qxyy = document.getElementById('qxyy')
+        // qxyy.addEventListener('click', function () {
+
+
+        //   // $(document).ready(function () {
+        //   //   var ch = $("#edit").find("p");
+        //   //   for (var i = 0; i < ch.length; i++) {
+        //   //     console.log(ch[i]);
+        //   //     ch[i].onclick = wd2
+        //   //   }
+        //   sh = $('.aaa')
+        //   for (var i = 0; i < sh.length; i++) {
+        //     sh[i].onclick = wd3
+        //   }
+
+        //   // })
+
+        // })
+
+
+        // function wd3() {
+
+        //   ls = $(this).html()
+        //   // $('.aaa').before(ls);
+        //   // $('.aaa').remove();
+
+        // }
+
+
+
+
+
+
+        // function yy111() {
+        //     yiny()
+        // }
+
+        // function yiny() {
+        //     $(document).ready(function () {
+        //         var ch = $("#edit").find("p");
+        //         for (var i = 0; i < ch.length; i++) {
+        //             ch[i].onclick = wd
+        //         }
+        //     })
+        // }
+        // function wd() {
+        //     $(this).wrap('<blockquote></blockquote>');
+        //     cp()
+        // }
+
+
+
+
+
+        // // 点击编辑框让他变成可编辑状态（好像没有什么影响）
+        // function hqjd() {
+        //   const edit2 = document.getElementById('edit')
+        //   edit2.contentEditable = true
+
+        //   let results = document.getElementById("cs")
+        //   for (let o = 0; o < results.length; o++) {
+
+        //     results[o].onclick = tpc
+        //   };
+
+        // }
+
+
+
+
+
+
+        // 图片不被点击颜色变换回来
+
+        function tpc() {
+            this.style.border = "2px solid #FFFFFF"
+        }
+
+
+
+
+        // 点击生成p标签
+
+        function cp() {
+            const edit1 = document.getElementById('edit')
+            var p = document.createElement('p');
+            p.innerHTML = "<br>"
+            // p.id = "wq"
+            edit1.appendChild(p);
+        }
+
+
+
+
+
+
+        //生成换行hr标签  （需要和p标签同级  删除托蓝文字 把光标上下俩段文字分开生成显示俩个p标签） 
+
+        // function hh() {
+        // $(".result").after("<p><br></p>");
+        // $(".result").before("<p><br></p>");
+        // console.log("添加回车");
+
+        // const result1 = document.getElementsByClassName('result')
+        // for (let i = 0; i < result1.length; i++) {
+        //   var br = document.createElement('br');
+        // br.innerHTML = "<br>"
+        // this.insertBefore(br,result1);
+        // }
+        // console.log(result);
+
+        // }
+        // function tpc1() {
+        //   var br = document.createElement('br');
+        //   br.innerHTML = "<br>"
+        //   this.insertBefore(br,this);
+        // }
+
+
+
+
+        //  图片注释的回车事件
+        // function hc() {
+        //   document.onkeydown = function (e) {
+        //     var ev = (typeof event != 'undefined') ? window.event : e;
+        //     if (ev.keyCode == 13) {
+        //       return false;
+        //       console.log("回车");
+        //     }
+        //   }
+        // }
+
+
+
+
+        // // 大标签获取焦点 屏蔽回车
+        // function hdjd() {
+        //   if(document.getElementById("cs").contentEditable = true){
+        //     document.onkeypress = function () {
+        //     if (event.keyCode == 13) {
+        //       console.log("回车");
+        //       return false;
+        //     }
+
+        //   }
+        //   }
+
+
+
+
+
+        //   console.log("获取焦点");
+        // }
+        // // 大标签失去焦点 取消屏蔽回车
+        // function sqjd() {
+        //   document.onkeypress = function () {
+        //     if (event.keyCode == 13) {
+        //       console.log("取消回车");
+        //       return true;
+        //     }
+
+        //   }
+        // }
+
+
+
+
+
+
+
+
+        // var sc = " "    // 设置点击选中的初始值
+
+
+        // 鼠标移出大框事件  希望实现鼠标移出当前图片的大框就会让边框颜色变成白色 同时取消图片的点击事件
+
+        function yctpk() {
+
+            editss = document.getElementById('edit')
+            editss.contentEditable = true
+        }
+
+
+
+
+
+
+
+        // 当大的编辑框获得焦点的时候  取消之前选中的图片删除事件 jies.id = 1
+        function dkjd() {
+            jies.id = 1
+            // 获取图片的父级设定可编辑
+            // let re = jies.parent("#cs");
+            // re.contenteditable = "true"
+            // console.log(re);
+
+            // jies.style.border = "3px solid #FFFFFF"  // 对边框颜色限制
+        }
+
+
+
+
+        // $(".result").onmouseout( function () {
+
+        //     console.log("鼠标移出");
+        //     var tpdk = $(".result")
+
+        //     for (let i = 0; i < tpdk.length; i++) {
+        //         tpdk[i].onclick = kbj  // 给每一个图片大框添加点击事件
+        //     };
+
+        // });
+
+
+
+        // function imgtpyr() {
+        //     const cs2 = document.getElementsByClassName('results')
+        //     for (let k = 0; k < cs2.length; k++) {
+        //         cs2[k].onclick = kbj  // 给每一个图片大框添加点击事件
+        //     };
+
+        //     // let TPYR = document.getElementsByTagName("img");
+        //     // for (let i = 0; i < TPYR.length; i++) {
+        //     //     TPYR[i].onclick = kbjj
+        //     // };
+        // }
+
+
+
+
+        // function kbj() {
+        //     var tpimg = $(this).find(".results").find("img")
+        //     console.log(tpimg);
+        //     console.log("zji1");
+
+
+
+
+        //     editss = document.getElementById('edit')
+        //     editss.contentEditable = true
+        //     this.style.border = '2px solid #FFFFFF'
+        // }
+
+
+
+        // 好像没有效果
+
+        // function kbjj() {
+        //     this.style.border = '2px solid #FFFFFF'
+        // }
+
+
+
+
+
+
+
+        // 鼠标移入图片
+
+        function tpyr() {
+
+            let TPYR = document.getElementsByTagName("img");
+            for (let i = 0; i < TPYR.length; i++) {
+                add2()
+                TPYR[i].onclick = tpd
+                // TPYR[i].style.border = '2px solid #33FFFF'
+            };
+        }
+
+
+
+        // 图片移出
+
+        function tpyc() {
+            let results = document.getElementById("cs")
+            for (let o = 0; o < results.length; o++) {
+
+                cz = results[o]
+                cz.contenteditable = true
+                // TPYR[i].style.border = '2px solid #FFFFFF'
+            };
+        }
+
+
+
+
+        //  function  tpdj(){
+        //   console.log("点击图片");
+        //   edit = document.getElementById('edit')
+        //     edit.contenteditable = false
+        //  } 
+
+
+
+
+
+
+
+
+
+
+        // 鼠标移入图片标签点击了删除按键 就会删除整个插入图片的标签
+
+
+        var jies = ""
+
+        function add2() {
+
+            document.addEventListener('keydown', (e) => {
+                // console.log(e.target);
+                if (e.keyCode === 8 && jies.id == 0) {  // 监听删除按键
+
+                    // let result = document.getElementsByClassName("result")[0]; //获取result元素
+                    let result = jies.parentElement
+                    // var fj = this.parentElement
+                    // console.log(fj);
+                    var parent = result.parentElement; // 获取result的父元素
+                    parent.removeChild(result); // 删除result 元素
+                    editss = document.getElementById('edit')// 删除图片的时候让编辑框恢复可编辑功能
+                    editss.contentEditable = true
+
+                }
+                return false
+            })
+
+        }
+
+
+
+
+
+
+        // 鼠标在移入后点击图片 图片的边框变化颜色
+
+        function tpd() {
+            editss = document.getElementById('edit')
+            editss.contentEditable = false
+            jies = this
+            jies.id = 0
+            jies.style.border = "3px solid #33CCFF"
+
+        }
+
+
+
+
+
+
+
+        // 鼠标移入并且点击图片注释事件
+        function yrzs() {
+            let MYP1 = document.getElementsByTagName("figcaption");
+            for (let w = 0; w < MYP1.length; w++) {
+                MYP1[w].onclick = xs
+
+            };
+        }
+
+
+
+
+
+
+        // 鼠标移入图片注释的点击事件
+        function xs() {
+            let d = document.getElementsByTagName("button");
+            for (let f = 0; f < d.length; f++) {
+                d[f].disabled = true;  // 禁用编辑器按钮
+            };
+            let h = document.getElementsByTagName("select");
+            for (let y = 0; y < h.length; h++) {
+                h[y].disabled = true;  // 禁用编辑器按钮
+            };
+            // .disabled = false
+            let a = document.getElementsByTagName("input")
+            for (let i = 0; i < a.length; i++) {
+                a[i].disabled = true;  // 禁用编辑器按钮
+            };
+            document.getElementById("myP").contentEditable = true; // (暂时不用)   
+            if (document.getElementById("myP").contentEditable = true) {
+                hc()  // 注释屏蔽回车功能
+            }
+            this.setAttribute('dataBefore', ' ');// 修改注释默认提示
+        }
+
+
+
+
+
+
+
+        // 编辑的时候屏蔽回车事件
+        function hc() {
+            document.onkeypress = function () {
+                if (event.keyCode == 13) {
+                    return false; //可以控制是否屏蔽
+                }
+
+            }
+        }
+
+
+
+
+
+
+
+        // 设置大的编辑框不屏蔽回车事件
+        function qxhc() {
+            document.onkeypress = function () {
+                if (event.keyCode == 13) {
+                    return true;
+                }
+
+            }
+        }
+
+
+
+
+
+
+
+        // 当注释框失去焦点的时候 判断注释标签里面是否有内容 进行控制默认提示是否显示
+
+        function cc() {
+            let MYP = document.getElementsByTagName("figcaption");
+            for (let i = 0; i < MYP.length; i++) {
+                let dg = MYP[i]
+                let nr = dg.innerHTML
+                if (nr === "") {
+                    dg.setAttribute('dataBefore', '在此输入图片注释 '); // 显示注释默认提示
+                }
+
+            };
+
+
+
+            // 恢复操作按钮可以使用
+
+            let d1 = document.getElementsByTagName("button");
+            for (let f1 = 0; f1 < d1.length; f1++) {
+                d1[f1].disabled = false;  // 可以使用编辑器按钮
+            };
+            let h1 = document.getElementsByTagName("select");
+            for (let y1 = 0; y1 < h1.length; h1++) {
+                h1[y1].disabled = false; // 可以使用编辑器按钮
+            };
+            // .disabled = false
+            let a1 = document.getElementsByTagName("input")
+            for (let i1 = 0; i1 < a1.length; i1++) {
+                a1[i1].disabled = false; // 可以使用编辑器按钮
+            };
+
+            qxhc()
+
+            // document.getElementById("myP").contentEditable = false;// （不用）
+        }
+
+
+
+
+
+
+
+
+        // // 把按钮插入在光标后面
+        // let position = ''
+        // function blurEdit() {
+        //   position = window.getSelection().getRangeAt(0)
+        // }
+        // function clickInsert() {
+        //   if (position === '') {
+        //     // 如果div没有光标，则在div内容末尾插入
+        //     const div = document.getElementById('inputContent')
+        //     div.focus()
+        //     const range = window.getSelection()
+        //     range.selectAllChildren(div)
+        //     range.collapseToEnd()
+        //     position = window.getSelection().getRangeAt(0)
+        //   }
+        //   // 创建一个元素
+        //   const span = document.createElement('span')
+        //   // 插入的按钮不可编辑，设置contenteditable为false
+        //   span.innerHTML = '<figure class="result" contenteditable="false"  ><img src="' +
+        //         this.result +
+        //         '" alt=""/><br ><figcaption contenteditable="true"  class="zs" >在此输入图片注释</figcaption> </figure><br >'
+        //   // 将按钮插入
+        //   position.insertNode(span)
+        // }
+
+
+
+
+
+
+        // var sel = window.getSelection();
+        // document.onmouseup = function () {
+        //   var a = sel.anchorOffset
+        //   console.log(sel.anchorNode);    //起点所在的文本节点
+        //   console.log(a);  //起点在该节点中的位置   
+        // }
+
+
+
+
+
+
+        // 插入图片事件
+
+        var input = document.getElementById('file_input');
+        var onInput = document.getElementById('file_input');
+        var oAdd = document.getElementById('add');
+        var dataArr = []; // 储存所选图片的结果(文件名和base64数据)
+        var fd;
+        var result;
+        (function () {
+            // 富文本编辑器类 类的构造函数
+            class Editor {
+                constructor() {
+                    this.bindElem();
+                }
+
+                bindElem() {
+                    var toolbar = document.getElementById('toolbar');
+                    var bs = toolbar.querySelectorAll('input,select');
+                    for (var i = 0; i < bs.length; i++) {
+                        if (bs[i].tagName.toLowerCase() == 'select') {
+                            bs[i].onchange = function () {
+                                document.execCommand(this.name, true, this.value);
+                            };
+                        } else if (bs[i].tagName.toLowerCase() == 'input') {
+                            this.action(bs[i], bs[i].name);
+                        }
+                    }
+                }
+
+                action(obj, attr) {
+                    obj.onclick = function () {
+                        document.execCommand(attr, true);
+                    };
+                }
+            }
+
+            new Editor();
+        })();
+
+
+
+
+
+
+        //判断是否支持FileReader
+        if (typeof FileReader === 'undefined') {
+            alert('抱歉，你的浏览器不支持 FileReader');
+            input.setAttribute('disabled', 'disabled'); //添加属性，禁用input
+        } else {
+            //添加监听事件
+            input.addEventListener('change', readFile, false); //默认值是false，冒泡传递;当值为true，捕获传递
+        }
+
+        let position = ''
+        function blurEdit() {
+            jies.id = 0
+            position = window.getSelection().getRangeAt(0)
+            console.log(position);
+        }
+
+        var tpsfy = " "
+
+        function readFile() {
+            if (position === '') {
+                console.log("光标为空");
+                // 如果div没有光标，则在div内容末尾插入
+                const div = document.getElementById('edit')
+                div.focus()
+                const range = window.getSelection()
+                range.selectAllChildren(div)
+                range.collapseToEnd()
+                position = window.getSelection()
+            }
+
+
+
+
+
+
+
+
+            fd = new FormData(); //FormData方式发送请求
+            var iLen = this.files.length; //获取图片数量
+            var index = 0;
+            for (var i = 0; i < iLen; i++) {
+                if (!input['value'].match(/.jpg|.gif|.png|.jpeg|.bmp/i)) {
+                    //判断上传文件格式
+                    return alert('上传的图片格式不正确，请重新选择');
+                }
+                var reader = new FileReader(); //创建FileReader对象
+                reader.index = i;
+                fd.append(i, this.files[i]); //可以通过fd.get(i)获取FormData()对应的值;
+                reader.readAsDataURL(this.files[i]); //转成base64，并存在reader.result里
+                reader.fileName = this.files[i].name;
+                reader.onload = function (e) {
+                    //设置图片信息对象
+                    var imgMsg = {
+                        name: this.fileName, //获取文件名
+                        base64: this.result, //reader.readAsDataURL方法执行完后，base64数据储存在reader.result里
+                    };
+                    dataArr.push(imgMsg); //将图片信息对象存到数据数组中
+                    console.log(dataArr);
+                    result =
+                        ' <figure class="results" id="cs"   contenteditable="false" ><img id="tp" onmouseover="tpyr()"  onmouseout="tpyc()"  onclick="tpdj()" src="' +
+                        this.result +
+                        '" alt=""/><br><figcaption  contenteditable="true" dataBefore="在此输入图片注释 "   onclick="qq()" onblur="cc()"  onmouseover="yrzs()"  id="myP" class="zs" ></figcaption> </figure>   ';
+                    var div = document.createElement('p');
+                    // div.contenteditable = true
+                    div.innerHTML = result;
+                    div['className'] = 'result';
+                    div['index'] = index;
+
+                    if (div !== null) {
+                        tpsfy = 0  // 建立变量做为创建成功的标志
+                    }
+
+                    console.log(tpsfy);
+
+                    // document.getElementById('edit').appendChild(div); //插入dom树
+                    // parentNode = document.getElementById('edit')
+                    // div = parentNode.insertBefore(div, position)
+
+                    // console.log(position);121212
+                    // if (olj[0].nodeName = "UL" || olj[0].nodeName == "OL") {
+                    //     olj.after(div) // 这种情况是列表下插入图片 默认把图片插入到
+                    //     var p = document.createElement('p');
+                    //     p.innerHTML = "<br>";
+                    //     div.after(p)
+                    //     // console.log(olj[0].nodeName);
+                    // }
+
+
+
+
+                    if (jdsl == 1) {
+                        console.log("一个节点");
+                        if (djys[0].nodeName == "P" && djys.parent().attr('class') != "aaa") {
+
+                            djys.after(div)
+
+                            // console.log("sde");
+                            var p = document.createElement('p');
+                            p.innerHTML = pt2;
+                            div.after(p)
+                            cp()
+                            pbj.html(pbj.html().replace(pbj.text(), pt3))
+
+                        }
+                        if (djys[0].nodeName = "UL" || djys[0].nodeName == "OL") {
+                            djys.after(div) // 列表情况下插入图片插入到列表标签的下面   不可以插入到列表标签的中间
+                            cp()
+                        }
+                        if (djys.parent().attr('class') == "aaa") {
+                            console.log("是引用");
+                            djys.parent().after(div) //  引用情况下插入图片插入到引用标签的下面   不可以插入到引用标签的中间
+                            cp()
+                        }
+
+
+                    }
+
+
+                    if (jdsl > 1) {
+                        console.log("多个节点");
+
+                        if (djys[0].nodeName == "P") {
+                            console.log("p的多个节点");
+
+                            // djys.after(div)
+
+                            // // 需要获取节点内容
+
+                            // for (let i = 0; i < jds.length; i++) {
+                            //     jdnr = jds[1].outerHTML;
+                            // }
+                            // console.log(jdnr);
+
+
+                            position.insertNode(div)
+
+
+                            // var brDiv = document.createElement('pre');
+
+                            // pbj.innerHTML = 11111111 + "\r \n " + 333333333;
+                            // position.insertNode(brDiv)
+                            // pbj.after(brDiv);
+                            // brDiv.after(div)
+
+
+
+                            // var p = document.createElement('p');
+                            // p.innerHTML = pt2;
+                            // div.after(p)
+                            // cp()
+                            // pbj.html(pbj.html().replace(pbj.text(), pt3))
+
+                        }
+
+
+
+
+                    }
+
+
+
+
+
+
+
+
+                    // console.log(pbj[0].nodeName);
+
+                    // var ty = pbj[0].nodeName
+                    // console.log(ty);
+
+
+                    // if (ty == "P") {
+                    //     console.log("sde");
+
+                    // }
+
+
+
+
+
+
+
+                    // var p = document.createElement('p');
+                    // p.innerHTML = " <br>";
+                    // p.innerHTML = pt2;
+
+
+                    // div.after(p)
+
+                    // p.html(pbj.html().replace(pbj.text(),p2))
+
+                    // div.contenteditable = "true"
+
+                    // p.html(p.html().replace("<br>",p2))
+                    // var dp = document.createElement('p');
+                    // dp.innerHTML =  p3;
+                    // div.before(dp)
+
+
+                    // pbj.innerHTML =  p3
+                    // position.insertNode(div)
+                    // cp()
+                    // pbj.remove()
+
+
+                    // pbj.html(pbj.html().replace(pbj.text(), pt3))
+                    // setTimeout(hh(),500)
+                    // hh()
+                    // div.onclick = function () {
+                    //   this.remove(); // 在页面中删除该图片元素
+                    //   // delete dataArr[this.index]; // 删除dataArr对应的数据
+                    // };
+
+                    index++;
+
+                };
+            }
+        }
+
+
+
+        // 点击图片按钮
+
+        function add1() {
+
+
+
+            onInput.value = ''; // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
+            onInput.click();
+        }
+
+    </script>
+</body>
+
+</html>
+<!-- 
+&#8203 -->
