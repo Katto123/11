@@ -237,47 +237,6 @@
 
 
 
-        // 点击水平线标签在水平线下面生成p标签 并且把光标定位到新创建的标签的末尾
-
-        // function djspx() {
-        //     var hr = document.createElement('hr');
-        //     var xhr = pbj.after(hr)
-        //     console.log("点击水平线");
-        //     setTimeout(p = document.createElement('p'),
-        //     xhr.after(p), 1)
-        //     // setTimeout(gbyd, 1)
-
-        // }
-
-
-
-        // function gbyd() {
-        //     var hrp = xhr.next('p')
-        //     for (let i = 0; i < hrp.length; i++) {
-        //         // p[i].onclick = xzhr
-        //         console.log(hrp[0].innerHTML);
-
-        //         hrp[0].focus();
-        //         if (window.getSelection) {
-        //             //ie11 10 9 ff safari
-        //             var range = window.getSelection(); //创建range
-        //             range.selectAllChildren(hrp[0]); //range 选择p[0]下所有子内容
-        //             range.collapseToEnd(); //光标移至最后
-        //         }
-        //     }
-
-        // }
-
-
-
-        // var p2 = ""
-
-        //         function wbnr() {
-
-        //             p2 =$(this).text().slice(sz)
-        //             console.log(p2);
-        //         }
-
 
         var sz = ""
         var jdwz = ""
@@ -286,24 +245,8 @@
         // var rangeObj  = sel.getRangeAt(4);
         var sel = window.getSelection();
         document.onmouseup = function () {
-
-
-
-
-            // var jd = document.getElementById("jd")
-            // jd.innerHTML = "qqqq" + " \r \n "
-
-
-            // keyEvent()
-
-
-
-            // console.log(jd.lastChild);
             console.log(sel);
             console.log(sel.baseNode.parentNode.parentNode);
-            // if (sel.baseNode.parentNode.parentNode.parentNode.id == "edit") {
-            //     document.getElementById("edit").removeChild(sel.baseNode.parentNode.parentNode)
-            // }
             // console.log(sel.anchorNode);    //起点所在的文本节点
             console.log("起点在该节点中的位置");
             console.log(sel.anchorOffset);  //起点在该节点中的位置
@@ -383,48 +326,13 @@
         })
 
         function sppx() {
-            // var p = document.createElement('p');
-            // div.innerHTML = "<br>";
-            // djhr.after(p)
-
 
             let hr = document.querySelectorAll("hr");
-
-
-
-
 
             // 判断hr的父级的父级是不是引用标签 如果是那么光标就落在hr标签下生成一个p标签 然后把光标定位到当前的p标签下面
 
 
             for (let i = 0; i < hr.length; i++) {
-                // hr[i].onmousemove = spx   //  这个移动触发函数需要修改
-                // var px = document.createElement('p');
-                // px.innerHTML = "<br>";
-                // hr[i].after(px)
-                // var hryy = $(hr[i]).parent()
-
-                // console.log(hryy.tagName);
-                // if (hryy.attr("tagName") == "li") {
-                //     console.log("hrpanduan1");
-                // }
-
-
-                // 遍历每一个hr给当前的hr下面生成一个p标签
-
-                // hr[i]
-
-
-
-
-
-
-                // 在每个hr标签下面生成p标签  但是这样会出现引用标签套引用标签情况
-                // var phr = document.createElement('p');
-                // phr.innerHTML = "<br>";
-                // $(hr[i]).after(phr)
-
-                // var p = $(hr[i]).next('p')
 
                 var p = $(hr[i]).next('p')
                 for (let i = 0; i < p.length; i++) {
@@ -647,7 +555,7 @@
         var ulj = ''
         // 引用点击事件
         function wd2() {
-
+            console.log(djys[0].nodeName);
             // console.log(djys[0].nodeName);
             if (djys[0].nodeName == "P") {
                 console.log("点击p");
@@ -806,7 +714,11 @@
             // console.log(pbj);
             pbj = $(this)
             djys = pbj
+
+
+            console.log(pbj);
             state = pbj.context.id
+
 
             jdsl = this.childNodes.length
             jds = this.childNodes
@@ -997,35 +909,10 @@
 
         document.addEventListener('mousemove', (e) => {  // 对性能不太友好
 
-            // if (tpsfy == 0) {
-            //     console.log("创建标签");   // 判断创建图片成功  为什么会一直触发
-
-            // }
-
-            // let imgys = document.getElementsByTagName("img");
-            // for (let i = 0; i < imgys.length; i++) {
-            //     add2()
-
-            // };
-
-
-            // 引用标签里面插入图片
-            // var yybq = $("blockquote")
-            // for (var y = 0; y < yybq.length; y++) {
-            //     yybq[y].onclick = yyp
-            // }
-
-
-
-
-
-
             var hr = $("hr")
             for (var f = 0; f < hr.length; f++) {
                 hr[f].onmouseleave = hrp
             }
-
-
 
 
             var tpk = $(".result")
@@ -1033,13 +920,7 @@
                 tpk[t].onmouseleave = yctpk
             }
 
-
-
-
-
-            // $(document).ready(function () {
-            adjustList()  //去掉包裹有序列表无序列表的p标签
-            // changp()//p标签替换div标签
+            adjustList()  
             // 以p标签包裹内容
             var ch = $("#edit").find("p");
             for (var i = 0; i < ch.length; i++) {
@@ -1047,22 +928,6 @@
                 ch[i].onclick = wd1
 
             }
-
-
-            //     //   // 以ol标签包裹内容
-            //     //   var ol = $("#edit").find("ol");
-            //     //   for (var i = 0; i < ol.length; i++) {
-            //     //     // ch[i].id = 0
-            //     //     ol[i].onclick = olhwd
-            //     //   }
-
-
-            //     //   // 以ul标签包裹内容
-            //     //   var ul = $("#edit").find("ul");
-            //     //   for (var i = 0; i < ul.length; i++) {
-            //     //     // ch[i].id = 0
-            //     //     ul[i].onclick = ulhwd
-            //     //   }
 
 
             let lists = document.querySelectorAll("ol, ul");
