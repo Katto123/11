@@ -779,7 +779,7 @@
                 }
             }
 
-// 点击p标签后 当该标签文本内容为空的时候 且点击删除标签的时候   判断该标签上一个标签是否
+            // 点击p标签后 当该标签文本内容为空的时候 且点击删除标签的时候   判断该标签上一个标签是否
 
 
 
@@ -920,7 +920,7 @@
                 tpk[t].onmouseleave = yctpk
             }
 
-            adjustList()  
+            adjustList()
             // 以p标签包裹内容
             var ch = $("#edit").find("p");
             for (var i = 0; i < ch.length; i++) {
@@ -1138,7 +1138,7 @@
             // re.contenteditable = "true"
             // console.log(re);
 
-            // jies.style.border = "3px solid #FFFFFF"  // 对边框颜色限制
+            jies.style.border = "3px solid #FFFFFF"  // 对边框颜色限制
         }
 
 
@@ -1259,7 +1259,8 @@
                     // var fj = this.parentElement
                     // console.log(fj);
                     var parent = result.parentElement; // 获取result的父元素
-                    parent.removeChild(result); // 删除result 元素
+                    parent2 = parent.parentElement
+                    parent2.removeChild(parent); // 删除result 元素
                     editss = document.getElementById('edit')// 删除图片的时候让编辑框恢复可编辑功能
                     editss.contentEditable = true
 
@@ -1304,7 +1305,6 @@
 
 
 
-
         // 鼠标移入图片注释的点击事件
         function xs() {
             let d = document.getElementsByTagName("button");
@@ -1320,7 +1320,7 @@
             for (let i = 0; i < a.length; i++) {
                 a[i].disabled = true;  // 禁用编辑器按钮
             };
-            document.getElementById("myP").contentEditable = true; // (暂时不用)   
+            // document.getElementById("myP").contentEditable = true; // (暂时不用)   
             if (document.getElementById("myP").contentEditable = true) {
                 hc()  // 注释屏蔽回车功能
             }
