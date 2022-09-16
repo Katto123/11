@@ -376,27 +376,21 @@
         // p标签插入hr标签控制光标落到下一个标签末尾
         //  首先遍历hr标签 给每一个hr标签都添加事件
         $(".insertHorizontalRule").click(function () {
-            cp()
+            const edit1 = document.getElementById('edit')
+            var p = document.createElement('p');
+            p.innerHTML = "<br>"
+            // p.id = "wq"
+            edit1.appendChild(p);
             // document.addEventListener('mousemove', (e) => {
             setTimeout(sppx, 1)
             // })
         })
-
         function sppx() {
             // var p = document.createElement('p');
             // div.innerHTML = "<br>";
             // djhr.after(p)
-
-
             let hr = document.querySelectorAll("hr");
-
-
-
-
-
             // 判断hr的父级的父级是不是引用标签 如果是那么光标就落在hr标签下生成一个p标签 然后把光标定位到当前的p标签下面
-
-
             for (let i = 0; i < hr.length; i++) {
                 // hr[i].onmousemove = spx   //  这个移动触发函数需要修改
                 // var px = document.createElement('p');
@@ -807,21 +801,15 @@
             pbj = $(this)
             djys = pbj
             state = pbj.context.id
-
             jdsl = this.childNodes.length
             jds = this.childNodes
             console.log(jdsl);
             console.log(this.childNodes); //p标签内节点
             console.log(this.children);
-
-
-
-
             // console.log($(this));
             // console.log("p标签");  
             let fj = $(this).parent();
             if (fj.attr('class') == "aaa") {
-
                 console.log("外标签是aaa");
                 dwgb = 0
                 // 如果外标签是aaa 那么执行点击回车的判断
@@ -831,7 +819,6 @@
                         p2 = pbj.text()
                         setTimeout(function () {
                             p1 = pbj.nextAll('p').text()
-
                             // p2 = pbj.next('p').next('p').text()
                             // console.log(p2);
                             if (p1 == "" || p2 == "") {
@@ -859,6 +846,11 @@
                                             }
                                         }
                                         pbj.nextAll('p').remove()
+                                        console.log(fj.next('p')[0]);
+                                        //    var ul = document.getElementById("edit")
+                                        //             ul. fj.next('p')[0].remove()
+
+
                                     }
                                 }
                             }
@@ -866,15 +858,7 @@
                     }
                 }
             }
-
-// 点击p标签后 当该标签文本内容为空的时候 且点击删除标签的时候   判断该标签上一个标签是否
-
-
-
-
-
-
-
+            // 点击p标签后 当该标签文本内容为空的时候 且点击删除标签的时候   判断该标签上一个标签是否
         }
 
 
@@ -997,6 +981,12 @@
 
         document.addEventListener('mousemove', (e) => {  // 对性能不太友好
 
+
+            // 获取最后一个子元素
+
+
+
+
             // if (tpsfy == 0) {
             //     console.log("创建标签");   // 判断创建图片成功  为什么会一直触发
 
@@ -1045,6 +1035,7 @@
             for (var i = 0; i < ch.length; i++) {
                 // ch[i].id = 0
                 ch[i].onclick = wd1
+                ch[i].onfocus = wd3
 
             }
 
@@ -1071,7 +1062,10 @@
             }
         })
 
-
+        // p 标签获得焦点
+        function wd3() {
+            console.log("获得焦点事件");
+        }
 
 
 
@@ -1161,11 +1155,22 @@
         // 点击生成p标签
 
         function cp() {
-            const edit1 = document.getElementById('edit')
-            var p = document.createElement('p');
-            p.innerHTML = "<br>"
-            // p.id = "wq"
-            edit1.appendChild(p);
+
+
+
+            var ul = document.getElementById("edit")
+
+            console.log(ul.lastElementChild.nodeName);
+            if (ul.lastElementChild.nodeName !== "P") {
+
+                const edit1 = document.getElementById('edit')
+                var p = document.createElement('p');
+                p.innerHTML = "<br>"
+                // p.id = "wq"
+                edit1.appendChild(p);
+
+            }
+
         }
 
 
